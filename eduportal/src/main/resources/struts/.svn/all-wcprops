@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/Eduportal/!svn/ver/1698/code/eduportal/src/main/resources/struts
+END
+struts-app.xml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/Eduportal/!svn/ver/2338/code/eduportal/src/main/resources/struts/struts-app.xml
+END
+struts-eduPlatform.xml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/Eduportal/!svn/ver/3111/code/eduportal/src/main/resources/struts/struts-eduPlatform.xml
+END
+struts-action.xml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/Eduportal/!svn/ver/3111/code/eduportal/src/main/resources/struts/struts-action.xml
+END

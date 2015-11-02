@@ -1,0 +1,26 @@
+{
+    "rtnMsg": "调用成功",
+    "retInfo": [
+        {
+            "score": "80",
+            "userNm": "测2",
+            "gradeId": 5386035,
+            "gradeNm": "2014新生小小1班",
+            "avgscore": '67',
+            "rank": '1',
+            "courseId": 12,
+            "userId": 77079846
+        },
+        {
+            "score": "30",
+            "userNm": "测222",
+            "gradeId": 5386035,
+            "gradeNm": "2014新生小小1班",
+            "avgscore": '67',
+            "rank": '2',
+            "courseId": 12,
+            "userId": 77079844
+        }
+    ],
+    "rtnCode": "1"
+}

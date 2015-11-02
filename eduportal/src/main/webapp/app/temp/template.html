@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<style>
+html,body {background-color: #efeff4;}
+.mui-bar .mui-segmented-control .mui-control-item{
+	 width: 72px; 
+	 line-height: 30px;
+}
+header.mui-bar .mui-segmented-control{
+	width: 218px;
+	position: absolute;
+	left: 50%;
+	margin-left: -109px;
+}
+</style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+		<a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 id="title" class="mui-title"></h1>
+		<a class="mui-btn mui-btn-link mui-btn-nav mui-pull-right" id="J_search_btn" style="display: none;">
+			<span class="mui-icon mui-icon-search"></span>
+		</a>
+	</header>
+	<div class="mui-loader">加载中...</div>
+</body>
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../common/app.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script type="text/javascript">
+mui.init({
+	swipeBack:true //启用右滑关闭功能
+});
+mui.plusReady(function(){
+	var titleElem = document.getElementById("title");
+	var menu = document.getElementById("J_search_btn");
+	window.addEventListener("updateHeader", function(e) {
+		var title = e.detail.title,
+			showMenu = e.detail.showMenu;
+		titleElem.innerHTML = title;
+		titleElem.className = "mui-title mui-fadein";
+		var display = showMenu ? "block" : "none";
+		if (showMenu) {
+			//初始化模板
+			setTimeout(function () {
+				getTemplate('examSearch', '../temp/template_2.html');
+			},200);
+			menu.addEventListener('tap', function() {
+				//获得共用模板组
+				var template = getTemplate('examSearch');
+				//获得共用父模板
+				var headerWebview = template.header;
+				//获得共用子webview
+				var contentWebview = template.content;
+				//通知模板修改标题，并显示隐藏右上角图标；
+				mui.fire(headerWebview,'updateHeader_2',{title:'成绩搜索',showMenu:''});
+//				var reload = true;
+//				if (!template.loaded) {
+//					if (contentWebview.getURL().indexOf("examScoreSearch.html") == -1) {
+//						contentWebview.loadURL("../care/examScoreSearch.html");
+//					} else {
+//						reload = false;
+//					}
+//				} else {
+//					reload = false;
+//				}
+//				(!reload) && contentWebview.show();
+				contentWebview.loadURL("../care/examScoreSearch.html");
+				contentWebview.show();
+				headerWebview.show('slide-in-right', 150);
+			});
+			
+			//关闭search页面的webview
+			/*document.getElementById('back').addEventListener('tap', function () {
+				var temp = plus.webview.getWebviewById('examSearch-main');
+				var temp_sub = temp.children()[0];
+				if (temp_sub.getURL() != id) {
+					if (temp) {
+						temp.close();
+					}
+					if(temp_sub){
+						temp_sub.close();
+					}
+				}
+			})*/
+		}
+		var userInfo = Util.lStorage.getParam('userInfo');//当前登录用户信息
+		userInfo = JSON.parse(userInfo);
+//		if(userInfo.typeId == '1'){
+			menu.style.display = display;
+//		}
+	});
+})
+</script>
+</html>

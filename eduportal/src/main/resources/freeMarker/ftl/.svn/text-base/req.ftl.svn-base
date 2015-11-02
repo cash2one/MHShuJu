@@ -1,0 +1,4 @@
+{
+    "phone":"${phone}",
+    "type":${userType}
+}

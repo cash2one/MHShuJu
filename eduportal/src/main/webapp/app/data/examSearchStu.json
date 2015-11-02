@@ -1,0 +1,34 @@
+{
+    "rtnMsg": "调用成功",
+    "retInfo": [
+        {
+            "examDate": "2015-02-11 11:15",
+            "courseId": "111",
+            "score": "100",
+            "avgscore": "60",
+            "rank": "1",
+            "lastRank": "2",
+            "course": "语文"
+        },
+        {
+            "examDate": "2015-02-11 11:15",
+            "courseId": "333",
+            "score": "60",
+            "avgscore": "60",
+            "rank": "19",
+            "lastRank": "2",
+            "course": "英语"
+        },
+        {
+            "examDate": "2015-02-11 11:15",
+            "courseId": "222",
+            "score": "50",
+            "avgscore": "70",
+            "rank": "29",
+            "lastRank": "2",
+            "course": "数学"
+        }
+    ],
+    "examName": "期中考试",
+    "rtnCode": "1"
+}

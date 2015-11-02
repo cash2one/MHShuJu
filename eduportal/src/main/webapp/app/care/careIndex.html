@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>关爱</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+</head>
+<body>
+<div class="mui-content" id="J_careIndex"></div>
+
+<div class="ui-loader ui-corner-all" id="J_loading">
+    <span class="ui-icon-loading"></span>
+    <div class="ui-loader-verbose">正在加载数据...</div>
+</div>
+<script id="T_careIndex" type="text/x-handlebars-template">
+	<div class="ui-role-info">
+		<div class="ui-info-wrap fn-clear">
+			<img src="{{userInfo.imgUrl}}">
+			<div class="fn-left">
+				<div>
+					<span style="color:#333;margin-right:20px;">{{userInfo.userName}}</span><span>{{roleTrans userInfo.typeId}}</span>
+				</div>
+				<div style="margin-top:5px;">
+					<span>{{userInfo.schoolName}}</span>
+				</div>
+				<div style="margin-top:5px;">
+					<span>{{userInfo.gradeName}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<ul class="ui-care-menu fn-clear">
+		<li>
+			<a href="notice.html" title="公告" showMenu="">
+				<img src="../theme/images/notice.png" width="60" height="60">
+				<div class="ui-care-title">公告</div>
+				<!--{{#if notifyInfo.noticeNum}}<div class="ui-care-rmd">{{notifyInfo.noticeNum}}</div>{{/if}}-->
+			</a>
+		</li>
+		<li>
+			<a href="homeworkList.html" title="作业" showMenu="">
+				<img src="../theme/images/homework.png" width="60" height="60">
+				<div class="ui-care-title">作业</div>
+				<!--{{#if notifyInfo.homeWorkNum}}
+					<div class="ui-care-rmd">{{notifyInfo.homeWorkNum}}</div>
+				{{/if}}-->
+			</a>
+		</li>
+		<li>
+			<a href="examScoreSearch.html" title="成绩查询" showMenu="">
+				<img src="../theme/images/performance.png" width="60" height="60">
+				<div class="ui-care-title">成绩单</div>
+				<!--{{#if notifyInfo.schoolRptNum}}
+					<div class="ui-care-rmd">{{notifyInfo.schoolRptNum}}</div>
+				{{/if}}-->
+			</a>
+		</li>
+		<!--<li>
+			<a href="#">
+				<img src="../theme/images/course.png" width="60" height="60">
+				<div class="ui-care-title">课程表</div>
+				{{#if notifyInfo.scheduleNum}}
+					<div class="ui-care-rmd">{{notifyInfo.scheduleNum}}</div>
+				{{/if}}
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<img src="../theme/images/seat.png" width="60" height="60">
+				<div class="ui-care-title">座位表</div>
+				{{#if notifyInfo.seatChartNum}}
+					<div class="ui-care-rmd">{{notifyInfo.seatChartNum}}</div>
+				{{/if}}
+			</a>
+		</li>-->
+	</ul>
+	<div class="ui-intro">
+		<div class="ui-intro-title">推荐</div>
+		<div class="ui-intro-line"></div>
+	</div>
+	{{#if newApps}}
+		<ul class="ui-intro-app fn-clear">
+		{{#each newApps}}
+			<li>
+				<a href="../study/studyDtl.html" appID="{{appID}}" nodeUid="{{nodeUid}}" title="{{appName}}">
+					<img src="{{appPath}}{{appPic}}" width="70" height="44">
+					<div>{{retNewName appName}}</div>
+				</a>
+			</li>
+		{{/each}}
+		</ul>
+	{{/if}}
+</script>
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script type="text/javascript">
+
+mui.init({
+	preloadLimit: 5, //同时并存的预加载窗口数量
+	swipeBack: true,
+	keyEventBind: {
+		backbutton: false
+	}
+});
+
+mui.plusReady(function () {
+	srvMap.add('careIndex', 'careIndex.json','commonOuterNormal.action?uid=getUserRoleInfo');	
+	//关闭splash页面；
+	plus.navigator.closeSplashscreen();
+	//初始化模板
+	setTimeout(function () {
+		getTemplate('default', '../temp/template.html');
+		getTemplate('pullrefresh', '../temp/temp_pullrefresh.html');
+	},300);
+	Util.ajax.postJson(srvMap.get('careIndex'),'',function(json,status){
+		if (status) {
+			if(json){
+				if($(".nocontent").length){
+					$(".nocontent").remove();
+				}
+				for(var i =0;i<json.newApps.length;i++){
+					json.newApps[i].appPath = srvMap.getAppPath();
+				}
+				Util.ajax.loadTemp('#J_careIndex',$('#T_careIndex'),json);
+				/*点击进入菜单*/
+				mui('#J_careIndex').on('tap', '.ui-care-menu a', function() {
+					var id = this.getAttribute('href'),
+						title = this.getAttribute('title'),
+						showMenu = this.getAttribute('showMenu');
+					if (id) {
+						var href = this.href;
+						//获得共用模板组
+						var template = (~href.indexOf('notice.html')||~href.indexOf('homeworkList.html'))?getTemplate('pullrefresh'):getTemplate('default');
+						//判断是否显示右上角menu图标；
+						var showMenu = showMenu;
+						//获得共用父模板
+						var headerWebview = template.header;
+						//获得共用子webview
+						var contentWebview = template.content;
+						//通知模板修改标题，并显示隐藏右上角图标；
+						mui.fire(headerWebview,'updateHeader',{title:title,showMenu:showMenu});
+						
+						contentWebview.loadURL(this.href);
+						contentWebview.show();
+						
+						headerWebview.show('slide-in-right', 150);
+					}
+				});
+			}else{
+				Util.alert(json.rtnMsg || "暂无数据！");
+				$("body").append("<div class='nocontent'></div>");
+			}
+		}else{
+//			$('#J_careIndex').html('<div class="ui-load-error">获取用户信息失败！</div>');
+			Util.alert(json.rtnMsg || '获取用户信息失败');
+			$("body").append("<div class='nocontent'></div>");
+		}
+	})
+	
+	mui('#J_careIndex').on('tap', '.ui-intro-app a', function() {
+		var appID = this.getAttribute('appID'),
+			nodeUid = this.getAttribute('nodeUid'),
+			title = this.getAttribute('title');
+			
+		var template = getTemplate('default');
+		var headerWebview = template.header;
+		var contentWebview = template.content;
+		mui.fire(headerWebview,'updateHeader',{title:title,appID:appID,nodeUid:nodeUid});
+		var reload = true;
+		if (!template.loaded) {
+			if (contentWebview.getURL() != '../study/studyDtl.html') {
+				contentWebview.loadURL('../study/studyDtl.html?appID='+appID+'&nodeUid='+nodeUid);
+			} else {
+				reload = false;
+			}
+		} else {
+			reload = false;
+		}
+		(!reload) && contentWebview.show();
+		headerWebview.show('slide-in-right', 150);
+	})
+})
+
+Handlebars.registerHelper("roleTrans", function(typeid,fn){
+    var role = '';
+	if (typeid=='2') {
+		role = '老师';
+	}else{
+		role = '家长/学生';
+	}
+    return role;
+});
+Handlebars.registerHelper("retNewName", function(name,fn){
+    if(name.length > 4){
+    	name = name.substring(0, 4)+"...";
+    }
+    return name;
+});
+
+</script>
+</body>
+</html>

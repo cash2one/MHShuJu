@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/Eduportal/!svn/ver/1701/code/eduportal/src/main/resources/config
+END
+control-cms.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/Eduportal/!svn/ver/2213/code/eduportal/src/main/resources/config/control-cms.xml
+END
+control.xml
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/Eduportal/!svn/ver/2459/code/eduportal/src/main/resources/config/control.xml
+END
+system.properties
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/Eduportal/!svn/ver/3091/code/eduportal/src/main/resources/config/system.properties
+END
+control-sub.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/Eduportal/!svn/ver/2760/code/eduportal/src/main/resources/config/control-sub.xml
+END
+common-1.9.dtd
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/Eduportal/!svn/ver/12/code/eduportal/src/main/resources/config/common-1.9.dtd
+END
+control-edu.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/Eduportal/!svn/ver/3063/code/eduportal/src/main/resources/config/control-edu.xml
+END
+control-app.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/Eduportal/!svn/ver/3223/code/eduportal/src/main/resources/config/control-app.xml
+END
+common-sub-1.9.dtd
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/Eduportal/!svn/ver/12/code/eduportal/src/main/resources/config/common-sub-1.9.dtd
+END
+control-crm.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/Eduportal/!svn/ver/1055/code/eduportal/src/main/resources/config/control-crm.xml
+END

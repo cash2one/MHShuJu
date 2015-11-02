@@ -1,0 +1,24 @@
+{
+    "rtnCode": "1",
+    "rtnMsg": null,
+    "beans": [
+        {
+          "name":"已完成",
+          "value":20,
+          "color":"#5DBABE"
+        },
+        {
+          "name":"未完成",
+          "value":30,
+          "color":"#E4E3E3"
+        }
+    ],
+    "rows": [
+    	{
+    		"name": "王佳玉"
+    	},
+    	{
+    		"name": "松松"
+    	}
+    ]
+}

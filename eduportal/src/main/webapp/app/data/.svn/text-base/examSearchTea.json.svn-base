@@ -1,0 +1,466 @@
+{
+    "rtnMsg": "调用成功",
+    "retInfo": [
+        {
+            "examDate": "2015-02-11 11:15",
+            "examNm": "郑州家长俱乐部学校00001班期末成绩",
+            "gradeId": 3062231,
+            "RW": 1,
+            "gradeNm": "00001班",
+            "examId": 2170122,
+            "courseId": "12",
+            "courseNm": "语文"
+        },
+        {
+            "examDate": "2015-02-11 11:15",
+            "examNm": "郑州家长俱乐部学校00001班期末成绩",
+            "gradeId": 3062231,
+            "RW": 1,
+            "gradeNm": "00001班",
+            "examId": 2170122,
+            "courseId": "2",
+            "courseNm": "数学"
+        },
+        {
+            "examDate": "2015-02-11 11:15",
+            "examNm": "郑州家长俱乐部学校00001班期末成绩",
+            "gradeId": 3062231,
+            "RW": 1,
+            "gradeNm": "00001班",
+            "examId": 2170122,
+            "courseId": "2",
+            "courseNm": ""
+        },
+        {
+            "examDate": "2015-01-20 09:30",
+            "examNm": "郑州家长俱乐部学校计算机3班期末成绩",
+            "gradeId": 3980043,
+            "RW": 2,
+            "gradeNm": "计算机3班",
+            "examId": 2108021,
+            "courseId": "12",
+            "courseNm": "语文"
+        },
+        {
+            "examDate": "2015-01-20 09:30",
+            "examNm": "郑州家长俱乐部学校计算机3班期末成绩",
+            "gradeId": 3980043,
+            "RW": 2,
+            "gradeNm": "计算机3班",
+            "examId": 2108021,
+            "courseId": "3",
+            "courseNm": "英语"
+        },
+        {
+            "examDate": "2015-01-20 09:30",
+            "examNm": "郑州家长俱乐部学校计算机3班期末成绩",
+            "gradeId": 3980043,
+            "RW": 2,
+            "gradeNm": "计算机3班",
+            "examId": 2108021,
+            "courseId": "20",
+            "courseNm": "物理"
+        },
+        {
+            "examDate": "2015-01-16 14:49",
+            "examNm": "郑州家长俱乐部学校计算机3班期末成绩",
+            "gradeId": 3980043,
+            "RW": 3,
+            "gradeNm": "计算机3班",
+            "examId": 2103436,
+            "courseId": "21",
+            "courseNm": "化学"
+        },
+        {
+            "examDate": "2015-01-16 14:49",
+            "examNm": "郑州家长俱乐部学校计算机3班期末成绩",
+            "gradeId": 3980043,
+            "RW": 3,
+            "gradeNm": "计算机3班",
+            "examId": 2103436,
+            "courseId": "22",
+            "courseNm": "生物"
+        },
+        {
+            "examDate": "2015-01-16 14:49",
+            "examNm": "郑州家长俱乐部学校计算机3班期末成绩",
+            "gradeId": 3980043,
+            "RW": 3,
+            "gradeNm": "计算机3班",
+            "examId": 2103436,
+            "courseId": "23",
+            "courseNm": "地理"
+        },
+        {
+            "examDate": "2015-01-04 09:58",
+            "examNm": "郑州家长俱乐部学校计算机3班期末成绩",
+            "gradeId": 3980043,
+            "RW": 4,
+            "gradeNm": "计算机3班",
+            "examId": 2081823,
+            "courseId": "24",
+            "courseNm": "历史"
+        },
+        {
+            "examDate": "2015-01-04 09:58",
+            "examNm": "郑州家长俱乐部学校计算机3班期末成绩",
+            "gradeId": 3980043,
+            "RW": 4,
+            "gradeNm": "计算机3班",
+            "examId": 2081823,
+            "courseId": "25",
+            "courseNm": "政治"
+        },
+        {
+            "examDate": "2015-01-04 09:58",
+            "examNm": "郑州家长俱乐部学校计算机3班期末成绩",
+            "gradeId": 3980043,
+            "RW": 4,
+            "gradeNm": "计算机3班",
+            "examId": 2081823,
+            "courseId": "14",
+            "courseNm": "微机"
+        },
+        {
+            "examDate": "2015-01-04 09:25",
+            "examNm": "郑州家长俱乐部学校计算机3班期末成绩",
+            "gradeId": 3980043,
+            "RW": 5,
+            "gradeNm": "计算机3班",
+            "examId": 2081776,
+            "courseId": "13",
+            "courseNm": "自然"
+        },
+        {
+            "examDate": "2015-01-04 09:25",
+            "examNm": "郑州家长俱乐部学校计算机3班期末成绩",
+            "gradeId": 3980043,
+            "RW": 5,
+            "gradeNm": "计算机3班",
+            "examId": 2081776,
+            "courseId": "7",
+            "courseNm": "美术"
+        },
+        {
+            "examDate": "2015-01-04 09:25",
+            "examNm": "郑州家长俱乐部学校计算机3班期末成绩",
+            "gradeId": 3980043,
+            "RW": 5,
+            "gradeNm": "计算机3班",
+            "examId": 2081776,
+            "courseId": "2",
+            "courseNm": "总分"
+        },
+        {
+            "examDate": "2015-01-04 08:59",
+            "examNm": "郑州家长俱乐部学校计算机3班期末成绩",
+            "gradeId": 3980043,
+            "RW": 6,
+            "gradeNm": "计算机3班",
+            "examId": 2081738,
+            "courseId": "25",
+            "courseNm": "政治"
+        },
+        {
+            "examDate": "2015-01-04 08:55",
+            "examNm": "郑州家长俱乐部学校计算机3班期末成绩",
+            "gradeId": 3980043,
+            "RW": 7,
+            "gradeNm": "计算机3班",
+            "examId": 2081753,
+            "courseId": "12",
+            "courseNm": "语文"
+        },
+        {
+            "examDate": "2015-01-04 08:55",
+            "examNm": "郑州家长俱乐部学校计算机3班期末成绩",
+            "gradeId": 3980043,
+            "RW": 7,
+            "gradeNm": "计算机3班",
+            "examId": 2081753,
+            "courseId": "29",
+            "courseNm": "数学"
+        },
+        {
+            "examDate": "2015-01-04 08:55",
+            "examNm": "郑州家长俱乐部学校计算机3班期末成绩",
+            "gradeId": 3980043,
+            "RW": 7,
+            "gradeNm": "计算机3班",
+            "examId": 2081753,
+            "courseId": "2",
+            "courseNm": "总分"
+        },
+        {
+            "examDate": "2015-01-04 08:55",
+            "examNm": "郑州家长俱乐部学校00001班期末成绩",
+            "gradeId": 3062231,
+            "RW": 8,
+            "gradeNm": "00001班",
+            "examId": 2081752,
+            "courseId": "12",
+            "courseNm": "语文"
+        },
+        {
+            "examDate": "2015-01-04 08:55",
+            "examNm": "郑州家长俱乐部学校00001班期末成绩",
+            "gradeId": 3062231,
+            "RW": 8,
+            "gradeNm": "00001班",
+            "examId": 2081752,
+            "courseId": "29",
+            "courseNm": "数学"
+        },
+        {
+            "examDate": "2015-01-04 08:55",
+            "examNm": "郑州家长俱乐部学校00001班期末成绩",
+            "gradeId": 3062231,
+            "RW": 8,
+            "gradeNm": "00001班",
+            "examId": 2081752,
+            "courseId": "2",
+            "courseNm": "总分"
+        },
+        {
+            "examDate": "2015-01-03 11:08",
+            "examNm": "郑州家长俱乐部学校00001班期末成绩",
+            "gradeId": 3062231,
+            "RW": 9,
+            "gradeNm": "00001班",
+            "examId": 2081335,
+            "courseId": "12",
+            "courseNm": "语文"
+        },
+        {
+            "examDate": "2015-01-03 11:08",
+            "examNm": "郑州家长俱乐部学校00001班期末成绩",
+            "gradeId": 3062231,
+            "RW": 9,
+            "gradeNm": "00001班",
+            "examId": 2081335,
+            "courseId": "29",
+            "courseNm": "数学"
+        },
+        {
+            "examDate": "2015-01-03 11:08",
+            "examNm": "郑州家长俱乐部学校00001班期末成绩",
+            "gradeId": 3062231,
+            "RW": 9,
+            "gradeNm": "00001班",
+            "examId": 2081335,
+            "courseId": "2",
+            "courseNm": "总分"
+        },
+        {
+            "examDate": "2015-01-03 10:49",
+            "examNm": "郑州家长俱乐部学校00001班期末成绩",
+            "gradeId": 3062231,
+            "RW": 10,
+            "gradeNm": "00001班",
+            "examId": 2081305,
+            "courseId": "12",
+            "courseNm": "语文"
+        },
+        {
+            "examDate": "2015-01-03 10:49",
+            "examNm": "郑州家长俱乐部学校00001班期末成绩",
+            "gradeId": 3062231,
+            "RW": 10,
+            "gradeNm": "00001班",
+            "examId": 2081305,
+            "courseId": "29",
+            "courseNm": "数学"
+        },
+        {
+            "examDate": "2015-01-03 10:49",
+            "examNm": "郑州家长俱乐部学校00001班期末成绩",
+            "gradeId": 3062231,
+            "RW": 10,
+            "gradeNm": "00001班",
+            "examId": 2081305,
+            "courseId": "2",
+            "courseNm": "总分"
+        },
+        {
+            "examDate": "2015-01-03 09:31",
+            "examNm": "郑州家长俱乐部学校计算机3班期末成绩",
+            "gradeId": 3980043,
+            "RW": 11,
+            "gradeNm": "计算机3班",
+            "examId": 2081267,
+            "courseId": "2",
+            "courseNm": "数学"
+        },
+        {
+            "examDate": "2015-01-03 09:31",
+            "examNm": "郑州家长俱乐部学校计算机3班期末成绩",
+            "gradeId": 3980043,
+            "RW": 11,
+            "gradeNm": "计算机3班",
+            "examId": 2081267,
+            "courseId": "12",
+            "courseNm": "语文"
+        },
+        {
+            "examDate": "2015-01-03 09:30",
+            "examNm": "郑州家长俱乐部学校计算机3班期末成绩",
+            "gradeId": 3980043,
+            "RW": 12,
+            "gradeNm": "计算机3班",
+            "examId": 2081266,
+            "courseId": "12",
+            "courseNm": "语文"
+        },
+        {
+            "examDate": "2015-01-03 09:30",
+            "examNm": "郑州家长俱乐部学校计算机3班期末成绩",
+            "gradeId": 3980043,
+            "RW": 12,
+            "gradeNm": "计算机3班",
+            "examId": 2081266,
+            "courseId": "29",
+            "courseNm": "数学"
+        },
+        {
+            "examDate": "2015-01-03 09:30",
+            "examNm": "郑州家长俱乐部学校计算机3班期末成绩",
+            "gradeId": 3980043,
+            "RW": 12,
+            "gradeNm": "计算机3班",
+            "examId": 2081266,
+            "courseId": "2",
+            "courseNm": "总分"
+        },
+        {
+            "examDate": "2014-12-23 10:27",
+            "examNm": "郑州家长俱乐部学校00001班单元测验成绩",
+            "gradeId": 3062231,
+            "RW": 13,
+            "gradeNm": "00001班",
+            "examId": 2062282,
+            "courseId": "12",
+            "courseNm": "语文"
+        },
+        {
+            "examDate": "2014-12-23 10:27",
+            "examNm": "郑州家长俱乐部学校00001班单元测验成绩",
+            "gradeId": 3062231,
+            "RW": 13,
+            "gradeNm": "00001班",
+            "examId": 2062282,
+            "courseId": "29",
+            "courseNm": "数学"
+        },
+        {
+            "examDate": "2014-12-23 10:27",
+            "examNm": "郑州家长俱乐部学校00001班单元测验成绩",
+            "gradeId": 3062231,
+            "RW": 13,
+            "gradeNm": "00001班",
+            "examId": 2062282,
+            "courseId": "2",
+            "courseNm": "总分"
+        },
+        {
+            "examDate": "2014-12-09 11:07",
+            "examNm": "郑州家长俱乐部学校00001班单元测验成绩",
+            "gradeId": 3062231,
+            "RW": 14,
+            "gradeNm": "00001班",
+            "examId": 2043407,
+            "courseId": "12",
+            "courseNm": "语文"
+        },
+        {
+            "examDate": "2014-12-09 11:07",
+            "examNm": "郑州家长俱乐部学校00001班单元测验成绩",
+            "gradeId": 3062231,
+            "RW": 14,
+            "gradeNm": "00001班",
+            "examId": 2043407,
+            "courseId": "2",
+            "courseNm": "数学"
+        },
+        {
+            "examDate": "2014-12-09 11:07",
+            "examNm": "郑州家长俱乐部学校00001班单元测验成绩",
+            "gradeId": 3062231,
+            "RW": 15,
+            "gradeNm": "00001班",
+            "examId": 2043405,
+            "courseId": "12",
+            "courseNm": "语文"
+        },
+        {
+            "examDate": "2014-12-09 11:07",
+            "examNm": "郑州家长俱乐部学校00001班单元测验成绩",
+            "gradeId": 3062231,
+            "RW": 15,
+            "gradeNm": "00001班",
+            "examId": 2043405,
+            "courseId": "29",
+            "courseNm": "数学"
+        },
+        {
+            "examDate": "2014-12-09 11:07",
+            "examNm": "郑州家长俱乐部学校00001班单元测验成绩",
+            "gradeId": 3062231,
+            "RW": 15,
+            "gradeNm": "00001班",
+            "examId": 2043405,
+            "courseId": "2",
+            "courseNm": "总分"
+        },
+        {
+            "examDate": "2014-12-06 14:29",
+            "examNm": "郑州家长俱乐部学校00001班单元测验成绩",
+            "gradeId": 3062231,
+            "RW": 16,
+            "gradeNm": "00001班",
+            "examId": 2040951,
+            "courseId": "911467",
+            "courseNm": "哈哈你好"
+        },
+        {
+            "examDate": "2014-12-06 14:27",
+            "examNm": "郑州家长俱乐部学校技术部家长身份测试单元测验成绩",
+            "gradeId": 3981643,
+            "RW": 17,
+            "gradeNm": "技术部家长身份测试",
+            "examId": 2040973,
+            "courseId": "911466",
+            "courseNm": "测试"
+        },
+        {
+            "examDate": "2014-12-06 14:27",
+            "examNm": "郑州家长俱乐部学校技术部家长身份测试单元测验成绩",
+            "gradeId": 3981643,
+            "RW": 18,
+            "gradeNm": "技术部家长身份测试",
+            "examId": 2040972,
+            "courseId": "689042",
+            "courseNm": "语文成绩"
+        },
+        {
+            "examDate": "2014-11-17 22:22",
+            "examNm": "郑州家长俱乐部学校00001班期中成绩",
+            "gradeId": 3062231,
+            "RW": 19,
+            "gradeNm": "00001班",
+            "examId": 1990979,
+            "courseId": "12",
+            "courseNm": "语文"
+        },
+        {
+            "examDate": "2014-09-30 16:04",
+            "examNm": "郑州家长俱乐部学校计算机3班单元测验成绩",
+            "gradeId": 3980043,
+            "RW": 20,
+            "gradeNm": "计算机3班",
+            "examId": 1879691,
+            "courseId": "12",
+            "courseNm": "语文"
+        }
+    ],
+    "rtnCode": "1"
+}

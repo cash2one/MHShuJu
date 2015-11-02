@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/Eduportal/!svn/ver/1026/code/eduportal/src/main/webapp/data
+END
+changeRole.json
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/Eduportal/!svn/ver/978/code/eduportal/src/main/webapp/data/changeRole.json
+END
+unBindAct.json
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/Eduportal/!svn/ver/93/code/eduportal/src/main/webapp/data/unBindAct.json
+END
+sCartList.json
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/Eduportal/!svn/ver/973/code/eduportal/src/main/webapp/data/sCartList.json
+END
+prodDtl.json
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/Eduportal/!svn/ver/973/code/eduportal/src/main/webapp/data/prodDtl.json
+END
+loginApp.json
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/Eduportal/!svn/ver/973/code/eduportal/src/main/webapp/data/loginApp.json
+END
+appList.json
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/Eduportal/!svn/ver/967/code/eduportal/src/main/webapp/data/appList.json
+END
+getRoleInfo.json
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/Eduportal/!svn/ver/89/code/eduportal/src/main/webapp/data/getRoleInfo.json
+END
+myOrder.json
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/Eduportal/!svn/ver/973/code/eduportal/src/main/webapp/data/myOrder.json
+END
+collectList.json
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/Eduportal/!svn/ver/973/code/eduportal/src/main/webapp/data/collectList.json
+END
+loginUserInfo.json
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/Eduportal/!svn/ver/2296/code/eduportal/src/main/webapp/data/loginUserInfo.json
+END
+validRtn.json
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/Eduportal/!svn/ver/749/code/eduportal/src/main/webapp/data/validRtn.json
+END
+getValidateCode.json
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/Eduportal/!svn/ver/80/code/eduportal/src/main/webapp/data/getValidateCode.json
+END
+bindingInfo.json
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/Eduportal/!svn/ver/973/code/eduportal/src/main/webapp/data/bindingInfo.json
+END
+signIn.json
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/Eduportal/!svn/ver/80/code/eduportal/src/main/webapp/data/signIn.json
+END
+index_head.json
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/Eduportal/!svn/ver/2227/code/eduportal/src/main/webapp/data/index_head.json
+END
+roleList.json
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/Eduportal/!svn/ver/973/code/eduportal/src/main/webapp/data/roleList.json
+END
+confirmBill.json
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/Eduportal/!svn/ver/978/code/eduportal/src/main/webapp/data/confirmBill.json
+END
+autoComplete.json
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/Eduportal/!svn/ver/967/code/eduportal/src/main/webapp/data/autoComplete.json
+END
+bindAct.json
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/Eduportal/!svn/ver/973/code/eduportal/src/main/webapp/data/bindAct.json
+END
+noLoginApp.json
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/Eduportal/!svn/ver/967/code/eduportal/src/main/webapp/data/noLoginApp.json
+END

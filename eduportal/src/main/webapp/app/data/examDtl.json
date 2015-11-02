@@ -1,0 +1,34 @@
+{
+    "retInfo": [
+        {
+            "score": "93",
+            "examDate": "2015-01-28",
+            "rw": 1,
+            "avgscore": "70",
+            "courseId": 3
+        },
+        {
+            "score": "63",
+            "examDate": "2015-01-28",
+            "rw": 3,
+            "avgscore": "60",
+            "courseId": 3
+        },
+        {
+            "score": "73",
+            "examDate": "2015-01-28",
+            "rw": 10,
+            "avgscore": "80",
+            "courseId": 3
+        },
+        {
+            "score": "100",
+            "examDate": "2015-01-28",
+            "rw": 10,
+            "avgscore": "80",
+            "courseId": 3
+        }
+    ],
+    "rtnMsg": "调用成功",
+    "rtnCode": "1"
+}

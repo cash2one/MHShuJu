@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/Eduportal/!svn/ver/1864/code/eduportal/src/main/resources/freeMarker/ftl
+END
+respStudent.ftl
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/Eduportal/!svn/ver/1036/code/eduportal/src/main/resources/freeMarker/ftl/respStudent.ftl
+END
+respTeacher.ftl
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/Eduportal/!svn/ver/1174/code/eduportal/src/main/resources/freeMarker/ftl/respTeacher.ftl
+END
+req.ftl
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/Eduportal/!svn/ver/1036/code/eduportal/src/main/resources/freeMarker/ftl/req.ftl
+END

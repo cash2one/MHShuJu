@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>登录</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="theme/common.css">
+<link rel="stylesheet" href="lib/mui/css/mui.css">
+<style>
+.login_form .mui-switch {
+	float: right;
+	margin-right: 10px;
+}
+.ui-bg {
+	padding-top: 70px;
+}
+.ui-auto-login-text {
+	color: #B1AA9B;
+	margin-left: 12px;
+}
+.quick-handle {
+	margin-top: 20px;
+}
+#J_quickRegist {
+	padding-left: 3px;
+}
+.quick-handle .mui-btn {
+	color: #fff;
+}
+.quick-handle .forgetPwd{
+	padding-left: 0px;
+	padding-right: 3px;
+}
+.split-line {
+	display: inline-block;
+	border: 1px solid #FF0000;
+	height: 15px;
+	vertical-align: middle;
+	width: 1px;
+	margin-top: 6px;
+	margin-right: 8px;
+}
+
+.ui-login-wrap .login_form .mui-btn-block {
+	margin-top: 30px;
+	padding: 10px 0;
+	border: 1px solid #fff;
+	color: #fff;
+}
+.ui-login-wrap .login_form .mui-btn-block:active {
+	background: #DD4D28;
+}
+.ui-login-wrap .login_form .mui-switch.mui-active {
+	background-color: #6BC8E0;
+	border-color: #6BC8E0;
+}
+</style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+	<h1 id="title" class="mui-title">登录</h1>
+</header>
+<div class="mui-content">
+	<div class="ui-wrap">
+	    <div class="ui-bg ui-login-bg" style="display: block;">
+			<div class="ui-login-wrap">
+				<form class="login_form" id="J_fwmm_login">
+				  	<input class="ui-login-phone" type="text" placeholder="请输入校讯通帐号" maxlength="11">
+				  	<input class="ui-login-pwd" type="password" placeholder="请输入密码">
+				  	<div class="ui-auto-login">
+				  		<div class="ui-auto-login-text">自动登录</div>
+				  		<div style="padding: 10px 0 0 188px;">
+				  			<div class="mui-switch mui-switch-mini mui-active">
+								<div class="mui-switch-handle"></div>
+							</div>
+				  		</div>
+				  	</div>
+				  	<button class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined">登 录</button>
+				</form>
+				
+				<div class="quick-handle fn-clear">
+					<button class="mui-btn mui-btn-link mui-pull-left" id="J_quickRegist">快速注册</button>
+					<button class="mui-btn mui-btn-link forgetPwd mui-pull-right" id="J_F_btn">忘记密码</button>
+				</div>
+			</div>
+	    </div>
+	</div>
+</div>
+<script src="lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="lib/mui/mui.min.js"></script>
+<script src="lib/handlebars/1.3.0/handlebars.js"></script>
+<script type="text/javascript" src="lib/cryptojs/3.1.2/md5.js"></script>
+<script src="lib/cryptojs/3.1.2/core-min.js"></script>
+<script src="lib/cryptojs/3.1.2/enc-base64-min.js"></script>
+<script src="common/config.js"></script>
+<script src="common/base64.js"></script>
+<script src="common/common.js"></script>
+<script src="common/pwdencode.js"></script>
+<script src="common/update.js"></script>
+<script type="text/javascript">
+var choiceRole = null;
+var pageIndex = null;
+
+mui.init();
+mui.plusReady(function(){
+	var loginPhone = Util.lStorage.getParam('loginPhone');
+	if(loginPhone && loginPhone.length == '11'){
+		$(".ui-login-phone").val(loginPhone);
+		$(".ui-login-pwd").focus();
+	}
+	
+	srvMap.add('login', 'careIndex.json','commonOuterNormal.action?uid=heaLogin');
+	
+	//忘记密码
+	document.getElementById("J_F_btn").addEventListener('tap', function() {
+		var title = '输入手机号';
+		var template = getTemplate('forgetPwd');
+		var headerWebview = template.header;
+		var contentWebview = template.content;
+		var phone = $(".ui-login-phone").val();
+		Util.lStorage.setParam("forgetPwdPhone", phone);
+		mui.fire(headerWebview,'updateHeader',{title:title,pageId:'forgetPwd'});
+		contentWebview.loadURL('forgetpwd/forgetPwd.html');
+		contentWebview.show();
+		headerWebview.show('slide-in-right', 150);
+	})
+	//快速注册
+	document.getElementById("J_quickRegist").addEventListener('tap', function() {
+		var title = '输入手机号';
+		var template = getTemplate('forgetPwd');
+		var headerWebview = template.header;
+		var contentWebview = template.content;
+		mui.fire(headerWebview,'updateHeader',{title:title,pageId:'quickRegist'});
+		contentWebview.loadURL('regist/register.html');
+		contentWebview.show();
+		headerWebview.show('slide-in-right', 150);
+	})
+	setTimeout(function () {
+		getTemplate('forgetPwd', 'temp/template.html');
+	},300);
+	
+	mui(".ui-login-wrap").on("tap", ".mui-btn-block", function(e){
+		var mobile=$('.ui-login-phone').val();
+		if((!mobile) || (mobile && mobile.length != '11')){
+			Util.alert('请输入11位校讯通帐号');
+			return false;
+		}
+		Util.lStorage.removeParam('loginPhone');
+		Util.lStorage.setParam('loginPhone',mobile);
+		var pwd=$('.ui-login-pwd').val();
+		if(!pwd){
+			Util.alert('请输入密码');
+			return false;
+		}
+		var passwordMd5 = Util.base64Md5(mobile+pwd);
+		var isAuto=0;
+		if($('.mui-switch').hasClass('mui-active')){
+			Util.lStorage.setParam('autoLogin','1');
+			isAuto=1;
+		}else{
+			Util.lStorage.setParam('autoLogin','');
+		}
+		var datas = 'mobile='+mobile+'&pwd='+passwordMd5+'&isAuto='+isAuto;
+		login(datas);
+	})
+})
+
+function login(datas){
+	//预加载choiceRole.html
+	choiceRole = mui.preload({
+		id:'care/choiceRole.html',
+		url:'care/choiceRole.html',
+		styles: {
+			top:'0px',
+			bottom:'0px'
+		}
+	});
+	//预加载
+	pageIndex = mui.preload({
+		id:'index.html',
+		url:'index.html',
+		styles: {
+			top:'0px',
+			bottom:'0px'
+		}
+	});
+	var w=plus.nativeUI.showWaiting("正在登录... ");
+	Util.ajax.postJson(srvMap.get('login'),datas,function(json,status){
+		if (status) {
+			Util.lStorage.removeParam('userInfoHasRole');
+			Util.lStorage.removeParam('loginInfo');
+			Util.lStorage.setParam('loginInfo',datas);
+			/*判断是否有角色，若有角色信息则跳转至选择角色页面，若没有角色信息则跳转至关爱中的学习页签*/
+			if(json.typeId){
+				Util.lStorage.removeParam('userInfoHasRole');
+				if(!choiceRole){
+					choiceRole = plus.webview.getWebviewById('care/choiceRole.html');
+				}
+				mui.fire(choiceRole,'choiceRole',{title:'选择角色',pageId:'login'});
+				choiceRole.show('slide-in-right', 150);
+			}else{
+				Util.lStorage.setParam('userInfoHasRole',"1");
+				window.location.href = 'index.html';
+			}
+		}else{
+			Util.alert(json.rtnMsg||'登录失败!');
+		}
+		w.close();
+	})
+}
+	
+//手机号码验证
+function ValidateCallNumber(strCallNumber){
+	var objRegExp  = new RegExp('(13[4-9]{1}[0-9]{8})|(150[0-9]{8})|(182[0-9]{8})|(151[0-9]{8})|(152[0-9]{8})|(155[0-9]{8})|(157[0-9]{8})|(158[0-9]{8})|(159[0-9]{8})|(188[0-9]{8})|(187[0-9]{8})|(147[0-9]{8})|(183[0-9]{8})|(156[0-9]{8})','g');
+	return(objRegExp.test(strCallNumber));
+}
+
+Handlebars.registerHelper("roleTrans", function(typeid,fn){
+    var role = '';
+	if (typeid=='2') {
+		role = '老师';
+	}else{
+		role = '家长/学生';
+	}
+    return role;
+});
+
+mui.back = function() {
+	return false;
+};
+
+</script>
+</body>
+</html>

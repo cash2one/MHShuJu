@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/Eduportal/!svn/ver/9/code/eduportal/.settings
+END
+org.eclipse.jdt.core.prefs
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/Eduportal/!svn/ver/9/code/eduportal/.settings/org.eclipse.jdt.core.prefs
+END
+org.eclipse.core.resources.prefs
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/Eduportal/!svn/ver/9/code/eduportal/.settings/org.eclipse.core.resources.prefs
+END
+org.maven.ide.eclipse.prefs
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/Eduportal/!svn/ver/9/code/eduportal/.settings/org.maven.ide.eclipse.prefs
+END

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>沟通</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<link rel="stylesheet" href="comuni.css" />
+</head>
+<body>
+<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+	<div class="mui-scroll">
+		<ul class="comui-wrap-ul fn-hide" id="J_history">
+			<li class="his"><span class="hr_line">&nbsp;&nbsp;以上是历史消息&nbsp;&nbsp;</span></li>
+		</ul>
+		<ul class="comui-wrap-ul fn-clear" id="J_worklist">
+			<!--<li class="left fn-clear">
+				<div class="user_icon"></div>
+				<div class="content-wrap">
+					<p class="user_name">名字</p>
+					<p class="conten">左边1<span class="mui-icon mui-icon-spinner-cycle mui-spin loading"></span></p>
+				</div>
+			</li>
+			<li class="left fn-clear">
+				<div class="user_icon"></div>
+				<div class="content-wrap">
+					<p class="user_name">名字</p>
+					<p class="conten">
+						左边2
+						<span class="mui-icon mui-icon-spinner-cycle mui-spin loading"></span>
+					</p>
+				</div>
+			</li>
+			<li class="right fn-clear">
+				<div class="user_icon"></div>
+				<div class="content-wrap">
+					<p class="user_name">名字</p>
+					<p class="conten">111111111111111111111111111111111111111111111111111111111111111111111111111111<span class="mui-icon mui-icon-spinner-cycle mui-spin loading"></span></p>
+				</div>
+			</li>
+			<li class="left fn-clear">
+				<div class="user_icon"></div>
+				<div class="content-wrap">
+					<p class="user_name">名字</p>
+					<p class="conten">左边3左边3左边3左边3左边3左边3左边3左边3左边3左边3左边3左边3左边3左边3左边3左边3左边3左边3<span class="mui-icon mui-icon-spinner-cycle mui-spin loading"></span></p>
+				</div>
+			</li>
+			<li class="right fn-clear">
+				<div class="user_icon"></div>
+				<div class="content-wrap">
+					<p class="user_name">名字</p>
+					<p class="conten">右边2</p>
+				</div>
+			</li>
+			<li class="right fn-clear">
+				<div class="user_icon"></div>
+				<div class="content-wrap">
+					<p class="user_name">名字</p>
+					<p class="conten">
+						<img src="file:///C:/fakepath/IMG_20150525_120738.jpg" width="50" height="50" onclick="plus.runtime.openFile('file:///C:/fakepath/IMG_20150525_120738.jpg');" />
+					</p>
+				</div>
+			</li>-->
+		</ul>
+	</div>
+</div>
+
+<script id="T_msg" type="text/x-handlebars-template">
+{{#each this}}
+	{{#if_eq msgtype compare='cc'}}
+	<li class="{{retLR msgsendtype}} fn-clear">
+		<div class="user_icon"></div>
+		<div class="content-wrap">
+			<p class="user_name">时间</p>
+			<p class="conten">{{content}}</p>
+		</div>
+	</li>
+	{{/if_eq}}
+{{/each}}
+</script>
+
+<script id="T_msg_t" type="text/x-handlebars-template">
+{{#each this}}
+	<li class="{{retLR msgContent.msgsendtype}} fn-clear">
+		<div class="user_icon"></div>
+		<div class="content-wrap">
+			<p class="user_name">{{msgContent.createdate}}</p>
+			<p class="conten">
+				{{msgContent.content}}
+				{{#if msgContent.filepath}}<br/><a href="javascript:;" onclick="plus.runtime.openURL('{{msgContent.filepath}}')">{{msgContent.filepath}}</a>{{/if}}
+			</p>
+		</div>
+	</li>
+{{/each}}
+</script>
+
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../lib/handlebars/1.3.0/helpers.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script src="../common/jquery.form.js"></script>
+<script src="comuni.js"></script>
+<script type="text/javascript">
+
+var userId, destid;
+userId = JSON.parse(Util.lStorage.getParam('userInfo')).userId;
+
+mui.init({
+	swipeBack: true,
+	pullRefresh: {
+		container: '#pullrefresh',
+		down: {
+		      contentdown : "下拉获取历史信息",//可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+		      contentover : "释放立即获取",//可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+		      contentrefresh : "正在获取...",//可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+		      callback :pulldownRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+		}
+	}
+});
+
+mui.plusReady(function(){
+	
+})
+window.addEventListener("refreshData", function (e) {
+	mui('#pullrefresh').pullRefresh().endPulldownToRefresh(false);
+	$("#J_worklist").html("");
+    var comuniDtl = e.detail.comuniDtl;
+    var newChat = e.detail.newChat;
+    if(newChat && newChat == '1'){
+    	
+    	console.log(JSON.stringify(comuniDtl));
+	    destid = comuniDtl.destid;
+    	
+    }else{
+	    destid = comuniDtl[0].destid;
+		setTimeout(function(){
+			Util.ajax.loadTemp('#J_worklist',$("#T_msg_t"), comuniDtl);
+			window.scrollTo(0, $('.mui-scroll')[0].scrollHeight);
+		}, 300)
+		
+		$("#J_history").html('<li class="his"><span class="hr_line">&nbsp;&nbsp;以上是历史消息&nbsp;&nbsp;</span></li>').hide();
+    }
+});
+
+window.addEventListener("addMsg", function (e) {
+    var type = e.detail.type;
+    var data = e.detail.data;
+    var dataId = e.detail.dataId;
+    var html = "";
+	if(type == '1'){
+		//文字
+		html = '<li class="right fn-clear" id="'+dataId+'"> <div class="user_icon"></div> <div class="content-wrap"> <p class="user_name">'+dateToStr((new Date()))+'</p> <p class="conten">'+data+'<span class="mui-icon mui-icon-spinner-cycle mui-spin loading"></span></p> </div> </li>';
+		$("#J_worklist").append(html);
+	}
+	window.scrollTo(0, $('.mui-scroll')[0].scrollHeight);
+});
+
+window.addEventListener("removeLoading", function (e) {
+    var dataId = e.detail.dataId;
+	$("#"+dataId).find(".loading").remove();//取消loading
+});
+
+//下拉刷新历史数据
+var count = 0;
+function pulldownRefresh() {
+	//查询数据库，当前页面条数+20
+	var currentLi = $("#J_worklist li").length;
+	var histLi = $("#J_history li").length;
+	console.log(currentLi+"      "+histLi)
+	if(histLi == 1 && currentLi <= 3){
+		setTimeout(function() {
+			mui('#pullrefresh').pullRefresh().endPulldownToRefresh(true);
+			Util.alert("查无历史记录！");
+		}, 1500);
+		
+		return false;
+	}
+	var start = 10*(count+1);
+	webSql.queryHistTalkDtl(userId, destid, start, 10, function(Sql_searchLocalRes){
+		if(Sql_searchLocalRes){
+			var sidList = $("#T_msg_t").html();
+			var template = Handlebars.compile(sidList); 
+			var html = template(Sql_searchLocalRes);
+			$("#J_history").show().prepend(html);
+			
+			mui('#pullrefresh').pullRefresh().endPulldownToRefresh(false);
+			count++;
+		}else{
+			setTimeout(function() {
+				mui('#pullrefresh').pullRefresh().endPulldownToRefresh(true);
+				Util.alert("查无历史记录！");
+			}, 1500);
+		}
+	})
+}
+Handlebars.registerHelper('retLR', function(value, fn){
+	if(value == '2'){//别人发给自己的
+		return "left";
+	}else if(value == '1'){//自己发的
+		return "right";
+	}
+	return "left";
+});
+
+</script>
+</body>
+</html>

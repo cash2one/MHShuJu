@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<style>
+
+</style>
+</head>
+<body>
+<div class="mui-content" id="J_jump">
+	<div class="ui-loader ui-corner-all" id="J_loading">
+	    <span class="ui-icon-loading"></span>
+	    <div class="ui-loader-verbose">正在加载数据...</div>
+	</div>
+</div>
+
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../common/app.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../lib/handlebars/1.3.0/helpers.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script type="text/javascript">
+mui.init({
+	swipeBack: true
+});
+mui.plusReady(function(){
+	
+})
+window.addEventListener('jumpurl', function(e){
+	var url = e.detail.jumpurl;
+	$("#J_jump").html('<iframe id="" src="'+url+'" width="100%" height="100%" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="auto" allowtransparency="yes"></iframe>')
+})
+</script>
+</body>
+</html>

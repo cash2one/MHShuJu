@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="httpClient" class="common.ai.httpclient.tools.HttpClientHelper">
+	   <property name="connectTimeout" value="${cms.http.connectTimeout}" />
+	   <property name="requestTimeout" value="${cms.http.requestTimeout}" />
+	   <property name="reRequestTimes" value="${cms.http.reRequestTimes}" />
+	   <property name="httpReqUrl"     value="${cms.http.httpReqUrl}" />
+	   <property name="httpReqPort"    value="${cms.http.httpReqPort}" />
+	   <property name="httpReqServiceName" value="${cms.http.httpReqServiceName}" />
+	</bean>
+
+	<bean id="httpParams" class="com.ai.eduportal.service.CmsServiceClientParams">
+	   <property name="queryBasecondition" value="${cms.queryBasecondition}" />
+	   <property name="serviceUid"         value="${cms.serviceUid}" />
+	</bean>
+	<bean id="downLoadPic" class="com.ai.eduportal.service.DownLoadPic">
+		<property name="httpClient" ref="httpClient" />
+		<property name="cmsPath"    value="${cms.http.httpurl}" />
+	</bean>
+	<bean id="cmsClient" class="com.ai.eduportal.service.CmsServiceClient">
+	   <property name="httpClient"  ref="httpClient" />
+	   <property name="httpParams"  ref="httpParams" />
+	   <property name="downLoadPic" ref="downLoadPic" />
+	</bean>
+	 <!--
+	 <bean id="remoteCaller" class="com.ai.eduportal.remote.mock.RemoteCallerFactoryMock1">
+	 	<property name="httpClient"       ref="httpClient" />
+		<property name="callCoreService"  ref="eduCoreService" />
+		<property name="logservice"       value="${caller.logservice}" />
+		<property name="logmethod"        value="${caller.logmethod}" />
+		<property name="xxtHttpurl"       value="${caller.xxtHttpurl}" />
+		<property name="xxbHttpurl"       value="${caller.xxbHttpurl}" />
+		<property name="tbkHttpurl"       value="${caller.tbkHttpurl}" />
+		<property name="xencryptedKey"    value="${caller.xencryptedKey}" />
+		<property name="tencryptedKey"    value="${caller.tencryptedKey}" />
+		<property name="zencryptedKey"    value="${caller.zencryptedKey}" />
+	 </bean>
+	 -->
+	    
+	 <bean id="remoteCaller" class="com.ai.eduportal.remote.RemoteCallerFactory">
+		<property name="httpClient"       ref="httpClient" />
+		<property name="callCoreService"  ref="callCoreService" />
+		<property name="logservice"       value="${caller.logservice}" />
+		<property name="logmethod"        value="${caller.logmethod}" />
+		<property name="xxtHttpurl"       value="${caller.xxtHttpurl}" />
+		<property name="xxbHttpurl"       value="${caller.xxbHttpurl}" />
+		<property name="tbkHttpurl"       value="${caller.tbkHttpurl}" />
+		<property name="xencryptedKey"    value="${caller.xencryptedKey}" />
+		<property name="tencryptedKey"    value="${caller.tencryptedKey}" />
+		<property name="zencryptedKey"    value="${caller.zencryptedKey}" />
+	</bean>  
+	
+	<bean id="coreServiceUtil" class="com.ai.eduportal.service.CoreServiceUtil">
+		<property name="websvurl"       value="${remoteServiceWsdl1}" />
+	</bean>
+	
+	<bean id="remoteAppCaller" class="com.ai.eduportal.remote.RemoteCallerF4AppFactory">
+		<property name="callCoreService"  ref="eduCoreService" />
+		<property name="cmsService"       ref="cmsClient" />
+		<property name="appRemoteCaller"  ref="appRemoteCaller" />
+		<property name="codeUtil"  		  ref="codeUtil" />
+	</bean>
+	
+	<bean id="codeUtil" class="com.ai.eduportal.remote.CodeUtil">
+	</bean>
+	
+	<bean id="appRemoteCaller" class="com.ai.eduportal.remote.app.AppRemoteCaller">
+		<property name="httpClient"       ref="httpClient" />
+		<property name="callCoreService"  ref="eduCoreService" />
+		<property name="logservice"       value="${caller.logservice}" />
+		<property name="logmethod"        value="${caller.logmethod}" />
+		<property name="httpUrl"       value="${caller.xxtAppHttpurl}" />
+	</bean>
+	 
+	 <!--
+ 	<bean id="appRemoteCaller" class="com.ai.eduportal.remote.mock.AppRemoteCallerMock">
+ 	</bean>
+ 	-->
+	<bean id="apkservice" class="com.ai.eduportal.service.ApkpackageService">
+	    <property name="apkUploadUrls" value="${edu.apk.uploads}" />
+    </bean>
+    
+    <!-- 
+    <bean id="hessianClient" class="com.ai.eduportal.service.hessian.HessianClient">
+        <property name="conntimeout" value="${edu.hessian.conntime}" />
+        <property name="readtimeout" value="${edu.hessian.readtime}" />
+        <property name="hessianUrl"  value="${edu.hessian.url}" />
+        <property name="hessianUrlUtil" ref="coreServiceUtil" />
+    </bean>
+     -->
+    <bean id="eduHttpClient" class="com.ai.eduportal.remote.outer.EduPlatformHttclient">
+       <property name="connectTimeout" value="${cms.http.connectTimeout}" />
+       <property name="requestTimeout" value="${cms.http.requestTimeout}" />
+       <property name="reRequestTimes" value="${cms.http.reRequestTimes}" />
+    </bean>
+    <bean id="eduPlatformSvc" class="com.ai.eduportal.remote.outer.EduPlatformSvc">
+        <property name="coreService" ref="eduCoreService" />
+        <property name="httpclient"  ref="eduHttpClient" />
+    </bean>
+</beans>

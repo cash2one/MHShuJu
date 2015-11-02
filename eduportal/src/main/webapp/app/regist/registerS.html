@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>登录</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<style>
+/**
+ * 忘记密码
+ * **/
+.ui-bg {
+	background-position:  center center;
+}
+.forgetPwd-wrap {
+	padding: 0 20px;
+	margin-top: 70px;
+}
+.forgetPwd-wrap .step {
+	position: relative;
+}
+.forgetPwd-wrap input {
+	margin-bottom: 0px;
+	border-radius: 5px;
+	height: 50px;
+}
+.forgetPwd-wrap .mui-btn {
+	margin-top: 30px;
+	padding: 10px 0;
+	border: 1px solid #fff;
+	color: #fff;
+}
+.forgetPwd-wrap .mui-btn:active {
+	background: #DC4C27;
+}
+.forgetPwd-wrap .step .last-time {
+	position: absolute;
+	right: 7px;
+	top: 7px;
+	display: inline-block;
+	background: #D3DDE3;
+	padding: 8px 15px;
+	border-radius: 5px;
+	color: #fff;
+}
+.forgetPwd-wrap .step .tips {
+	margin-top: -60px;
+}
+.forgetPwd-wrap .step .tips p {
+	color: #fff;
+}
+.forgetPwd-wrap .step .reGet {
+	background: #A9BEC8;
+}
+#J_F_vadiCode {
+	padding-right: 120px;
+}
+</style>
+</head>
+<body>
+<div class="mui-content">
+	<div class="ui-wrap">
+	    <div class="ui-bg ui-login-bg" style="display: block;">
+			<div class="forgetPwd-wrap">
+				<div class="step step-2">
+					<input type="text" value="" name="" id="J_F_vadiCode" placeholder="请输入短信密码" maxlength="6" />
+					<label for="" class="last-time dis" id="J_F_time"></label>
+					<button class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined" id="J_nextStep">确认注册</button>
+				</div>
+			</div>
+	    </div>
+	</div>
+</div>
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script type="text/javascript" src="../lib/cryptojs/3.1.2/md5.js"></script>
+<script src="../lib/handlebars/1.3.0/helpers.js"></script>
+<script src="../lib/cryptojs/3.1.2/core-min.js"></script>
+<script src="../lib/cryptojs/3.1.2/enc-base64-min.js"></script>
+<script src="../common/base64.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script src="../common/pwdencode.js"></script>
+<script type="text/javascript">
+var result = 0;
+var tiemInter = null;
+var registerPhone = Util.lStorage.getParam("registerPhone");
+//srvMap.add('sendPhoneVadi', 'examSearchStu.json','');//验证码发送
+//srvMap.add('getPhoneVadi', 'examSearchStu.json','');//验证码校验
+srvMap.addLogin('getFirstPassword', 'getFirstPassword.json','user-SendSms.action?uid=sdSms');//获取首次登陆密码
+srvMap.addLogin('firstLogin', 'firstLogin.json','user-CheckPwdRt.action?uid=checkPwdRg');//首次登陆,标识用户已经注册成功
+
+mui.init({swipeBack: true});
+var old_back = mui.back;
+mui.back = function(){
+  var cwebview = plus.webview.getWebviewById('registerT-sub');
+  if(cwebview){
+    var self = plus.webview.currentWebview();
+    self.remove(cwebview);
+    cwebview.close();
+  }
+  old_back();
+}
+mui.plusReady(function(){
+	mui(".forgetPwd-wrap").on("tap", "#J_F_time", function(){
+		if($(this).hasClass("dis")){
+			Util.alert("请耐心等待...");
+		}else{
+			countTime();
+		}
+	})
+	countTime();
+	
+	$("#J_F_phone").bind("keyup", function(e){
+		if(e.which==13){
+		    gotoNext();
+		    return false;
+		}
+	})
+	
+	mui(".forgetPwd-wrap").on("tap", "#J_nextStep", function(){
+		gotoNext();
+		return false;
+	})
+	setTimeout(function () {
+		getTemplate('registerT', '../temp/template.html');
+	},300);	
+
+})
+
+function countTime(){
+	$("#J_F_time").html('剩余<span id="J_txt">60</span>"').removeClass("reGet").addClass("dis");
+	timeInter = setInterval(function(){
+		var text = parseInt($("#J_txt").text(), 10);
+		if(text == 0){
+			$("#J_F_time").html('<span class="reGet">重新获取</span>');
+			$("#J_F_time").removeClass("dis").addClass("reGet");
+			clearInterval(timeInter);
+		}else{
+			text--;
+			$("#J_txt").text(text);
+		}
+	}, 1000)
+	
+	Util.ajax.postJson(srvMap.get("getFirstPassword"), "mobile="+registerPhone, function(json, state){
+		if(state){
+			if(json){
+				Util.alert("验证码已发送到您的手机，请及时查看！");
+			}else{
+				Util.alert(json.rtnMsg || "验证码发送失败！");
+			}
+		}else{
+			Util.alert("系统错误，请稍后再试！");
+		}
+	})
+}
+
+function gotoNext(){
+	var vadiCode = $("#J_F_vadiCode").val();
+	if(vadiCode.length != '6'){
+		Util.alert("请输入6位验证码");
+		return false;
+	}
+	var passwordMd5 = Util.base64Md5(registerPhone+vadiCode);
+    var data = 'mobile='+registerPhone+'&pwd='+passwordMd5;
+	Util.ajax.postJson(srvMap.get("firstLogin"), data, function(json, state){
+		if(state){
+			if(json){
+				result = 1;
+				var title = '注册结果';
+				var template = getTemplate('registerT');
+				var headerWebview = template.header;
+				var contentWebview = template.content;
+				mui.fire(headerWebview,'updateHeader',{title:title,pageId:'registerT'});
+				
+				mui.fire(contentWebview, 'showRes', {result: result});
+				
+				//缓存页面
+				var reload = true;
+				if (!template.loaded) {
+					if (contentWebview.getURL().indexOf('registerT.html') == '-1') {
+						contentWebview.loadURL('registerT.html');
+					} else {
+						reload = false;
+					}
+				} else {
+					reload = false;
+				}
+				(!reload) && contentWebview.show();
+				headerWebview.show('slide-in-right', 150);
+				
+			}else{
+				Util.alert(json.rtnMsg || "验证不通过！");
+			}
+		}else{
+			Util.alert("系统错误，请稍后再试！");
+		}
+	})
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>学习</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<style>
+.ui-study-now, #ui-unOrder2 {
+	height: 55px;
+    line-height: 55px;
+}
+.ui-study-now:active {
+	color: #fff;
+}
+#ui-unOrder2 {
+	color: #fff;
+}
+.ui-stdy-prod-intro {
+	padding-bottom: 5px;
+}
+.ui-stdy-intro-title {
+	padding-left: 10px;
+	height: 40px;
+	line-height: 40px;
+}
+.ui-stdy-prod-intro p {
+	padding: 10px;
+	margin-bottom: 100px;
+	border-bottom: 1px solid #D9DEE2;
+}
+.ui-prod-info-wrap {
+	width: 100%;
+	height: auto; 
+	background-color: #fff;
+}
+.ui-prod-info-wrap img {
+	display: inline-block;
+	margin: 20px 10px 0 10px;
+	vertical-align: top;
+	float: none;
+}
+.ui-prod-info {
+	font-size: 14px;
+	display: inline-block;
+	margin: 20px 0 0 0;
+	float: none;
+	width: 60%;
+}
+#ui-study-now5 {
+	background: #DD4D28;
+}
+</style>
+</head>
+<body>
+<div id="J_prod_dtl" class="content" style="background-color:#F5F5F5;">
+ 	
+</div>
+<div class="ui-loader ui-corner-all" id="J_loading">
+    <span class="ui-icon-loading"></span>
+    <div class="ui-loader-verbose">正在加载数据...</div>
+</div>
+
+<script id="T_studyDtl" type="text/x-handlebars-template">
+{{#if_eq isMutiApp compare="1"}}
+	<div class="ui-prod-info-wrap">
+       <img src="{{appPath}}{{appPic}}" width="100">
+	   <div class="ui-prod-info">
+	    	<h4>{{appName}}</h4>
+            <div>
+            	订购状态：{{#if_eq orderState compare="1"}}
+            	<span style="color:#FE631F;">已订购</span>{{else}}未订购{{/if_eq}}
+            </div>
+	    	<div>价格：<span id="J_price" style="color:red;">{{price}}</span>/月</span></div>
+	    	<div>适合角色：{{suitRole domain}}</div>
+	    </div>
+	</div>
+	{{#if mPtInfo.length}}
+	    <div class="ui-prod-version fn-clear">
+	    	<div class="ui-stdy-intro-title">产品类型</div>
+			<ul id="J_prod_version" class="fn-clear">
+			{{#each mPtInfo}}
+				<li smsCode="{{smsCode}}" offerCode="{{offerCode}}" price="{{price}}" month="{{month}}">{{ptSubName}}</li>
+			{{/each}}
+			</ul>
+		</div>
+	{{/if}}
+    <div class="ui-stdy-prod-intro">
+	    <div class="ui-stdy-intro-title">产品简介</div>
+	      {{#if priceTable}}
+	    		<img src="{{appPath}}{{priceTable}}" width="100%">
+	      {{/if}}
+		  {{#if appDescPic}}
+ 	  		<img src="{{appPath}}{{appDescPic}}" width="100%">
+          {{/if}}
+          {{#if appDesc}}
+            <p>
+	    	    <span style="color:#000;">简介：</span>{{replace appDesc}}
+	         </p>
+         {{/if}}
+   	</div>
+    <div class="ui-stdy-prod-opera fn-clear">
+        {{#if_eq orderState compare="1"}}
+			<!--<a class="ui-study-now" style="width:100%;">已订购</a>-->
+		   	{{#if apphref}}
+		   	<a class="ui-study-now" onclick="plus.runtime.openURL('{{apphref}}')" style="width:100%;">立即学习</a>
+		   	{{/if}}
+        {{else}}
+	        <form id="prodInfoForm" method="post">
+				  <input type="hidden" id="appID" name="appID" value="{{appID}}">
+	              <input type="hidden" id="appName" name="appName" value="{{appName}}">
+	              <input type="hidden" id="appPath" name="appPath" value="{{appPath}}">
+	              <input type="hidden" id="appPic" name="appPic" value="{{appPic}}">
+				  <input type="hidden" id="nodeUid" name="nodeUid" value="{{nodeUid}}">
+				  <input type="hidden" id="isMutiApp" name="isMutiApp" value="{{isMutiApp}}">
+				  <input type="hidden" id="redirect" name="redirect" value="billConfirm.html">
+				  <input type="hidden" id="sysType" name="sysType" value="{{sysType}}">
+				  <input type="hidden" id="offerId" name="offerId" value="{{offerId}}">
+				  <input type="hidden" id="offerCode" name="offerCode" value="">
+				  <input type="hidden" id="smsCode" name="smsCode" value="">
+				  <input type="hidden" id="price" name="price" value="">
+				  <input type="hidden" id="month" name="month" value="">
+	              <input type="hidden" id="domain" name="domain" value="{{domain}}">
+				  <a  class="ui-study-now" onclick="buy('{{isMutiApp}}')" style="width: 100%; background: #DD4D28;">立即订购</a>
+			  </form>
+         {{/if_eq}}
+     </div>
+{{else}}
+	<div class="ui-prod-info-wrap">
+       <img src="{{appPath}}{{appPic}}" width="100">
+	   <div class="ui-prod-info">
+	    	<h4>{{appName}}</h4>
+            <div>
+            	订购状态：<span style="color:#FE631F;" id="J_order">{{#if_eq orderState compare="1"}}
+            	已订购{{else}}未订购{{/if_eq}}</span>
+            </div>
+	    	<div>价格：<span id="J_price" style="color:red;">{{packagePrice}}</span>/月</span></div>
+	    	<div>适合角色：{{suitRole domain}}</div>
+	    </div>
+	</div>
+	{{#if ptInfo.length}}
+    <div class="ui-prod-version fn-clear">
+    	<div class="ui-stdy-intro-title">产品类型</div>
+		<ul id="J_prod_version" class="fn-clear">
+		{{#each ptInfo}}
+			<li ptSign="{{ptSign}}" sign="{{sign}}" isOrder="{{isOrder}}" price="{{price}}">{{ptSubName}}</li>
+		{{/each}}
+		</ul>
+	</div>
+	{{/if}}
+    <div class="ui-stdy-prod-intro">
+	    <div class="ui-stdy-intro-title">产品简介</div>
+	      {{#if priceTable}}
+	    		<img src="{{appPath}}{{priceTable}}" width="100%">
+	      {{/if}}
+		  {{#if appDescPic}}
+ 	  		<img src="{{appPath}}{{appDescPic}}" width="100%">
+          {{/if}}
+          {{#if appDesc}}
+            <p>
+	    	    <span style="color:#000;">简介：</span>{{replace appDesc}}
+	         </p>
+         {{/if}}
+   	</div>
+	<div class="ui-stdy-prod-opera fn-clear">
+        {{#if_eq orderState compare="1"}}
+            <form id="prodInfoForm" method="post">
+				<input type="hidden" id="appID" name="appID" value="{{appID}}">
+                <input type="hidden" id="appName" name="appName" value="{{appName}}">
+                <input type="hidden" id="appPath" name="appPath" value="{{appPath}}">
+                <input type="hidden" id="appPic" name="appPic" value="{{appPic}}">
+				<input type="hidden" id="nodeUid" name="nodeUid" value="{{nodeUid}}">
+				<input type="hidden" id="isMutiApp" name="isMutiApp" value="{{isMutiApp}}">
+				<input type="hidden" id="redirect" name="redirect" value="billConfirm.html">
+				<input type="hidden" id="sysType" name="sysType" value="{{sysType}}">
+				<input type="hidden" id="offerId" name="offerId" value="{{offerId}}">
+				<input type="hidden" id="offerCode" name="offerCode" value="{{threeOfferCode}}">
+				<input type="hidden" id="price" name="price" value="{{packagePrice}}">
+                <input type="hidden" id="domain" name="domain" value="{{domain}}">
+                <input type="hidden" id="orderState" name="orderState" value="{{orderState}}">
+                <input type="hidden" id="priceFlag" name="priceFlag" value="">
+                <input type="hidden" id="signFlag" name="signFlag" value="">
+                <a id="ui-unOrder2" class="ui-unOrder" href="#" onclick="unBuy('{{isMutiApp}}')">退订</a>  
+                <a id="ui-study-now4" class="ui-study-now" onclick="plus.runtime.openURL('{{freehref}}')">立即学习</a>  
+                <a id="ui-study-now5" class="ui-study-now" style="width: 100%;"onclick="buySingle('{{isMutiApp}}')">立即订购</a>
+          </form>
+		{{else}}
+            {{#if freehref}}
+				<a class="ui-study-now" onclick="plus.runtime.openURL('{{freehref}}')" style="width:100%;" id="freeExp">免费体验</a>
+    		{{/if}}
+            {{#if_eq packagePrice compare="0"}}
+    		{{else}}
+            	<form id="prodInfoForm" method="post">
+		     		<input type="hidden" id="appID" name="appID" value="{{appID}}">
+                    <input type="hidden" id="appName" name="appName" value="{{appName}}">
+                    <input type="hidden" id="appPath" name="appPath" value="{{appPath}}">
+                    <input type="hidden" id="appPic" name="appPic" value="{{appPic}}">
+		     		<input type="hidden" id="nodeUid" name="nodeUid" value="{{nodeUid}}">
+		     		<input type="hidden" id="isMutiApp" name="isMutiApp" value="{{isMutiApp}}">
+		     		<input type="hidden" id="redirect" name="redirect" value="billConfirm.html">
+		     		<input type="hidden" id="sysType" name="sysType" value="{{sysType}}">
+		     		<input type="hidden" id="offerId" name="offerId" value="{{offerId}}">
+		     		<input type="hidden" id="offerCode" name="offerCode" value="{{threeOfferCode}}">
+		     		<input type="hidden" id="price" name="price" value="{{packagePrice}}">
+                    <input type="hidden" id="domain" name="domain" value="{{domain}}">
+                    <input type="hidden" id="orderState" name="orderState" value="{{orderState}}">
+                    <input type="hidden" id="priceFlag" name="priceFlag" value="">
+                    <input type="hidden" id="signFlag" name="signFlag" value="">
+                    <a id="ui-unOrder2" class="ui-unOrder" href="#" onclick="unBuy('{{isMutiApp}}')">退订</a>  
+                    <a id="ui-study-now4" class="ui-study-now" onclick="plus.runtime.openURL('{{freehref}}')">立即学习</a>  
+                    <a id="ui-study-now5" class="ui-study-now" style="width: 100%;"onclick="buySingle('{{isMutiApp}}')">立即订购</a>                  
+				</form>
+             {{/if_eq}}
+       	{{/if_eq}}
+	</div>
+{{/if_eq}}
+</script>
+
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../lib/handlebars/1.3.0/helpers.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script type="text/javascript">
+mui.init({swipeBack: true});
+var old_back = mui.back;
+mui.back = function(){
+  var cwebview = plus.webview.getWebviewById('billConfirm-sub');
+  if(cwebview){
+    var self = plus.webview.currentWebview();
+    self.remove(cwebview);
+    cwebview.close();
+  }
+  old_back();
+}
+
+srvMap.add('getUserInfo', 'isLogin.json','commonOuterNormal.action?uid=getHeaUserInfo');
+srvMap.add('prodDtl', 'prodDtl.json','commonCMS.action?uid=getHeaAppDetail');//详细信息
+srvMap.add('prodVersion', 'prodVersion.json','commonOuterNormal.action?uid=querySinglePtPriceSign');//产品类型
+mui.plusReady(function(){
+//$(function(){
+	/*Util.ajax.postJson(srvMap.get('getUserInfo'),'',function(json,status){
+		if (status) {
+			window.heaUserInfo =json.bean;
+		}else{
+			window.heaUserInfo = '';
+		}
+	})*/
+	var url = plus.webview.currentWebview().getURL();
+	var appID =null,nodeUid=null;
+	if(url.indexOf('?')!=-1){
+		//url带参数
+		appID = Util.browser.getParameter('appID',url),
+		nodeUid=Util.browser.getParameter('nodeUid',url);
+	}else{
+		//url不带参数其他跳转过来的
+		var	prodInfo = Util.lStorage.getParam('studyDtl');
+		prodInfo = JSON.parse(prodInfo);
+		appID = prodInfo?prodInfo.appID:'',
+		nodeUid = prodInfo?prodInfo.nodeUid:'';
+		Util.lStorage.removeParam('studyDtl');
+	}
+	//产品详情
+	Util.ajax.postJson(srvMap.get('prodDtl'),'appID='+appID+'&nodeUid='+nodeUid,function(json,status){
+		if (status) {
+//			return false;
+			console.log(JSON.stringify(json))
+			if(json.isMutiApp=='2'){
+                //单产品能订购
+				if(json.offerCode=='112000005003'||json.offerCode=='108007800057'||json.offerCode=='108007800053'||json.offerCode=='112000007724'){
+                	Util.ajax.postJson(srvMap.get('prodVersion'),'offerCode='+json.offerCode,function(prodType,status){
+						console.log(JSON.stringify(prodType))
+        			   	if (status) {
+        			   		//非教育彩信,在线课程
+        			   		if(prodType.ptInfo.length==1){
+        			   			$('title').html(json.appName);
+            			   		json.appPath = srvMap.getAppPath();
+            			   		json.orderState = prodType.ptInfo[0].isOrder ? "1" : "2";
+            			   		Util.ajax.loadTemp('#J_prod_dtl',$('#T_studyDtl'),json);
+            			   		$('#J_price').text(json.packagePrice);
+            			   		$('#price').val(json.packagePrice);
+            			   		$('#priceFlag').val(prodType.ptInfo[0].ptSign);
+        			   			$('#signFlag').val(prodType.ptInfo[0].sign);
+        			   			if(prodType.ptInfo[0].isOrder){
+        			   			    $('#J_order').text('已订购');
+        			   			    $('#orderState').val(1);
+        			   				$('#ui-study-now4').show();
+         			   			    $('#ui-unOrder2').show();
+         			   			    $('#ui-study-now5').hide();
+         			   			    
+        				   		}else{
+        				   			$('#J_order').text('未订购');
+        				   			$('#orderState').val(0);
+        				   			$('#ui-study-now4').hide();
+         			   			    $('#ui-unOrder2').hide();
+         			   			    $('#ui-study-now5').show();
+         			   			    
+         			   			    /**
+         			   			     * 控制按钮样式
+         			   			     * **/
+         			   			    $("#freeExp, #ui-study-now5").css({"width": "50%"});
+         			   			    $("#ui-study-now5").css({"background": "#DD4D28"});
+        				   		}
+        			   		}else{
+            			   		//在线课程
+            			   		if(json.offerCode=='108007800053'){
+            			   			for(var i =0;i<prodType.ptInfo.length;i++){
+            			   				prodType.ptInfo[i].price =json.packagePrice;
+            			   			}
+            			   		}
+        			   			//教育彩信或者在线课程
+        			   			json.ptInfo = prodType.ptInfo;
+            			   		$('title').html(json.appName);
+            			   		json.appPath = srvMap.getAppPath();
+            			   		Util.ajax.loadTemp('#J_prod_dtl',$('#T_studyDtl'),json);
+            			   		
+            			   		$('#J_prod_version li').bind('tap',function(){
+            			   			$(this).addClass('cur').siblings().removeClass('cur');
+            			   			$('#J_price').text($(this).attr('price'));
+            			   			if($(this).attr('isOrder')=='1'){
+            			   			   //可能进入已订购模版也可以进入未订购模版,根据模版内容动态隐藏显示按钮
+            			   			   $('#J_order').text('已订购');
+            			   			   $('#orderState').val(1);
+            			   			   $('#ui-study-now2').show();
+            			   			   $('#ui-unOrder').show();
+            			   			   $('#ui-study-now3').hide();
+            			   			   
+            			   			   $('#ui-study-now4').show();
+         			   			       $('#ui-unOrder2').show();
+         			   			       $('#ui-study-now5').hide();
+         			   			       
+         			   			       /**
+	         			   			     * 控制按钮样式
+	         			   			     * **/
+	         			   			    //隐藏免费体验按钮
+	         			   			    if($("#freeExp")){
+	         			   			    	$("#freeExp").hide();
+	         			   			    }
+	         			   			    $("#ui-unOrder2").css({"width": "35%"});
+	         			   			    $("#ui-study-now4").css({"width": "65%", "background": "#5DBABE"});
+            			   			}else{
+            			   			   $('#J_order').text('未订购');
+            			   			   $('#orderState').val(0);
+            			   			   $('#ui-study-now2').hide();
+            			   			   $('#ui-unOrder').hide();
+            			   			   $('#ui-study-now3').show();
+      			   			           $('#ui-unOrder2').hide();
+      			   			           $('#ui-study-now4').hide();
+      			   			           
+            			   			   if($("#freeExp")){
+	         			   			    	$("#freeExp").show().css({"width": "35%"});
+	         			   			    	$('#ui-study-now5').show().css({"width": "65%", "background": "#DD4D28"});
+	         			   			   }else{
+	         			   			   		$('#ui-study-now5').show().css({"width": "100%", "background": "#DD4D28"});
+	         			   			   }
+            			   			}
+            			   			$('#price').val($(this).attr('price'));
+            			   			$('#priceFlag').val($(this).attr('ptSign'));
+            			   			$('#signFlag').val($(this).attr('sign'));
+            			   		}).eq(0).trigger('tap');
+        			   		}
+        			   	}else{
+        			   		$('#J_prod_dtl').html('<div class="ui-load-error">加载失败</div>')
+        			   	}
+        			   })
+                }else{
+                	//其他单产品
+                	$('title').html(json.appName);
+			   		json.appPath = srvMap.getAppPath();
+			   		Util.ajax.loadTemp('#J_prod_dtl',$('#T_studyDtl'),json);
+			   		if(json.orderState=='1'){
+			   			$('#ui-unOrder').hide();
+	                    $('#ui-study-now4').show().css({"width": "65%"});
+	                    $('#ui-study-now5').hide();
+	                    $('#ui-unOrder2').show().css({"width": "35%"});
+			   		}else{
+			   			$('#ui-unOrder2').hide();
+	                    $('#ui-study-now4').hide();
+	                    $('#ui-study-now5').hide();
+			   		}
+                }
+		  }else{
+			  //组合产品
+			  $('title').html(json.appName);
+			  json.appPath = srvMap.getAppPath();
+			  Util.ajax.loadTemp('#J_prod_dtl',$('#T_studyDtl'),json);
+			  var mIndex=json.mIndex;
+			  $('#J_prod_version li').bind('tap',function(){
+					$(this).addClass('cur').siblings().removeClass('cur');
+					$('#J_price').text($(this).attr('price'));
+					$('#month').val($(this).attr('month'));
+					$('#price').val($(this).attr('price'));
+					$('#smsCode').val($(this).attr('smsCode'));
+					$('#offerCode').val($(this).attr('offerCode'));
+			  }).eq(mIndex).trigger('tap');
+		  }
+		}else{
+			$('#J_prod_dtl').html('<div class="ui-load-error">加载错误</div>')
+		}
+	})
+
+	//退订
+	/* $('.ui-unOrder').click(function(){
+		Util.ajax.postJson(srvMap.get('prodDtl'),'',function(json,status){
+			if (status) {
+				//Util.ajax.loadTemp('#J_careIndex',$('#T_studyDtl'),json);
+			}else{
+				$('#J_careIndex').html('<div class="ui-load-error"></div>')
+			}
+		})
+	}) */	
+});
+
+Handlebars.registerHelper("replace", function(str,fn) {
+	var buffer = '';
+	buffer = str.replace(/rtn/g,'<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+	return  new Handlebars.SafeString(buffer);
+});
+
+Handlebars.registerHelper("suitRole", function(domain,fn) {
+	var buffer = [];
+	if( domain.indexOf('1') != -1){
+		buffer.push('学生');
+	}
+	if( domain.indexOf('2') != -1){
+		buffer.push('老师');
+	}
+	if( domain.indexOf('3') != -1){
+		buffer.push('家长');
+	}
+	return buffer.join('、');
+});
+
+setTimeout(function () {
+	getTemplate('billConfirm', '../temp/template_2.html');
+},300);
+
+function buy(isMutiApp){
+	buyConfirm();
+}
+function buyConfirm(){
+	var dataObject={
+		'appID':$('#appID').val(),
+		'appName':$('#appName').val(),
+		'appPath':$('#appPath').val(),
+		'appPic':$('#appPic').val(),
+		'nodeUid':$('#nodeUid').val(),
+		'price':$('#price').val(),
+		'sysType':$('#sysType').val(),
+		'isMutiApp':$('#isMutiApp').val(),
+		'month':$('#month').val(),
+		'offerId':$('#offerId').val(),
+		'smsCode':$('#smsCode').val(),
+		'offerCode':$('#offerCode').val(),
+		'domain':$('#domain').val(),
+		'orderState':$('#orderState').val()
+	};
+	dataObject=JSON.stringify(dataObject);
+	Util.lStorage.setParam('appDatas',dataObject);
+	var template = getTemplate('billConfirm');
+	var headerWebview = template.header;
+	var contentWebview = template.content;
+	mui.fire(headerWebview,'updateHeader_2',{title:'订单确认',showMenu:''});
+	contentWebview.loadURL('billConfirm.html');
+	headerWebview.show('slide-in-right', 150);
+}
+
+/*跳转至确认订单页面*/
+function buySingle(isMutiApp){
+	var dataObject={
+		'appID':$('#appID').val(),
+		'appName':$('#appName').val(),
+		'appPath':$('#appPath').val(),
+		'appPic':$('#appPic').val(),
+		'nodeUid':$('#nodeUid').val(),
+		'price':$('#price').val(),
+		'sysType':$('#sysType').val(),
+		'isMutiApp':$('#isMutiApp').val(),
+		'month':$('#month').val(),
+		'offerId':$('#offerId').val(),
+		'smsCode':$('#smsCode').val(),
+		'offerCode':$('#offerCode').val(),
+		'domain':$('#domain').val(),
+		'orderState':$('#orderState').val(),
+		'priceFlag':$('#priceFlag').val(),
+		'signFlag':$('#signFlag').val()
+	};
+	dataObject=JSON.stringify(dataObject);
+	Util.lStorage.setParam('appDatas',dataObject);
+	
+	var template = getTemplate('billConfirm');
+	var headerWebview = template.header;
+	var contentWebview = template.content;
+	mui.fire(headerWebview,'updateHeader_2',{title:'订单确认',showMenu:''});
+	contentWebview.loadURL('billConfirm.html');
+	contentWebview.show();
+	headerWebview.show('slide-in-right', 150);
+}
+
+function unBuy(isMutiApp){
+	var dataObject={
+		'appID':$('#appID').val(),
+		'appName':$('#appName').val(),
+		'appPath':$('#appPath').val(),
+		'appPic':$('#appPic').val(),
+		'nodeUid':$('#nodeUid').val(),
+		'price':$('#price').val(),
+		'sysType':$('#sysType').val(),
+		'isMutiApp':$('#isMutiApp').val(),
+		'month':$('#month').val(),
+		'offerId':$('#offerId').val(),
+		'smsCode':$('#smsCode').val(),
+		'offerCode':$('#offerCode').val(),
+		'domain':$('#domain').val(),
+		'orderState':$('#orderState').val(),
+		'priceFlag':$('#priceFlag').val(),
+		'signFlag':$('#signFlag').val()	
+	};
+	dataObject=JSON.stringify(dataObject);
+	Util.lStorage.setParam('appDatas',dataObject);
+	var template = getTemplate('billConfirm');
+	var headerWebview = template.header;
+	var contentWebview = template.content;
+	mui.fire(headerWebview,'updateHeader_2',{title:'订单确认',showMenu:''});
+	contentWebview.loadURL('billConfirm.html');
+	headerWebview.show('slide-in-right', 150);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!ELEMENT control (action+)>        	<!-- 整个应用的控制请求,control.xml的根标签; -->
+<!ELEMENT action (input,output?)*>   	<!-- 请求动作标签,代表一个请求动作,各请求根据path属性进行区别;  -->
+
+<!--
+	path属性:Request请求路径,形如：/front/sh/login!index
+	service属性：Request请求调用后台的WebService服务类,值为后台工程中spring-services.xml中Service对应的id值;
+	method属性：服务类中的方法;
+-->
+<!ATTLIST action 						
+	path CDATA #REQUIRED
+	service CDATA #IMPLIED
+	method  CDATA #IMPLIED				
+>
+
+<!ELEMENT input (parameter*)>		<!--请求参数标签,<action>中可包含多个<input>标签,各标签通过uid区别; -->
+<!--
+	uid属性：请求的唯一编号; 
+	service属性：若填写,则重写父类action属性的service; 
+	method属性：若填写,则重写父类action属性的method; 
+	scope属性：默认以control.xml中的key从前台获取数据,若值为request,则以request中的key值封装InputObject; 
+	desc属性：描述此次请求完成的功能; 
+	sec属性：加密标识; 
+	cache属性：是否从缓存读取，默认不缓存; 
+-->
+<!ATTLIST input 
+	uid ID #REQUIRED				
+	service  CDATA #IMPLIED 
+	method CDATA #IMPLIED 
+	scope (request|control) "control"
+	desc CDATA #IMPLIED
+	sec (true|false) "false"
+	cache (true|false) "false"
+>
+
+<!ELEMENT parameter EMPTY>
+<!--
+	key属性：Request中对应的key;
+	order属性：参数的顺序,按照验证需求添加;
+	regex属性：按照验证需求添加
+	         required|     必须输入
+	         urlField|     URL验证
+	         strRange|     字符串范围验证,填写格式为：strRange[0,1],strRange{0,1],strRange[0,1},strRange{0,1}
+	         regex|        正则表达式验证
+	         numRange|     数字范围验证,填写格式为：numRange[0,1],numRange{0,1],numRange[0,1},numRange{0,1}
+	         numField|     输入数字
+	         emailField|   email格式
+	         dateRange|    日期范围，填写格式为：numRange[2010/01/01,2010/01/02],numRange{2010/01/01,2010/01/02],numRange[2010/01/01,2010/01/02},numRange{2010/01/01,2010/01/02}
+	         dateField     日期格式 
+	toKey属性：InputObject对象中params属性中的key值;
+	scope属性：key属性对应值的取值范围
+				1、若scope不配置,则默认为"request”,从前台请求中获取数据;
+				2、若scope为"session",则根据key到session中获取对应值,并以toKey属性的值作为params的键值存储,key的配置规则为： session中key值[.属性][.属性];
+				3、若scope为"constants”,则从com.ai.***.util.Constants.java中读取属性为key的值;
+				4、若scope为"properties”,则从config/system.properties中读取数据;
+				5、若scope为"file",则为前台上传文件
+-->
+<!ATTLIST parameter
+	key CDATA #REQUIRED
+	order CDATA #IMPLIED
+	regex CDATA #IMPLIED
+	toKey CDATA #IMPLIED
+	scope (request|session|constants|properties|file) "request"
+>
+
+<!ELEMENT output (parameter*)>			<!--请求返回结果转换标签，output标签通过uid属性和input匹配; -->
+<!--
+	uid属性：请求的唯一编号;
+	convertor属性：Json转换类 ; 
+	method属性：转换json调用的方法;
+-->
+<!ATTLIST output 
+	uid IDREF #REQUIRED
+	convertor CDATA #IMPLIED
+	method CDATA #IMPLIED
+>

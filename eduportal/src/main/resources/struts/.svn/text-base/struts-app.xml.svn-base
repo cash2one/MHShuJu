@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="struts-app" extends="projectstruts" namespace="/app/action">
+        <action name="common" class="appAction" method="excute">
+        </action>
+        <action name="commonCMS" class="appAction" method="exe4Cms" >
+        </action>
+        <action name="commonOuter" class="appAction" method="exe4Outer" >
+        </action>
+        <action name="commonOuterNormal" class="appAction" method="exe4OuterNormal" >
+        </action>
+        
+        <action name="uploadApk" class="uploadApkAction" method="excute" />
+        <!-- <action name="otherUploadApk" class="uploadApkAction" method="excuteUpldapk" /> -->
+    </package>
+</struts>

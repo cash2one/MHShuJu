@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<!-- -->
+	<bean id="eduCoreService" class="com.ai.eduportal.service.CallCoreServiceImp">
+		<property name="httpClient" ref="httpClient" />
+		<property name="coreServiceUtil" ref="coreServiceUtil" />
+	</bean>
+	 
+	<bean id="commonAction" class="com.ai.eduportal.action.Strut2BaseAction" scope="prototype">
+	   <property name="callCoreService" ref="eduCoreService" />
+	   <property name="cmsService" ref="cmsClient" />
+	</bean>
+
+    <bean id="loginAction" class="com.ai.eduportal.action.LoginAction" scope="prototype">
+       <property name="callCoreService" ref="eduCoreService" />
+       <property name="remoteCaller" ref="remoteCaller" />
+	</bean>
+	
+	<bean id="cms4app" class="com.ai.eduportal.service.Cms4App">
+       <property name="callCoreService" ref="eduCoreService" />
+       <property name="httpClient"  ref="httpClient" />
+	   <property name="httpParams"  ref="httpParams" />
+	   <property name="downLoadPic" ref="downLoadPic" />
+	</bean>
+	
+	<bean id="appAction" class="com.ai.eduportal.action.EduAppAction" scope="prototype">
+	   <property name="callCoreService" ref="eduCoreService" />
+	   <property name="cmsService" ref="cmsClient" />
+	   <property name="remoteCaller" ref="remoteAppCaller"/>
+	   <property name="cms4app" ref="cms4app"/>
+	</bean>
+	
+	<bean id="uploadApkAction" class="com.ai.eduportal.action.UploadAppAction" scope="prototype">
+       <property name="callCoreService" ref="eduCoreService" />
+       <property name="cmsService" ref="cmsClient" />
+       <property name="apkservice" ref="apkservice" />
+    </bean>
+    <bean id="eduPlatformAction" class="com.ai.eduportal.action.EduPlatformAction" scope="prototype">
+       <property name="callCoreService" ref="eduCoreService" />
+       <property name="eduPlatformSvc"  ref="eduPlatformSvc" />
+    </bean>
+    <bean id="localLoginAuthAction" class="com.ai.eduportal.action.LocalLoginAuthAction" scope="prototype">
+       <property name="callCoreService" ref="eduCoreService" />
+       <property name="eduPlatformSvc"  ref="eduPlatformSvc" />
+    </bean>
+</beans>

@@ -1,0 +1,471 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="renderer" content="webkit" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+<meta name="keywords" content="河南移动，教育门户，校讯通，同步课堂，中小学学习报" />
+<meta name="Description" content="河南移动教育门户————河南移动各类教育产品统一管理门户网站" />
+<title>登录</title>
+<link rel="stylesheet" type="text/css" href="../theme/common.css?v=20141112"/>
+<link rel="stylesheet" type="text/css" href="../lib/dialog/4.1.7/skins/blue.css"/>
+</head>
+<body>
+<div class="ui-wrap">
+    <div class="ui-bg ui-login-bg" style="display: block;">
+        <a href="index.html" class="ui-login-logo"></a>
+            <div class="ui-login-wrap" id="loginDefaultId">
+                <ul class="ui-login-form">
+                    <li class="fn-clear" style="height:60px;">
+                        <input type="text" name="mobile" id="mobile" class="ui-login-acc" value="河南移动手机号码" onblur="if(this.value=='') {this.value='河南移动手机号码';this.style.color='#999';}" onfocus="if(this.value=='河南移动手机号码') {this.value='';this.style.color='#333';}" maxlength="11">
+                        <span class="ui-sms-remind fn-hide"></span>
+                    </li>
+                    
+                    <li style="height:25px;">
+                        <!-- 
+                        <a id="J_pwd_type" href="javascript:;" onclick="firstLogin()">首次登陆</a>
+                         -->
+                    </li>
+                    
+                    <li class="fn-clear servPwd" style="height:55px;" id="pwdli">
+                        <input type="password" name="passwd" id="passwd" class="ui-login-pwd" >
+                        <b>请输入密码</b>
+                        <span class="ui-sms-remind fn-hide"></span>
+                    </li>
+                    <li style="height:25px;">
+<!--                        <a class="fn-hide" id="J_send_rdm" href="javascript:;">发送随机码</a> -->
+                        <a class="ui-fgt-pwd" href="forgetPassword.html" target="_blank">忘记密码</a>
+                    </li>
+                    
+                    <li class="fn-clear validCode">
+                        <!--
+                        <input id="rand" name="rand" type="hidden" />
+                        -->
+                        <input id="rand" name="rand" type="text" maxlength="4" size="6" value="不区分大小写" class="ui-login-acc" onblur="if(this.value=='') {this.value='不区分大小写';this.style.color='#999';}" onfocus="if(this.value=='不区分大小写') {this.value='';this.style.color='#333';}">
+                         
+                        <div id="codeImg" class="codeImg">
+                            <img id="J_auto_code" onclick="loadSafecode()" src="">
+                        </div>
+                        
+                    </li>
+                     
+                    <li class="fn-clear">
+                        <a href="javascript:regeditSubmit();" id="loginSubmit"   class="ui-regedit-btn" style="float: left;">注册</a>
+                        <a href="javascript:loginSubmit();"   id="regitSubmit"   class="ui-login-btn"   style="float: left;margin-left: 8px;">登陆</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="ui-guide ui-guide-login fn-hide" style="height:450px;">
+                <a href="javascript:;" class="ui-no-remind" style="left: 612px;top: 53px;"></a>
+                <a href="javascript:;" class="ui-know" style="width:0px;height:0px;"></a>
+            </div>
+            <div class="ui-mask fn-hide"></div>
+            <div class="ui-login-wrap fn-hide" id="loginFirstId" >
+                <ul class="ui-login-form">
+                    <li class="fn-clear" style="height:60px;">
+                        <input type="text" name="mobile" id="mobile1" class="ui-login-acc" value="河南移动手机号码" onblur="if(this.value=='') {this.value='河南移动手机号码';this.style.color='#999';}" onfocus="if(this.value=='河南移动手机号码') {this.value='';this.style.color='#333';}" maxlength="11">
+                        <span class="ui-sms-remind fn-hide"></span>
+                    </li>
+                    <li style="height:25px;">
+                        <a id="J_pwd_type_defaultLogin" href="javascript:;" onclick="defaultLogin()">正常登陆</a>
+                    </li>
+                    <li class="fn-clear servPwd" style="height:55px;" id="pwd1li">
+                        <input type="password" name="passwd" id="passwd1" class="ui-login-pwd">
+                        <b>输入获取的登陆密码</b>
+                        <span class="ui-sms-remind fn-hide"></span>
+                    </li>
+                    <li style="height:25px;">
+                        <a class="ui-fgt-pwd" id="get-first-password" onclick="getFirstPassword()" href="javascript:;" target="_blank">获取登陆密码</a>
+                    </li>
+                    <li class="fn-clear">
+                        <a href="javascript:loginSubmit1();" id="loginSubmit1" class="ui-login-btn">登陆</a>
+                    </li>
+                </ul>
+            </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../lib/json2/1.0.0/json2.js"></script>
+<script type="text/javascript" src="../lib/jquery/1.8.1/jquery.js"></script>
+<script type="text/javascript" src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script type="text/javascript" src="../lib/handlebars/1.3.0/helpers.js"></script>
+<script type="text/javascript" src="../lib/dialog/4.1.7/artDialog.js"></script>
+<script type="text/javascript" src="../lib/dialog/4.1.7/iframeTools.js"></script>
+<script type="text/javascript" src="../common/config.js"></script>
+<script type="text/javascript" src="../lib/cryptojs/3.1.2/md5.js"></script>
+<script type="text/javascript" src="../lib/cryptojs/3.1.2/core-min.js"></script>
+<script type="text/javascript" src="../lib/cryptojs/3.1.2/enc-base64-min.js"></script>
+
+<script type="text/javascript" src="../common/common.js?v=20141112"></script>
+<script type="text/javascript" src="../lib/cookie/1.2.0/jquery.cookie.js"></script>
+<script type="text/javascript" src="../common/base64.js"></script>
+<script type="text/javascript">
+
+var loginFlag = true;//登陆开关
+var cacheKey  = null;
+$(function(){
+    srvMap.addLogin('login', 'roleList.json','loginAuth.action?uid=loginAuth');//登录
+    //srvMap.addLogin('getFirstPassword', 'roleList.json','user-SendSms.action?uid=sdSms');//获取首次登陆密码 
+    srvMap.addLogin('randomCode', 'randomCode.json','user-RandomCode.action?_=');
+    
+    loadSafecode();
+    cacheKey = Util.browser.getParameter('cacheKey');
+    
+    $('#mobile').bind('keyup',function(e){
+        var _self = $(this);
+        var newVal = _self.val().replace(/[^\d]/g,'');
+        _self.val(newVal);
+    }).blur(function(){
+        var sMobile = $(this).val();
+        if (!ValidateCallNumber(sMobile)) {
+            $(this).siblings('.ui-sms-remind').addClass('ui-remind-error').removeClass('ui-remind-scs').text('请输入正确的河南移动手机号码！').css('color','#E64B65').show();
+            return false;
+        }else{
+            $('.ui-sms-remind').eq(0).hide();
+            return true;
+        }
+    })
+    $('#mobile1').bind('keyup',function(e){
+        var _self = $(this);
+        var newVal = _self.val().replace(/[^\d]/g,'');
+        _self.val(newVal);
+    }).blur(function(){
+        var sMobile = $(this).val();
+        if (!ValidateCallNumber(sMobile)) {
+            $(this).siblings('.ui-sms-remind').addClass('ui-remind-error').removeClass('ui-remind-scs').text('请输入正确的河南移动手机号码！').css('color','#E64B65').show();
+            return false;
+        }else{
+            $('.ui-sms-remind').eq(0).hide();
+            return true;
+        }
+    })
+    
+    
+    // clearAll();
+    $('#rand').keyup(function(event){
+        if (event.keyCode == '13') {
+            loginSubmit();
+        };
+    });
+    //全局搜索提示字的显示和隐藏
+    $('#pwd1li b').click(function(){
+        $(this).hide();
+        $('#passwd1').focus();
+    });
+    $('#pwdli b').click(function(){
+        $(this).hide();
+        $('#passwd').focus();
+    });
+    
+    $('#passwd').focus(function(){
+        $('#pwdli b').hide();
+        }).focusout(function(){
+            if($(this).val() == ''){
+                $('#pwdli b').show();
+            }
+    })
+    $('#passwd1').focus(function(){
+        $('#pwd1li b').hide();
+        }).focusout(function(){
+            if($(this).val() == ''){
+                $('#pwd1li b').show();
+            }
+    })
+    //切换服务密码和随机码方式
+//  $('#J_pwd_type').click(function(){
+//      var _this = $(this);
+//      if (_this.text() =='短信随机码登陆') {
+//          _this.css('background-position','1px -15px');
+//          _this.text('服务密码登陆');
+//          $('.validCode,.ui-fgt-pwd').hide();
+//          $('#J_send_rdm').show();
+//          $('.servPwd b').text('随机码');
+//      }else{
+//          _this.css('background-position','5px 2px');
+//          _this.text('短信随机码登陆');
+//          $('.validCode,.ui-fgt-pwd').show();
+//          $('#J_send_rdm').hide();
+//          $('.servPwd b').text('6位手机服务密码');
+//      }
+//  })
+//  $('#J_send_rdm').click(getSMSCode);
+    
+    
+//  if (!getCookie('noLoginRemind')) {
+//      $('.ui-guide-login').removeClass('fn-hide');
+//      $('.ui-mask').removeClass('fn-hide');
+//  };
+//  不再提示引导图片
+//  $('.ui-no-remind').click(function(){
+//      setCookie('noLoginRemind','1',90);
+//      $('.ui-know').click();
+//  })
+//  隐藏引导图片
+//  $('.ui-know').click(function(){
+//      $('.ui-guide-login').hide();
+//      $('.ui-mask').hide();
+//  })
+})
+/****
+function clearAll(){
+    //清空所有cookie
+    var keys=document.cookie.match(/[^ =;]+(?=\=)/g); 
+    if (keys) {
+        for (var i = keys.length; i--;){
+            document.cookie=keys[i]+'=0;expires=' + new Date( 0).toUTCString();
+        }
+    }
+    Util.ajax.postJson("../hn/login/user-Clear.action","",function(json,status){
+        $.cookie("JSESSIOID",null);
+        $.cookie("dlerrcntr",null);
+    });
+}
+****/
+//加载验证码
+function loadSafecode(){
+    loginFlag = true;
+    var time = new Date().getUTCMilliseconds();
+    //$('#J_auto_code').attr('src','http://localhost/edu/hn/login/user-RandomCode.action?_='+time);
+    $('#J_auto_code').attr('src',srvMap.get('randomCode')+time);
+    
+    /****
+    Util.ajax.postJson(srvMap.get('randomCode')+time,'',function(json,status){
+        if (json.rtnCode == 1) {
+            $('#rand').val(json.rtnMsg);
+        }else{
+        	$('#rand').val('');
+        }
+    })
+    *****/
+}
+
+//登陆
+function loginSubmit(){
+    if (loginFlag) {
+        loginFlag = false;
+        $('.ui-sms-remind').hide();
+        //检查登录错误次数
+        var errTimes= getRandErrorCount();
+        if(errTimes==''){
+            errTimes=0;
+        }else{
+            errTimes=parseInt(errTimes);
+        }   
+
+        var backuri = $('#BackURL').val();
+        var mobileno = $('#mobile').val();
+        var FwPassword = $('#passwd').val();
+        $('#mobile').blur();//验证手机号
+        //密码不为空
+        if(FwPassword==''){
+            $('.ui-sms-remind').eq(1).addClass('ui-remind-error').text('请输入密码！').css('color','#E64B65').show();
+            loginFlag = true;
+            return;
+        }else{
+            $('.ui-sms-remind').eq(1).hide();
+        }
+        //验证码 
+        var rand = $('#rand').val();
+        //密码输入错误超过2次 检查验证码是否输入
+        if(errTimes>2){
+            if(rand=='' || rand=='不区分大小写'){
+                art.dialog.tips('请输入验证码！');
+                loginFlag = true;
+                return;
+            }
+        }
+        loginIn(mobileno,FwPassword,rand);
+    }
+}
+
+function AuthnFail(errorCode){
+    if(errorCode!=''){
+        if(errorCode=='4001'){
+            art.dialog.tips('密码出错！请核实。');
+        }else if(errorCode=='5003'){
+            art.dialog.tips('您的手机号码登录权限已被锁，24小时后将自动解锁');
+        }else if(errorCode=='-75'){
+            art.dialog.tips('验证码错误，请您检查后重新输入！');
+            loadSafecode();
+        }else if(errorCode=='5002'){
+            art.dialog.tips('很抱歉，外省号码不能登录河南移动教育门户，感谢您对河南移动教育门户的关注和使用！');
+        }else{
+            art.dialog.tips('系统繁忙，请重试');
+        }
+        //var errTimes=$('#loginErrorTimes').val();
+        var errTimes=getRandErrorCount();
+        
+        //if(errTimes==''){
+        //  errTimes=1;
+        //}else{
+        //  errTimes=parseInt(errTimes);
+        //  errTimes+=1;
+        //}
+        //$('#loginErrorTimes').val(errTimes);
+        if((errTimes>=2) && ($('#pass').val()=='1')){
+            $('#rand').val('不区分大小写');
+            $('#rand').attr('class','yzm');
+            $('#div_rand').show();
+        }
+    }
+    $('#FwPassword').val('');
+    $('#authnresultIframe').html('');
+}
+
+function getRandErrorCount(){
+    var src = $.cookie('cmtokenidHeNanErrct');
+    if(src!=undefined && src!=''){
+        return utf8to16(base64decode(src));
+    }else{
+        return '0';
+    }
+}
+
+//手机号码验证
+function ValidateCallNumber(strCallNumber){
+    var objRegExp  = new RegExp('(13[4-9]{1}[0-9]{8})|(150[0-9]{8})|(182[0-9]{8})|(151[0-9]{8})|(152[0-9]{8})|(155[0-9]{8})|(157[0-9]{8})|(158[0-9]{8})|(159[0-9]{8})|(188[0-9]{8})|(187[0-9]{8})|(147[0-9]{8})|(183[0-9]{8})|(156[0-9]{8})','g');
+    return(objRegExp.test(strCallNumber));
+}
+
+//获取短信随机码
+function getSMSCode(){
+    var _this = $(this);
+    var phoneNum = $('#mobile').val();
+    if (!ValidateCallNumber(phoneNum)) {
+        $('.ui-sms-remind').eq(0).addClass('ui-remind-error').text('请输入正确的河南移动手机号码！').show();
+        return;
+    }
+    _this.text('正在发送..').unbind("click");
+    $('#SMSIDToken1').val(phoneNum);
+    $('#smschk_form').submit();
+}
+
+//发送短信随机码返回结果
+function SmsFetchResult(flag,msg){
+    var opts = {
+        obj : '#get-first-password',
+        maxtime : 60,
+        timer : null,
+        succ : '获取验证码',
+        fail : '重新获取验证码',
+        wait : '发送中...',
+        succf : '{0}秒后可再次获取'
+    }
+    if (flag == 0) {
+        
+        current = opts.maxtime;
+        current = current - 1;
+        opts.timer = setInterval(function() {
+            if (current > 0) {
+                var msg = Util.sms.formatStr(opts.succf, current);
+                $(opts.obj).html(msg);
+                if (!$(opts.obj).hasClass('dis')) {
+                    art.dialog.tips("发送成功，请查收！");
+                    $(opts.obj).addClass('dis');
+                };
+                current = (current) - 1;
+            }else{
+                clearInterval(opts.timer);
+                $(opts.obj).html(opts.succ);
+                $(opts.obj).removeClass('dis');
+                $(opts.obj).bind("click",getSMSCode);
+            }
+        }, 1000);
+    }else{
+        $(opts.obj).text('获取短信验证码');
+        art.dialog.tips(msg||"发送失败，请重试！");
+        $(opts.obj).bind("click",getSMSCode);
+    }
+    
+}
+
+function getFirstPassword(){
+    var mobile = $('#mobile1').val();
+    var data = 'mobile='+ mobile;
+    Util.ajax.postJson(srvMap.get('getFirstPassword'),data,function(json,status){
+        if (status && json.rtnCode == 1) {
+            SmsFetchResult(0,json.rtnMsg);
+        }else{
+            art.dialog.tips('获取密码失败！\n'+json.rtnMsg);
+        }
+        loginFlag = true;
+    })
+}
+
+function firstLogin(){
+    var mobile = $('#mobile').val();
+    
+    if(mobile == '' || mobile == '河南移动手机号码' || !ValidateCallNumber(mobile)){
+        art.dialog.tips("请先输入正确的手机号码！");
+    }else{
+        $("#loginDefaultId").addClass('fn-hide');
+        $("#loginFirstId").removeClass('fn-hide');
+        $('#mobile1').val(mobile);
+    }
+}
+function defaultLogin(){
+    $("#loginDefaultId").removeClass('fn-hide');
+    $("#loginFirstId").addClass('fn-hide');
+}
+//注册
+function regeditSubmit(){
+	window.location = 'regedit.html';
+}
+//首次登陆 
+function loginSubmit1(){
+    if (loginFlag) {
+        loginFlag = false;
+        $('.ui-sms-remind').hide();
+        //检查登录错误次数
+        var errTimes= getRandErrorCount();
+        if(errTimes==''){
+            errTimes=0;
+        }else{
+            errTimes=parseInt(errTimes);
+        }   
+        var backuri = $('#BackURL').val();
+        var mobileno = $('#mobile1').val();
+        var FwPassword = $('#passwd1').val();
+        $('#mobile1').blur();//验证手机号
+        //密码不为空
+        if(FwPassword==''){
+            $('.ui-sms-remind').eq(1).addClass('ui-remind-error').text('请输入密码！').css('color','#E64B65').show();
+            loginFlag = true;
+            return;
+        }else{
+            $('.ui-sms-remind').eq(1).hide();
+        }
+        var cacheKey = Util.browser.getParameter('cacheKey');
+        //$.cookie('mobileno1',$('#mobile1').val());
+        
+        var rand = $('#rand').val();
+        loginIn(mobileno,FwPassword,rand,'1');
+    }
+}
+
+function loginIn(mobile,password,authCode,isFirst){
+    var passwordMd5 = Util.base64Md5(mobile+password);
+    //passwordMd5 = encodeURI(passwordMd5);
+    if(isFirst == '1'){
+        var data = 'mobile='+mobile+'&passwd='+passwordMd5+'&isFirst='+isFirst+'&authCode='+authCode;
+    }else{
+        var data = 'mobile='+mobile+'&passwd='+passwordMd5+'&authCode='+authCode;
+    }
+    Util.ajax.postJson(srvMap.get('login'),data,function(json,status){
+        if (status && json.rtnCode == 1) {
+            if(cacheKey && cacheKey.length>0){
+                window.location = 'choiceRole.html?cacheKey='+cacheKey; 
+            }else{
+                window.location = 'choiceRole.html';
+            }
+        }else{
+            art.dialog.tips('登录失败\n'+json.rtnMsg);
+            loadSafecode();
+        }
+        loginFlag = true;
+    })
+}
+    
+</script>
+</body>
+</html>

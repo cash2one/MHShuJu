@@ -1,0 +1,29 @@
+{
+    "ptInfo": [
+        {
+            "price": "3",
+            "ptSubName": "幼儿园版",
+            "sign": "1",
+            "ptName": "教育彩信",
+            "ptSign": "A",
+            "isOrder": "1"
+        },
+        {
+            "price": "2",
+            "ptSubName": "小学低年级版",
+            "sign": "1",
+            "ptName": "教育彩信",
+            "ptSign": "B"
+        },
+        {
+            "price": "2",
+            "ptSubName": "小学高年级版",
+            "sign": "1",
+            "ptName": "教育彩信",
+            "ptSign": "C",
+            "isOrder": "1"
+        }
+    ],
+    "rtnMsg": "call success",
+    "rtnCode": "1"
+}

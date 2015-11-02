@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<style>
+.ui-rank-num, .ui-rank-icon {
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 10px;
+}
+.mui-content .head {
+	padding: 20px 0 0;
+	background: #fff;
+	border-bottom: 1px solid #ddd;
+	box-shadow: 0 3px 5px #aaa;
+}
+.mui-content .head .left, .mui-content .head .right {
+	float: left;
+}
+.mui-content .head .left {
+	width: 100%;
+	text-align: center;
+}
+.mui-content .head .right {
+	float: right;
+	padding-right: 20px;
+}
+.mui-content .head .left .score {
+	color: #000;
+	font-size: 20px;
+	text-align: center
+}
+.mui-content .head .left p {
+	font-size: 18px;
+	padding: 0 10px;
+}
+.mui-content .head .right p {
+	font-size: 16px;
+	text-align: right;
+}
+.mui-content .head .right p .gd_icon {
+	width: 27px;
+	height: 27px;
+	vertical-align: middle;
+	margin-right: -3px;
+}
+/*.exam-item-wrap {
+	height: 50px;
+	margin: 10px 0;
+}
+.exam-item {
+	height: 50px;
+	line-height: 50px;
+}*/
+
+.income-detail-wrap .exam-item-wrap .exam-item {
+	background: #fff;
+	border: 1px solid #ddd;
+	padding: 4px 0;
+	/*margin: 10px 10px 10px 10px;*/
+	border-radius: 5px;
+	box-shadow: 3px 3px 1px #ddd;
+}
+.income-detail-wrap .exam-item-wrap .exam-item .c_date {
+	display: block;
+	width: 100%;
+	padding-top: 10px;
+}
+.income-detail-wrap .exam-item-wrap .exam-item .c_score, .income-detail-wrap .exam-item-wrap .exam-item .c_avg {
+	animation:exammove 1s infinite;
+	-webkit-animation:exammove 1s infinite;
+	animation-iteration-count:1;
+	-webkit-animation-iteration-count:1;
+	color: #A5A5A5;
+	display: inline-block;
+	vertical-align: middle;
+	max-width: 90%;
+	line-height: 35px;
+	height: 35px;
+	padding-left: 10px;
+}
+.income-detail-wrap .exam-item-wrap .exam-item .c_score {
+	background: #5DBABE;
+	color: #fff;
+	margin-right: 10px;
+}
+.income-detail-wrap .exam-item-wrap .exam-item .c_avg {
+	background: #E8E8E8;
+	color: #000;
+	margin-right: 10px;
+}
+.fn-mt-10 {
+	margin-top: 10px;
+}
+.mui-icon {
+	margin-right: 5px;
+}
+.income-detail-wrap {
+	min-height: 500px;
+}
+
+</style>
+</head>
+<body>
+<div class="mui-content" id="J_examDtl">
+	
+</div>
+<div class="ui-loader ui-corner-all fn-hide" id="J_loading">
+    <span class="ui-icon-loading"></span>
+    <div class="ui-loader-verbose">正在加载数据...</div>
+</div>
+
+<script id="T_pare_examDtl" type="text/x-handlebars-template">
+	<div class="head fn-clear">
+		<div class="left">
+			<p>{{this.examDatas.examName}}</p>
+			<p class="score">{{this.examDatas.score}}分</p>
+		</div>
+		<!--<div class="right">
+			{{#if this.examDatas.rank}}
+				<p>排名<span class="ui-rank-num">{{this.examDatas.rank}}</span><span class="ui-rank-icon"></span></p>
+			{{/if}}
+			{{#if avg}}
+				<p>平均 {{avg}}分<span class="gd_icon"></span></p>
+			{{/if}}
+		</div>-->
+	</div>
+	<div class="income-detail-wrap">
+		{{#each this}}
+		<div class="exam-item-wrap">
+		    <div class="exam-item ">
+		    	<div>
+		    		<!--<span class="c_score" style="width:{{countWidth value}}%;">{{date}}</span>
+		    		<span>{{value}}分</span>-->
+		    		<!--<span class="c_score">{{date}}</span>-->
+		    		<!--<span class="score_date">{{date}}</span>-->
+		    		<span class="c_score" style="width:{{countWidth value}}%;">
+		    			{{date}}
+		    		</span>
+		    		<span style="text-align: right; float:right">{{value}}分</span>
+		    	</div>
+		    	<!--<div class="fn-mt-10">
+		    		<span class="c_avg" style="width:{{countWidth view}}%;"></span>
+		    		<span style="color: #A2A2A2;">{{view}}分</span>
+		    	</div>-->
+		    </div>
+		</div>
+		{{/each}}
+	</div>
+</script>
+
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../common/app.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../lib/handlebars/1.3.0/helpers.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script type="text/javascript">
+window.exam={};
+window.exam.max=0;
+mui.plusReady(function(){
+	srvMap.add('getPareExamDtl', 'examDtl.json','commonOuter.action?uid=getStuOneCourseHistory');//学生 
+	
+	var userInfo = Util.lStorage.getParam('userInfo');//当前登录用户信息
+	userInfo = JSON.parse(userInfo);
+	var examDatas =  Util.lStorage.getParam('examDatas');
+	examDatas = JSON.parse(examDatas);
+	
+	var userId = userInfo.userId,
+		typeId = userInfo.typeId,
+		examId = examDatas.examId;
+	param  = 'courseId='+examDatas.courseId+'&start=0&limit=100';//stu
+	posturl= srvMap.get('getPareExamDtl');
+	tplId  = '#T_pare_examDtl';
+	Util.ajax.postJson(posturl,param,function(json,status){
+		if (status) {
+			if(json && json.retInfo){
+				var data=[];
+	            for(var i=0;i<json.retInfo.length;i++){
+	                data[i]={
+	                    value:json.retInfo[i].score,
+	                    date:json.retInfo[i].examDate,
+	                   /* view:json.retInfo[i].avgscore||0*/
+	                }
+	            }
+            	window.exam.max=getMax(data);
+            	data.examDatas = {
+            		"examName": examDatas.examName,
+            		"score": examDatas.score,
+            		"rank": examDatas.rank,
+            		"avg": examDatas.avgscore
+            	}
+				Util.ajax.loadTemp('#J_examDtl',$(tplId),data);
+            	if(!examDatas.rank && !examDatas.avgscore){
+            		$("#J_examDtl .head .left").css({"width":"80%", "text-align": "left"});
+            		$("#J_examDtl .head .right").remove();
+            	}
+			}else{
+				Util.alert("未能查到历史数据！");
+			}
+		}else{
+			$('#J_examDtl').html('<div class="ui-load-error"></div>')
+		}
+	})
+})
+
+Handlebars.registerHelper('countWidth', function (val) {
+    val=parseFloat(val);
+    val=Math.abs(val);
+    var pec=val/window.exam.max * 0.8;
+    return pec*100;
+});
+Handlebars.registerHelper('isMin', function (val) {
+    val=parseFloat(val);
+    if(val<0)
+        return 'exam-item-min';
+    else
+        return '';
+});
+
+function getMax(data){
+    var temp=0;
+    for(var i=0;i<data.length;i++){
+        var target=parseFloat(data[i].value)*100;
+        target=Math.abs(target);
+        if(target>temp){
+            temp=target;
+        }
+    }
+    return temp/100;
+}
+</script>
+</body>
+</html>

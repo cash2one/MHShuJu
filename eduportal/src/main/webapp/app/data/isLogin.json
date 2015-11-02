@@ -1,0 +1,22 @@
+{
+    "busiCode": null,
+    "opId": null,
+    "phone": null,
+    "rtnCode": "1",
+    "rtnMsg": "success",
+    "bean": {
+        "imgUrl": "../theme/images/headIcon.png",
+        "region": "",
+        "gradeName": "",
+        "sex": "0",
+        "schoolName": "测试大学",
+        "gradeId": "0",
+        "userId": "6087160",
+        "userName": "刘海丽",
+        "schoolId": "1234",
+        "typeId": "2",/*1学生|家长，2老师*/
+        "city": "",
+        "mobile": "15093265531"
+    },
+    "beans": []
+}

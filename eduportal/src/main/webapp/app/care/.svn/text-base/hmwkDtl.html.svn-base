@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>完成情况</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<style>
+.mui-content {
+	background: #fff;
+}
+.tea-name {
+	color: #6CC7EA;
+}
+.worktime {
+	color: #A2A2A2;
+}
+.worktime span {
+	color: #000;
+}
+#J_hmwk_dtl {
+}
+#J_hmwk_dtl .ui-hmwk-info {
+	margin: 10px 10px 20px;
+	border: 1px solid #ddd;
+	box-shadow: 3px 3px 5px #ddd;
+	border-radius: 5px;
+}
+#J_hmwkDtl {
+	padding: 20px 10px;
+}
+.ui-accessory-num {
+	border-top: 1px solid #E5E8EB;
+	font-size: 15px;
+}
+#J_hmwk_dtl .ui-hmwk-info>div {
+	font-size: 15px;
+	line-height: 25px;
+}
+.ui-accessory-num {
+	position: relative;
+}
+#J_downLoad, #J_submBtn, #J_submBtn2 {
+	padding: 7px 25px;
+	border-radius: 0;
+	position: absolute;
+	right: 0;
+	top: -1px;
+}
+#J_downLoad {
+	background: #5DBABE;
+	border: 1px solid #5DBABE;
+}
+#J_submBtn, #J_submBtn2 {
+	background: #DD4D28;
+	border: 1px solid #DD4D28;
+}
+.fn-high {
+	color: #DD4D28;
+}
+.mui-segmented-control {
+	border-radius: 0;
+	border-color: #5DBABE;
+	border-left: 0;
+	border-right: 0;
+}
+.mui-segmented-control .mui-control-item {
+	border-color: #5DBABE;
+	color: #5DBABE;
+}
+.mui-segmented-control .mui-control-item.mui-active {
+	background: #5DBABE;
+}
+.mui-table-view {
+	margin-bottom: 20px;
+}
+#J_acs_download {
+	margin-bottom: 0;
+}
+</style>
+</head>
+<body>
+<div class="mui-content" id="J_hmwk_dtl">
+
+</div>
+<div class="ui-loader ui-corner-all fn-hide" id="J_loading">
+    <span class="ui-icon-loading"></span>
+    <div class="ui-loader-verbose">正在加载数据...</div>
+</div>
+
+<script id="T_pareRole" type="text/x-handlebars-template">
+	<div class="ui-hmwk-info">
+		<h4><span>{{title}}</span></h4>
+		<div>班级：{{grade}}</div>
+		<div><span class="tea-name">{{teacher}}</span>&nbsp;老师&nbsp;于 <span>{{date}}</span> 布置</div>
+		<div class="worktime">
+			预估时长：<span>{{estime}}分钟</span>
+		</div>
+	</div>
+	<div class="ui-accessory-num">作业</div>
+	<div id="J_hmwkDtl">{{content}}</div>
+	{{#if attach}}
+	<div class="ui-accessory-num">附件<button class="mui-btn mui-btn-primary mui-pull-right" data-attach="{{attach}}" id="J_downLoad">下 载</button></div>
+	<ul class="mui-table-view" id="J_acs_download">
+		<li class="mui-table-view-cell">
+			<span class="ui-word-icon"></span>摘要
+		</li>
+	</ul>
+	{{/if}}
+	<div class="sub unsub {{showHidden 1 workstate}}">
+		<div class="ui-accessory-num record">记录<button class="mui-btn mui-btn-negative mui-pull-right" id="J_submBtn">提 交</button></div>
+		<ul class="mui-table-view">
+		  	<li class="mui-table-view-cell" id="J_choiceTime">
+			    <a class="mui-navigate-right" data-timevalue="0">
+			      	未完成
+			    </a>
+		  	</li>
+		</ul>
+	</div>
+	<div class="sub hassub {{showHidden 2 workstate}}">
+		<div class="ui-accessory-num record">记录<button class="mui-btn mui-btn-negative mui-pull-right" id="J_submBtn2">重 置</button></div>
+		<ul class="mui-table-view">
+		  	<li class="mui-table-view-cell">
+			    已完成，耗时：<span class="fn-high">{{worktime}}分钟</span>
+		  	</li>
+		</ul>
+	</div>
+</script>
+
+<script id="T_teaRole_top" type="text/x-handlebars-template">
+	<div class="ui-hmwk-info">
+		<h4><span>{{title}}</span></h4>
+		<div>班级：{{grade}}</div>
+		<div><span class="tea-name">{{teacher}}</span>&nbsp;老师&nbsp;于 <span>{{date}}</span> 布置</div>
+		<div class="worktime">
+			预估时长：<span>{{estime}}分钟</span>
+		</div>
+	</div>
+</script>
+<script id="T_teaRole" type="text/x-handlebars-template">
+	<div id="segmentedControl" class="mui-segmented-control">
+		<a class="mui-control-item mui-active" href="#" data-type="0">全部</a>
+		<a class="mui-control-item" href="#" data-type="1">未完成</a>
+		<a class="mui-control-item" href="#" data-type="2">已完成</a>
+	</div>
+	<ul class="mui-table-view" id="J_tea_hmwk">
+		{{#each retInfo}}
+		<li class="mui-table-view-cell {{retNewClass workstate}}">
+			<span class="ui-table-name">{{userName}}</span>
+			<span class="ui-table-rank">
+				{{#if_eq workstate compare = '0'}}
+				<span class="fn-high">未完成</span>
+				{{else}}已完成{{/if_eq}}
+			</span>
+		</li>
+		{{/each}}
+	</ul>
+</script>
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../common/app.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../lib/handlebars/1.3.0/helpers.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script type="text/javascript">
+mui.init({
+	swipeBack: true
+});
+var old_back = mui.back;
+mui.back = function(){
+  var cwebview = plus.webview.getWebviewById('hmwkDtlDown-sub');
+  if(cwebview){
+    var self = plus.webview.currentWebview();
+    self.remove(cwebview);
+    cwebview.close();
+  }
+  old_back();
+}
+srvMap.add('jumpdownload', 'teacherWorks.json','common.action?uid=jumpdownload');
+mui.plusReady(function(){
+	var hmwkTime = plus.webview.getWebviewById('hmwkTime');
+	if(hmwkTime){
+		var self = plus.webview.currentWebview();
+		self.remove(hmwkTime);
+		hmwkTime.close();
+	}
+	
+	setTimeout(function(){
+		mui.preload({
+			id: 'hmwkTime',
+			url: 'hmwkTime.html'
+		});
+	}, 300)
+	
+	Util.configPreloadPage.addPage('hmwkTime');
+	
+	setTimeout(function () {
+		getTemplate('hmwkDtlDown', '../temp/temp_3.html');
+	},300);
+	
+	var hmwkDatas =  Util.lStorage.getParam('hmwkDatas');
+	hmwkDatas = JSON.parse(hmwkDatas);
+	var userInfo = Util.lStorage.getParam('userInfo');
+	userInfo = JSON.parse(userInfo);
+	var typeId = userInfo.typeId;
+	if(typeId != '2'){
+		//学生
+		srvMap.add('subHmwk', 'teacherWorks.json','common.action?uid=saveUserWork');//提交与取消提交作业
+		
+		Util.ajax.loadTemp('#J_hmwk_dtl',$("#T_pareRole"),hmwkDatas);
+		
+		//更改作业完成时间的监听事件
+		window.addEventListener('changeTime', function(e){
+			var val = e.detail.val;
+			var txt = e.detail.txt;
+			txt = decodeURI(txt);
+			$('#J_choiceTime').find('a').text(txt).data("timevalue", val);
+		})
+		
+		document.getElementById('J_choiceTime').addEventListener('tap',function(){
+			plus.webview.getWebviewById('hmwkTime').show('slide-in-right', 150);
+		})
+		
+		//提交作业
+		mui("#J_hmwk_dtl").on("tap", "#J_submBtn", function(){
+			var timevalue = $('#J_choiceTime').find('a').data("timevalue");
+			if(!timevalue){
+				Util.alert("请选择完成时长");
+				return false;
+			}
+			var param = "workId="+hmwkDatas.workId+"&workTime="+timevalue+"&workState=1";
+			Util.ajax.postJson(srvMap.get("subHmwk"), param, function(json, state){
+				if(state){
+					if(json){
+						Util.alert("提交成功！");
+						$(".hassub").removeClass("fn-hide");
+						$(".unsub").addClass("fn-hide");
+						$(".hassub li span").text(timevalue+"分钟");
+						var cWebView=plus.webview.currentWebview();
+						var pWebView = cWebView.opener();
+						mui.fire(pWebView, "resetWorkState", {zindex: hmwkDatas.zindex, zreset: '1' , workstate: '1', worktime: timevalue});
+					}else{
+						Util.alert(json.rtnMsg || "提交失败！");
+					}
+				}
+			})
+		})
+		//重置作业时间
+		mui("#J_hmwk_dtl").on("tap", "#J_submBtn2", function(){
+			var param = "workId="+hmwkDatas.workId+"&workTime=&workState=0";
+			Util.ajax.postJson(srvMap.get("subHmwk"), param, function(json, state){
+				if(state){
+					if(json){
+						Util.alert("重置成功！");
+						$(".hassub").addClass("fn-hide");
+						$(".unsub").removeClass("fn-hide");
+						var cWebView=plus.webview.currentWebview();
+						var pWebView = cWebView.opener();
+						mui.fire(pWebView, "resetWorkState", {zindex: hmwkDatas.zindex, zreset: '0' , workstate: '0', worktime: '0'});
+					}else{
+						Util.alert(json.rtnMsg || "提交失败！");
+					}
+				}
+			})
+		})
+		
+		if(hmwkDatas.attach){
+			//如果有附件，提供下载按钮
+			mui(".ui-accessory-num").on("tap", "#J_downLoad", function(){
+				var attach = $(this).data("attach").replace(/"/g,'');
+				attach = srvMap.get("jumpdownload")+"&goUrl="+attach;
+				Util.ajax.postJson(attach,"",function(json, state){
+					if(state){
+						plus.runtime.openURL(json.sendurl);
+					}
+				})
+				return false;
+//				plus.runtime.openURL(attach);
+				var template = getTemplate('hmwkDtlDown');
+				var headerWebview = template.header;
+				var contentWebview = template.content;
+				mui.fire(headerWebview,'updateHeader_3',{title:"附件下载",pageId:'hmwkdown'});
+				contentWebview.loadURL('hmwkDtlDown.html');
+				mui.fire(contentWebview,'jumpurl',{jumpurl: attach});
+				setTimeout(function(){
+					contentWebview.show();
+				}, 300)
+				headerWebview.show('slide-in-right', 150);
+			})
+		}
+		
+	}else{
+		//老师
+		srvMap.add("hmwk_tea_dtl", "hmwkDtl_tea.json", "commonOuterNormal.action?uid=getHomeWorkDtlList");
+		var params = 'gradeId='+hmwkDatas.gradeId+'&workIds='+hmwkDatas.workId+'&status=';
+		
+		Util.ajax.loadTemp('#J_hmwk_dtl',$("#T_teaRole_top"),hmwkDatas);
+		Util.ajax.postJson(srvMap.get("hmwk_tea_dtl"), params, function(json, state){
+			if(state){
+				if(json){
+					hmwkDatas.rows = json.retInfo;
+					var sidList = $("#T_teaRole").html();
+					var template = Handlebars.compile(sidList); 
+					var html = template(json); 
+					$("#J_hmwk_dtl").append(html);
+					Util.lStorage.setParam('hmwkDatas',JSON.stringify(hmwkDatas));
+
+					mui("#segmentedControl").on("tap", "a", function(){
+						var type = $(this).data("type");
+						if(type == '0'){
+							$("#J_tea_hmwk .mui-table-view-cell").css({"display": "block"});
+						}else if(type == '1'){
+							$("#J_tea_hmwk .mui-table-view-cell").not(".undone").css({"display": "none"});
+							$("#J_tea_hmwk .mui-table-view-cell.undone").css({"display": "block"});
+						}else if(type == '2'){
+							$("#J_tea_hmwk .mui-table-view-cell").not(".undone").css({"display": "block"});
+							$("#J_tea_hmwk .mui-table-view-cell.undone").css({"display": "none"});
+						}
+					})
+				}else{
+					Util.alert(json.retMsg || "暂无数据！");
+				}
+			}else{
+				Util.alert(json.retMsg || "系统错误，请稍后再试！");
+			}
+		})
+	}
+})
+
+Handlebars.registerHelper("retNewClass", function(status,fn) {
+	if(status == '0'){
+		return "undone";
+	}
+	return "";
+});
+Handlebars.registerHelper("showHidden", function(type, value, fn){
+	if((type == '1' && value == '1') || (type == '2' && value == '0')){
+		return "fn-hide";
+	}else{
+		return "";
+	}
+})
+</script>
+</body>
+</html>

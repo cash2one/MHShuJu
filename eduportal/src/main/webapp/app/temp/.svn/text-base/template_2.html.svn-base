@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<style>
+	html,body {background-color: #efeff4;}
+</style>
+</head>
+
+<body>
+	<header class="mui-bar mui-bar-nav">
+		<a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 id="title" class="mui-title"></h1>
+		<a class="mui-btn mui-btn-link mui-btn-nav mui-pull-right" id="J_pie_btn" style="display: none;">
+			<span class="mui-icon mui-icon-settings"></span>
+		</a>
+	</header>
+	<div class="mui-loader">加载中...</div>
+</body>
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../common/app.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script type="text/javascript">
+mui.init({
+	swipeBack:true //启用右滑关闭功能
+});
+mui.plusReady(function () {
+	var titleElem = document.getElementById("title");
+	 window.addEventListener("updateHeader_2", function(e) {
+		var title = e.detail.title,
+			pageId = e.detail.pageId;
+		titleElem.innerHTML = title;
+		titleElem.className = "mui-title mui-fadein";
+		//处理来自业务页面的参数
+		if (pageId == 'notice') {
+			var content = e.detail.content;
+			plus.webview.currentWebview().children()[0].evalJS("$('.mui-content p').html('"+content+"')");
+		}else if(pageId == 'examDtl'){
+			//成绩分析
+			setTimeout(function () {
+				getTemplate('examAna', 'temp_3.html');
+			},300);
+			document.getElementById('J_pie_btn').style.display = 'block';
+			document.getElementById('J_pie_btn').addEventListener('tap', function(){
+				var template = getTemplate('examAna');
+				var headerWebview = template.header;
+				var contentWebview = template.content;
+				mui.fire(headerWebview,'updateHeader_3',{title:title,pageId:'examAna'});
+				contentWebview.loadURL('../care/examAna.html');
+				headerWebview.show('slide-in-right', 150);
+			})
+		}else if(pageId == 'hmwk'){
+			if(e.detail.typeId == '2'){
+				setTimeout(function () {
+					getTemplate('hmwkAna', 'temp_3.html');
+				},300);
+				document.getElementById('J_pie_btn').style.display = 'block';
+				document.getElementById('J_pie_btn').addEventListener('tap', function(){
+					var template = getTemplate('hmwkAna');
+					var headerWebview = template.header;
+					var contentWebview = template.content;
+					mui.fire(headerWebview,'updateHeader_3',{title:title,pageId:'examAna'});
+					contentWebview.loadURL('../care/hmwkAna.html');
+					headerWebview.show('slide-in-right', 150);
+				})
+			}
+		}
+	});
+	
+	/*document.getElementById('back').addEventListener('tap', function () {
+		var temp = plus.webview.getWebviewById('../care/examScoreSearch.html-main');
+		if (temp) {
+			temp.close('slide-in-right',150);
+		}
+	})*/
+})
+</script>
+</html>

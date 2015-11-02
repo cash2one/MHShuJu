@@ -1,0 +1,195 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.ai</groupId>
+  <artifactId>EduPortal</artifactId>
+  <packaging>war</packaging>
+  <version>1.0.0</version>
+  <name>EduPortal</name>
+  
+  <properties>
+      <struts2-version>2.3.16</struts2-version>
+      <spring-version>3.1.1.RELEASE</spring-version>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+
+  <dependencies>
+      <dependency>
+      <groupId>org</groupId>
+      <artifactId>patchca</artifactId>
+      <version>0.5.0</version>
+    </dependency>
+  	<dependency>
+      <groupId>commons-id</groupId>
+      <artifactId>commons-id</artifactId>
+      <version>0.1</version>
+    </dependency>
+  	<dependency>
+      <groupId>com.ai.sso</groupId>
+      <artifactId>hnssoclient</artifactId>
+      <version>0.1</version>
+    </dependency>
+  
+  	<dependency>
+      <groupId>com.ai.frame</groupId>
+      <artifactId>web</artifactId>
+      <version>1.9</version>
+    </dependency>
+  
+    <!-- Spring -->
+    <dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-web</artifactId>
+		<version>${spring-version}</version>
+	</dependency>
+	
+    <!-- struts2 -->
+    <dependency>
+        <groupId>org.apache.struts</groupId>
+        <artifactId>struts2-core</artifactId>
+        <version>${struts2-version}</version>
+        <scope>compile</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.struts</groupId>
+        <artifactId>struts2-spring-plugin</artifactId>
+        <version>${struts2-version}</version>
+    </dependency>
+
+    <dependency>
+        <groupId>com.caucho</groupId>
+        <artifactId>hessian</artifactId>
+        <version>4.0.37</version>
+    </dependency>
+    
+	<!-- xfire -->
+    <dependency>
+        <groupId>javax.xml.bind</groupId>
+        <artifactId>jaxb-api</artifactId>
+        <version>2.0</version>
+    </dependency>
+    <dependency>
+        <groupId>xerces</groupId>
+        <artifactId>xercesImpl</artifactId>
+        <version>2.7.1</version>
+    </dependency>
+    <dependency>
+        <groupId>org.codehaus.xfire</groupId>
+        <artifactId>xfire-all</artifactId>
+        <version>1.2.6</version>
+    </dependency>
+    <dependency>
+       <groupId>org.codehaus.xfire</groupId>
+       <artifactId>xfire-spring</artifactId>
+       <version>1.2.6</version>
+       <exclusions>
+           <exclusion>
+               <groupId>org.springframework</groupId>
+               <artifactId>spring</artifactId>
+           </exclusion>
+           <exclusion>
+               <groupId>ant</groupId>
+               <artifactId>ant</artifactId>
+           </exclusion>
+           <exclusion>
+               <groupId>qdox</groupId>
+               <artifactId>qdox</artifactId>
+           </exclusion>
+       </exclusions>
+    </dependency> 
+        
+    <!--servlet -->
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>servlet-api</artifactId>
+		<version>2.3</version>
+		<scope>provided</scope>
+	</dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+   <!--  <resources>
+        <resource>
+            <directory>src/main/webapp</directory>
+            <filtering>true</filtering>
+            <excludes>
+                <exclude>**/app/**/*.*</exclude>
+            </excludes>
+        </resource>        
+    </resources>  -->
+	<plugins>
+	    <!-- <plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-war-plugin</artifactId>
+	        <configuration>
+	            <webResources>
+	                <resource>
+	                    <directory>src/main/webapp</directory>
+			            <excludes>
+			                <exclude>**/app/**/*.*</exclude>
+			            </excludes>
+	                </resource>
+	            </webResources>
+	        </configuration>
+	    </plugin> -->
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-surefire-plugin</artifactId>
+			<configuration>
+				<skip>true</skip>
+			</configuration>
+		</plugin>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-resources-plugin</artifactId>
+			<configuration>
+				<encoding>UTF-8</encoding>
+			</configuration>
+		</plugin>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<configuration>
+				<source>1.5</source>
+				<target>1.5</target>
+				<encoding>UTF-8</encoding>
+			</configuration>
+		</plugin>
+		
+		<plugin>
+	         <groupId>org.mortbay.jetty</groupId>
+	         <artifactId>maven-jetty-plugin</artifactId>
+	         <version>6.0.0</version>
+	         <configuration>
+	             <webDefaultXml>src/main/resources/webdefault.xml</webDefaultXml>
+	             <contextPath>/edu</contextPath>
+	             <scanIntervalSeconds>300</scanIntervalSeconds>
+	             <connectors>
+	                 <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+	                     <port>80</port>
+	                 </connector>
+	             </connectors>
+	             
+	         </configuration>
+     	</plugin>
+     	
+		<plugin>
+             <groupId>org.apache.tomcat.maven</groupId>
+             <artifactId>tomcat6-maven-plugin</artifactId>
+             <configuration>
+                 <url>http://localhost:8080/manager/html</url>
+                 <server>tomcat6</server>
+                 <username>tomcat</username>
+                 <password>tomcat</password>
+                 <path>/edu</path>
+             </configuration>
+        </plugin>
+	</plugins>
+  </build>
+</project>

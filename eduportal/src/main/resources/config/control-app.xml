@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE control SYSTEM "common-sub-1.9.dtd">
+<control>
+    <action path="/app/action/common">
+        <input uid="getTeachStudents" service="workmarkService" method="getGradeWorkContent" scope="control" >
+        	<parameter key="userId"  toKey="userId"  scope="request"/>
+        	<parameter key="gradeId" toKey="gradeId" scope="request"/>
+        	<parameter key="workId"  toKey="workId"  scope="request"/>
+        </input>
+        <output uid="getTeachStudents" convertor="com.ai.frame.web.convertor.CommonConvert" method="convert2List">
+           <parameter key="userId"      toKey="userId" />
+           <parameter key="userNm"      toKey="userNm" />
+           <parameter key="sex"         toKey="sex" />
+           <parameter key="userTp"      toKey="userTp" />
+           <parameter key="schoolNm"    toKey="schoolNm" />
+           <parameter key="schoolId"    toKey="schoolId" />
+           <parameter key="gradeNm"     toKey="gradeNm" />
+           <parameter key="gradeId"     toKey="gradeId" />
+           <parameter key="finishState" toKey="finishState" />
+           
+           <parameter key="returnCode"    toKey="rtnCode" />
+     	   <parameter key="returnMessage" toKey="rtnMsg" />
+        </output>
+        
+        <input uid="x0002" service="noticeColService" method="saveNotice" scope="control" desc="收藏公告">
+            <parameter key="rId"      toKey="rId"     scope="request"  regex="" />
+            <parameter key="noticeId"    toKey="noticeId"   scope="request" regex="" />
+        </input>
+        
+        <input uid="x0003" service="noticeColService" method="getMyNoticeCol" scope="control" desc="获取该角色收藏的公告">
+            <parameter key="rId"      	toKey="rId"      	scope="request" regex="" />
+            <parameter key="start"      toKey="start"      	scope="request" regex="" />
+            <parameter key="limit"      toKey="limit"      	scope="request" regex="" />
+        </input>
+        <output uid="x0003" convertor="com.ai.frame.web.convertor.CommonConvert" method="convert2List">
+        	<parameter key="id"    toKey="id" />
+        	<parameter key="rId" toKey="rId" />
+        	<parameter key="noticeId" toKey="content" />
+ 	        <parameter key="createDate" toKey="createDate" />
+        </output>
+        
+        <input uid="x0004" service="noticeColService" method="deletMyNoticeById" scope="control" desc="取消收藏公告">
+            <parameter key="rId"      toKey="rId"      scope="request" regex="" />
+            <parameter key="noticeId"      toKey="noticeId"      scope="request" regex="" />
+        </input>
+        
+        <input uid="befChoiceRole" service="userLastRoleService" method="getAllCRMUserInfo" scope="control" >
+            <parameter key="hea_login_user.userId" toKey="userId" scope="session" regex=""/>
+            <parameter key="hea_login_user.mobile" toKey="mobile" scope="session" regex="numField"/>
+        </input>
+        <output uid="befChoiceRole" convertor="com.ai.eduportal.convertor.UserInfoConvert" method="convertList2UserInfo">
+        </output>
+        
+        <input uid="checkFtLg" service="userService" method="isFirstLogin" scope="control" >
+             <parameter key="mobile"        toKey="mobile"      scope="request" regex="required;numField"/>
+        </input>
+        <output uid="checkFtLg" convertor="com.ai.frame.web.convertor.CommonConvert" method="convertSingleData">
+           <parameter key="returnCode"    toKey="rtnCode" />
+     	   <parameter key="returnMessage" toKey="rtnMsg" />
+       </output>
+       
+       <input uid="sdSms" service="userService" method="sendEduSms" scope="control" >
+           <parameter key="mobile"        toKey="mobile"      scope="request" regex="required;numField"/>
+        </input>
+        <output uid="sdSms" convertor="com.ai.frame.web.convertor.CommonConvert" method="convertSingleData">
+           <parameter key="returnCode"    toKey="rtnCode" />
+     	   <parameter key="returnMessage" toKey="rtnMsg" />
+       </output>
+       
+       <input uid="saveUserWork" service="workmarkService" method="saveUserWorkmark" scope="control" >
+           <parameter key="hea_current_user.userId" toKey="userId" scope="session" regex="numField"/>
+           <parameter key="hea_current_user.gradeId" toKey="gradeId" scope="session" regex="numField"/>
+           <parameter key="workId"        toKey="workId"      scope="request" regex="required;numField"/>
+           <parameter key="workTime"        toKey="workTime"      scope="request" regex=""/>
+           <parameter key="workState"        toKey="workState"      scope="request" regex=""/>
+        </input>
+        <output uid="saveUserWork" convertor="com.ai.frame.web.convertor.CommonConvert" method="convertSingleData">
+           <parameter key="returnCode"    toKey="rtnCode" />
+     	   <parameter key="returnMessage" toKey="rtnMsg" />
+        </output>
+       
+       <input uid="getGradeStudents"  service="userService" method="getGradeStudents" desc="根据gradeId来获取班级成员的信息（包括老师 学生）">
+            <parameter key="gradeId"    toKey="gradeId"    scope="request" regex="" />
+       </input>
+       <output uid="getGradeStudents" convertor="com.ai.eduportal.convertor.EduPlatformConvert" method="convertBeans">
+           <parameter key="sex"    toKey="userSex" />
+           <parameter key="userNm"    toKey="userName" />
+           <parameter key="userId"    toKey="userId" />
+           <parameter key="xxtuid"    toKey="userXxtId" />
+           <parameter key="userTp"    toKey="userType" />
+           <parameter key="returnCode"    toKey="rtnCode" />
+     	   <parameter key="returnMessage" toKey="rtnMsg" />
+     	   <parameter key="beans" toKey="rtnInfo" />
+       </output>
+       
+       <input uid="getGradeTeaPt"  service="userService" method="getGradeTeaPt" desc="沟通：获取班级老师家长id">
+           <parameter key="gradeId"    toKey="gradeId"    scope="request" regex="" />
+       </input>
+       <output uid="getGradeTeaPt" convertor="com.ai.eduportal.convertor.EduPlatformConvert" method="convertBeans">
+           <parameter key="sex"    toKey="userSex" />
+           <parameter key="userNm"    toKey="userName" />
+           <parameter key="userId"    toKey="userId" />
+           <parameter key="xxtuid"    toKey="userXxtId" />
+           <parameter key="userTp"    toKey="userType" />
+           <parameter key="returnCode"    toKey="rtnCode" />
+     	   <parameter key="returnMessage" toKey="rtnMsg" />
+     	   <parameter key="beans" toKey="rtnInfo" />
+       </output>
+       
+       <input uid="jumpdownload" service="" method="xx" scope="control" desc="下载作业附件">
+           <parameter key="hea_pt_user.userId"        toKey="userId" scope="session" regex=""/>
+           <parameter key="hea_current_user.schoolId" toKey="orgId" scope="session" regex=""/>
+           <parameter key="hea_current_user.typeId"   toKey="sysRoleId" scope="session" regex=""/>
+           <parameter key="goUrl"                     toKey="goUrl"     scope="request" regex="required"/>
+        </input> 
+    </action>
+    <action path="/app/action/commonCMS">
+        <input uid="getStdMenuList" service="" method="" scope="control" >
+        </input>
+        <input uid="getStdAppList" service="" method="" scope="control" >
+        </input>
+        <input uid="queryAppList" service="" method="" scope="control" >
+        	<parameter key="menuID"  toKey="menuID"  scope="request" />
+        	<parameter key="teacher" toKey="teacher" scope="request" />
+        	<parameter key="student" toKey="student" scope="request" />
+        	<parameter key="ismuti"  toKey="ismuti"  scope="request" />
+        	<parameter key="isfree"  toKey="isfree"  scope="request" />
+        	<parameter key="horder"  toKey="horder"  scope="request" />
+        	<parameter key="norder"  toKey="norder"  scope="request" />
+        	<parameter key="keywords"  toKey="keywords"  scope="request" />
+        	<parameter key="hea_current_user.mobile" toKey="mobile" scope="session" regex="numField"/>
+        </input>
+        
+        <input uid="getHeaAppDetail" scope="control" service="appOrderService" method="getHeaOrderState"  >
+            <parameter key="nodeUid"  toKey="appId"   scope="request" regex="" />
+    		<parameter key="appID"    toKey="appcode" scope="request" regex="" />
+            <parameter key="hea_current_user.mobile" toKey="mobile" scope="session" regex="numField"/>
+            <parameter key="hea_current_user.userId" toKey="userId" scope="session" regex="numField"/>  
+       </input>
+        
+    </action>
+    
+    <action path="/app/action/commonOuter">
+       <input uid="getWorkContent" scope="control" service="orderService" method="getEduCallSerialNo">
+           <parameter key="userId"    toKey="userId"    scope="request" regex="" />
+           <parameter key="userType"    toKey="userType"    scope="request" regex="" />
+           <parameter key="schoolId"    toKey="schoolId"    scope="request" regex="" />
+           <parameter key="start"    toKey="start"    scope="request" regex="" />
+           <parameter key="limit"    toKey="limit"    scope="request" regex="" />
+       </input>
+       <output uid="getWorkContent" convertor="com.ai.eduportal.convertor.AppOuterConvert" method="workConvert">
+           <parameter key="datas"     toKey="datas" />
+           <parameter key="retInfo"   toKey="retInfo" />
+           <parameter key="worktime"  toKey="worktime" />
+           <parameter key="workstate" toKey="workstate" />
+           
+           <parameter key="returnCode"    toKey="rtnCode" />
+           <parameter key="returnMessage" toKey="rtnMsg" />
+           
+           <parameter key="date"    toKey="date" />
+           <parameter key="title"   toKey="title" />
+           <parameter key="estime"  toKey="estime" />
+           <parameter key="grade"   toKey="grade" />
+           <parameter key="course"  toKey="course" />
+           <parameter key="courseNm"  toKey="courseNm" />
+           <parameter key="content" toKey="content" />
+           <parameter key="school"  toKey="school" />
+           <parameter key="require" toKey="require" />
+           <parameter key="teacher" toKey="teacher" />
+           <parameter key="attach"  toKey="attach" />
+           <parameter key="id"      toKey="workId" />
+           <parameter key="worktime"      toKey="worktime" />
+           <parameter key="workstate"      toKey="workstate" />
+           <parameter key="courseId"      toKey="courseId" />
+       </output>
+       <input uid="getGradeWorkContent" scope="control" service="workmarkService" method="getGradeWorkmarks">
+           <parameter key="userId"  toKey="userId"  scope="request" regex="required"/>
+           <parameter key="gradeId" toKey="gradeId" scope="request" regex="required"/>
+           <parameter key="type"    toKey="type"    scope="request" regex="required"/>
+           <parameter key="start"   toKey="start"   scope="request" regex="required"/>
+           <parameter key="limit"   toKey="limit"   scope="request" regex="required"/>
+       </input>
+       <output uid="getGradeWorkContent" convertor="com.ai.eduportal.convertor.AppOuterConvert" method="workConvert">
+           <parameter key="datas"     toKey="datas" />
+           <parameter key="retInfo"   toKey="retInfo" />
+           <parameter key="worktime"  toKey="worktime" />
+           <parameter key="workstate" toKey="workstate" />
+           <parameter key="finishedNum"  toKey="finishedNum" />
+           <parameter key="gradeNum"  toKey="gradeNum" />
+           
+           <parameter key="returnCode"    toKey="rtnCode" />
+           <parameter key="returnMessage" toKey="rtnMsg" />
+           
+           <parameter key="createdate"    toKey="date" />
+           <parameter key="title"   toKey="title" />
+           <parameter key="estime"  toKey="estime" />
+           <parameter key="grade"   toKey="grade" />
+           <parameter key="gradeId" toKey="gradeId" />
+           <parameter key="course"  toKey="course" />
+           <parameter key="courseNm"  toKey="courseNm" />
+           <parameter key="content" toKey="content" />
+           <parameter key="school"  toKey="school" />
+           <parameter key="require" toKey="require" />
+           <parameter key="teacher" toKey="teacher" />
+           <parameter key="attach"  toKey="attach" />
+           <parameter key="id"      toKey="workId" />
+       </output>
+       
+       <input uid="getNoticeCounts" service="orderService" method="getEduCallSerialNo" scope="control" desc="xh根据schoolId来查看校园公告的条数">
+        	<parameter key="hea_current_user.schoolId" toKey="schoolID" scope="session" regex="numField"/>
+       </input>
+       <output uid="getNoticeCounts" convertor="com.ai.eduportal.convertor.AppOuterConvert" method="convertNoticeCounts">
+        	<parameter key="returnCode"    toKey="rtnCode" />
+            <parameter key="returnMessage" toKey="rtnMsg" />
+        	<parameter key="retInfo"   toKey="retInfo" />
+        	<parameter key="announcementNum" toKey="announcementNum" />
+       </output>
+        
+       <input uid="getNoticeCountsList" service="orderService" method="getEduCallSerialNo" scope="control" desc="xh根据schoolId来校园公告列表">
+            <parameter key="hea_current_user.schoolId" toKey="schoolID" scope="session" regex="numField"/>
+            <parameter key="start"    toKey="start"    scope="request" regex="" />
+            <parameter key="limit"    toKey="limit"    scope="request" regex="" />
+       </input>
+       <output uid="getNoticeCountsList" convertor="com.ai.eduportal.convertor.AppOuterConvert" method="convertList2CountList">
+        	<parameter key="returnCode"    toKey="rtnCode" />
+            <parameter key="returnMessage" toKey="rtnMsg" />
+        	<parameter key="retInfo"   toKey="retInfo" />
+        	<parameter key="CONTENT" toKey="content" />
+        	<parameter key="RW" toKey="rw" />
+        	<parameter key="date" toKey="date" />
+        	<parameter key="SCHOOL" toKey="school" />
+        	<parameter key="TITLE" toKey="title" />
+        </output>
+        
+       <input uid="getMsglist" scope="control" service="orderService" method="getEduCallSerialNo" desc="获取班级朋友信息列表">
+       		<parameter key="hea_current_user.userId" toKey="userId" scope="session" regex="numField"/>
+       		<parameter key="hea_current_user.typeId" toKey="userType" scope="session" regex="numField"/>
+       		<parameter key="hea_current_user.schoolId" toKey="schoolId" scope="session" regex="numField"/>
+            <parameter key="executeDate"    toKey="executeDate"    scope="request" regex="" />
+       </input>
+       <output uid="getMsglist" convertor="com.ai.eduportal.convertor.AppOuterConvert" method="convertGetMsgList">
+       		<parameter key="destid"   	toKey="destid" />
+        	<parameter key="destinfo" 	toKey="destinfo" />
+        	<parameter key="destusertype" 	toKey="destusertype" />
+        	<parameter key="destcount" 	toKey="destcount" />
+        	<parameter key="msgtype" 	toKey="msgtype" />
+        	<parameter key="msgid" 	toKey="msgid" />
+        	<parameter key="content" 	toKey="content" />
+        	<parameter key="fileid" 	toKey="fileid" />
+        	<parameter key="filetype" 	toKey="filetype" />
+        	<parameter key="filename" 	toKey="filename" />
+        	<parameter key="filepath" 	toKey="filepath" />
+        	<parameter key="filetimelong" 	toKey="filetimelong" />
+        	<parameter key="msgflag" 	toKey="msgflag" />
+        	<parameter key="createdate" 	toKey="createdate" />
+        	
+        	<parameter key="retInfo"   toKey="retInfo" />
+	   	    <parameter key="returnCode"    toKey="rtnCode" />
+            <parameter key="returnMessage" toKey="rtnMsg" />
+       </output>
+       
+       <input uid="getStudentScoreList" scope="control" service="orderService" method="getEduCallSerialNo" desc="学生成绩表查询(user为学生userid)">
+      		<parameter key="hea_current_user.userId" toKey="userId" scope="session" regex="numField"/>
+            <parameter key="start"    toKey="start"    scope="request" regex="" />
+            <parameter key="limit"    toKey="limit"    scope="request" regex="" />
+       </input>
+       <output uid="getStudentScoreList" convertor="com.ai.eduportal.convertor.AppOuterConvert" method="convertList2TeaExamList">
+       		<parameter key="TERMID" 	toKey="termID" />
+       		<parameter key="TERMNM" 	toKey="termNm" />
+       		<parameter key="EXAMID" 	toKey="examId" />
+       		<parameter key="EXAMNM" 	toKey="examNm" />
+       		<parameter key="EXAMDATE" 	toKey="examDate" />
+       		<parameter key="RW" 		toKey="rw" />
+       		
+       		<parameter key="retInfo"   toKey="retInfo" />
+	   	    <parameter key="returnCode"    toKey="rtnCode" />
+            <parameter key="returnMessage" toKey="rtnMsg" />
+       </output>
+       
+       <input uid="getStuScoreOfOneExam" scope="control" service="orderService" method="getEduCallSerialNo" desc="学生某次考试所有科目成绩">
+      		<parameter key="hea_current_user.userId" toKey="userId" scope="session" regex="numField"/>
+            <parameter key="examId"    toKey="examId"    scope="request" regex="" />
+       </input>
+       <output uid="getStuScoreOfOneExam" convertor="com.ai.eduportal.convertor.AppOuterConvert" method="convertList2TeaExamList">
+       		<parameter key="COURSE"   toKey="course" />
+       		<parameter key="COURSEID"   toKey="courseId" />
+       		<parameter key="SCORE"   toKey="score" />
+       		<parameter key="AVGSCORE"   toKey="avgscore" />
+       		<parameter key="RANK"   toKey="rank" />
+       		<parameter key="GRADE"   toKey="grade" />
+       		<parameter key="SCHOOL"   toKey="school" />
+       
+       		<parameter key="retInfo"   toKey="retInfo" />
+	   	    <parameter key="returnCode"    toKey="rtnCode" />
+            <parameter key="returnMessage" toKey="rtnMsg" />
+       </output>
+       
+       <input uid="getStuOneCourseHistory" scope="control" service="orderService" method="getEduCallSerialNo" desc="学生某个科目的历史成绩">
+       		<parameter key="hea_current_user.userId" toKey="userId" scope="session" regex="numField"/>
+            <parameter key="courseId"    toKey="courseId"    scope="request" regex="" />
+            <parameter key="start"    toKey="start"    scope="request" regex="" />
+            <parameter key="limit"    toKey="limit"    scope="request" regex="" />
+       </input>
+       <output uid="getStuOneCourseHistory" convertor="com.ai.eduportal.convertor.AppOuterConvert" method="convertList2TeaExamList">
+       		<parameter key="EXAMDATE"   toKey="examDate" />
+       		<parameter key="COURSEID"   toKey="courseId" />
+       		<parameter key="SCORE"   	toKey="score" />
+       		<parameter key="AVGSCORE"   toKey="avgscore" />
+       		<parameter key="RW" 		toKey="rw" />
+       
+       		<parameter key="retInfo"   toKey="retInfo" />
+	   	    <parameter key="returnCode"    toKey="rtnCode" />
+            <parameter key="returnMessage" toKey="rtnMsg" />
+       </output>
+       
+       <input uid="getStuOneCourseHistoryPolt" scope="control" service="orderService" method="getEduCallSerialNo" desc="学生某个科目的历史成绩">
+       		<parameter key="hea_current_user.userId" toKey="userId" scope="session" regex="numField"/>
+            <parameter key="courseId"    toKey="courseId"    scope="request" regex="" />
+            <parameter key="start"    toKey="start"    scope="request" regex="" />
+            <parameter key="limit"    toKey="limit"    scope="request" regex="" />
+       </input>
+       <output uid="getStuOneCourseHistoryPolt" convertor="com.ai.eduportal.convertor.AppOuterConvert" method="convertMulList">
+	   	    <parameter key="returnCode"    toKey="rtnCode" />
+            <parameter key="returnMessage" toKey="rtnMsg" />
+       </output>
+       
+       <input uid="getTeaExamList" scope="control" service="orderService" method="getEduCallSerialNo" desc="老师获取成绩列表">
+       		<parameter key="hea_current_user.userId" toKey="userId" scope="session" regex="numField"/>
+       		<parameter key="hea_current_user.schoolId" toKey="schoolId" scope="session" regex="numField"/>
+            <parameter key="start"    toKey="startPg"    scope="request" regex="" />
+            <parameter key="limit"    toKey="limit"    scope="request" regex="" />
+       </input>
+       <output uid="getTeaExamList" convertor="com.ai.eduportal.convertor.AppOuterConvert" method="convertList2TeaExamList">
+	   	   <parameter key="RW" toKey="RW" />
+	   	   <parameter key="GRADENM" toKey="gradeName" />
+	   	   <parameter key="GRADEID" toKey="gradeId" />
+	   	   <parameter key="gradeNm" toKey="gradeNm" />
+	   	   <parameter key="courseId" toKey="courseId" />
+	   	   <parameter key="courseNm" toKey="courseNm" />
+	   	   <parameter key="EXAMID" toKey="examId" />
+	   	   <parameter key="EXAMNM" toKey="examNm" />
+	   	   <parameter key="EXAMDATE" toKey="examDate" />
+	   	   
+	   	   <parameter key="retInfo"   toKey="retInfo" />
+	   	   <parameter key="returnCode"    toKey="rtnCode" />
+           <parameter key="returnMessage" toKey="rtnMsg" />
+       </output>
+        
+       <input uid="getTeaOneExamInfo" scope="control" service="orderService" method="getEduCallSerialNo" desc="老师查看班级某次考试所有学生的成绩">
+            <parameter key="courseId"   toKey="courseId"    scope="request" regex="" />
+            <parameter key="examId"    	toKey="examId"    	scope="request" regex="" />
+            <parameter key="gradeId"    toKey="gradeId"    	scope="request" regex="" />
+       </input>
+       <output uid="getTeaOneExamInfo" convertor="com.ai.eduportal.convertor.AppOuterConvert" method="convertList2TeaExamListAvg">
+	   	   <parameter key="SCORE" toKey="score" />
+	   	   <parameter key="AVGSCORE" toKey="avgscore" />
+	   	   <parameter key="GRADEID" toKey="gradeId" />
+	   	   <parameter key="GRADENM" toKey="gradeNm" />
+	   	   <parameter key="COURSEID" toKey="courseId" />
+	   	   <parameter key="COURSENM" toKey="courseNm" />
+	   	   <parameter key="RANK" toKey="rank" />
+	   	   <parameter key="USERID" toKey="userId" />
+	   	   <parameter key="USERNM" toKey="userNm" />
+	   	   
+	   	   <parameter key="retInfo"   toKey="retInfo" />
+	   	   <parameter key="returnCode"    toKey="rtnCode" />
+           <parameter key="returnMessage" toKey="rtnMsg" />
+       </output>
+        
+       <input uid="getTeaOneExamInfoPoit" scope="control" service="orderService" method="getEduCallSerialNo" desc="老师查看班级某次考试所有学生的成绩">
+            <parameter key="courseId"   toKey="courseId"    scope="request" regex="" />
+            <parameter key="examId"    	toKey="examId"    	scope="request" regex="" />
+            <parameter key="gradeId"    toKey="gradeId"    	scope="request" regex="" />
+       </input>
+       <output uid="getTeaOneExamInfoPoit" convertor="com.ai.eduportal.convertor.AppOuterConvert" method="convertList2ListPoit">
+	   	   <parameter key="retInfo"   toKey="retInfo" />
+	   	   <parameter key="returnCode"    toKey="rtnCode" />
+           <parameter key="returnMessage" toKey="rtnMsg" />
+        </output>
+       
+       <input uid="getHomeworkList" scope="control" service="orderService" method="getEduCallSerialNo" desc="作业接口(userid为家长userid)">
+            <parameter key="hea_login_user.userId" toKey="loginUserId" scope="session"/>
+       		<parameter key="hea_current_user.userId" toKey="userId" scope="session" regex="numField"/>
+       		<parameter key="hea_current_user.typeId" toKey="userType" scope="session" regex="numField"/>
+       		<parameter key="hea_current_user.schoolId" toKey="schoolId" scope="session" regex="numField"/>
+            <parameter key="start"    toKey="start"    scope="request" regex="" />
+            <parameter key="limit"    toKey="limit"    scope="request" regex="" />
+            <parameter key="status"    toKey="status"    scope="request" regex="" />
+       </input>
+       <output uid="getHomeworkList" convertor="com.ai.eduportal.convertor.AppOuterConvert" method="workConvert">
+       	   <parameter key="datas"     toKey="datas" />
+           <parameter key="retInfo"   toKey="retInfo" />
+           <parameter key="worktime"  toKey="worktime" />
+           <parameter key="workstate" toKey="workstate" />
+           <parameter key="finishedNum"  toKey="finishedNum" />
+           <parameter key="unFinishedNum"  toKey="unFinishedNum" />
+           
+           <parameter key="returnCode"    toKey="rtnCode" />
+           <parameter key="returnMessage" toKey="rtnMsg" />
+           
+           <parameter key="date"    toKey="date" />
+           <parameter key="title"   toKey="title" />
+           <parameter key="estime"  toKey="estime" />
+           <parameter key="grade"   toKey="grade" />
+           <parameter key="gradeId" toKey="gradeId" />
+           <parameter key="courseId"  toKey="courseId" />
+           <parameter key="course"  toKey="course" />
+           <parameter key="courseNm"  toKey="courseNm" />
+           <parameter key="content" toKey="content" />
+           <parameter key="school"  toKey="school" />
+           <parameter key="require" toKey="require" />
+           <parameter key="teacher" toKey="teacher" />
+           <parameter key="attach"  toKey="attach" />
+           <parameter key="id"      toKey="workId" />
+       </output>
+       
+       <input uid="sendClassMsg" scope="control" service="orderService" method="getEduCallSerialNo" desc="发送信息">
+       		<parameter key="hea_current_user.userId" toKey="userId" scope="session" regex="numField"/>
+       		<parameter key="hea_current_user.typeId" toKey="userType" scope="session" regex="numField"/>
+       		<parameter key="hea_current_user.schoolId" toKey="schoolId" scope="session" regex="numField"/>
+            <parameter key="msgContent"    toKey="msgContent"    scope="request" regex="" />
+            <parameter key="msgType"    toKey="msgType"    scope="request" regex="" />
+            <parameter key="destUserType"    toKey="destUserType"    scope="request" regex="" />
+            <parameter key="destId"    toKey="destId"    scope="request" regex="" />
+            <parameter key="destUnitId"    toKey="destUnitId"    scope="request" regex="" />
+            <parameter key="ggName"    toKey="ggName"    scope="request" regex="" />
+            <parameter key="name"    toKey="name"    scope="request" regex="" />
+            <parameter key="tempId"    toKey="tempId"    scope="request" regex="" />
+       </input>
+       <output uid="sendClassMsg" convertor="com.ai.eduportal.convertor.AppOuterConvert" method="convertList2TeaExamList">
+	   	   <parameter key="retInfo"   toKey="retInfo" />
+	   	   <parameter key="returnCode"    toKey="rtnCode" />
+           <parameter key="returnMessage" toKey="rtnMsg" />
+       </output>
+       
+       <input uid="sendClassPicMsg" scope="control" service="orderService" method="getEduCallSerialNo" desc="发送班级公告信息(语音,图片)">
+       		<parameter key="hea_current_user.userId" toKey="userId" scope="session" regex="numField"/>
+       		<parameter key="hea_current_user.typeId" toKey="userType" scope="session" regex="numField"/>
+       		<parameter key="hea_current_user.schoolId" toKey="schoolId" scope="session" regex="numField"/>
+       		<parameter key="mediaFile"    toKey="mediaFile"    scope="file" regex="" />
+            <parameter key="fileType"    toKey="fileType"    scope="request" regex="" />
+            <parameter key="fileName"    toKey="fileName"    scope="request" regex="" />
+            <parameter key="fileTimeLong"    toKey="fileTimeLong"    scope="request" regex="" />
+            <parameter key="msgContent"    toKey="msgContent"    scope="request" regex="" />
+            <parameter key="msgType"    toKey="msgType"    scope="request" regex="" />
+            <parameter key="destUserType"    toKey="destUserType"    scope="request" regex="" />
+            <parameter key="destId"    toKey="destId"    scope="request" regex="" />
+            <parameter key="destUnitId"    toKey="destUnitId"    scope="request" regex="" />
+            <parameter key="ggName"    toKey="ggName"    scope="request" regex="" />
+            <parameter key="name"    toKey="name"    scope="request" regex="" />
+            <parameter key="tempId"    toKey="tempId"    scope="request" regex="" />
+       </input>
+       <output uid="sendClassPicMsg" convertor="com.ai.eduportal.convertor.AppOuterConvert" method="convertList2TeaExamList">
+	   	   <parameter key="retInfo"   toKey="retInfo" />
+	   	   <parameter key="returnCode"    toKey="rtnCode" />
+           <parameter key="returnMessage" toKey="rtnMsg" />
+       </output>
+       
+    </action>
+    
+    <action path="/app/action/commonOuterNormal">
+       <input uid="heaLogin" scope="control" service="userLastRoleService" method="heaUserPwdLogin"  >
+           <parameter key="mobile" toKey="mobile" scope="request" regex="" />
+           <parameter key="pwd" toKey="pwd" scope="request" regex="" />
+           <parameter key="isAuto" toKey="isAuto" scope="request" regex="" />
+       </input>
+       
+        <input uid="getUserRoleInfo" scope="control" service="userLastRoleService" method="getUserLastRole">
+           <parameter key="hea_login_user.userId" toKey="userId" scope="session" regex=""/>
+           <parameter key="hea_login_user.mobile" toKey="mobile" scope="session" regex="numField"/>
+        </input>
+        
+        <input uid="saveHeaChoiceRole" scope="control" service="userLastRoleService" method="saveUserChoiceRole"  >
+            <parameter key="hea_login_user.mobile" toKey="mobile" scope="session" regex="numField"/>
+            <parameter key="hea_login_user.userId" toKey="loginUserId" scope="session"/>
+            <parameter key="userId" toKey="userId" scope="request" regex="" />
+            <parameter key="userName" toKey="userName" scope="request" regex="" />
+            <parameter key="city" toKey="city" scope="request" regex="" />
+            <parameter key="region" toKey="region" scope="request" regex="" />
+            <parameter key="schoolId" toKey="schoolId" scope="request" regex="" />
+            <parameter key="schoolName" toKey="schoolName" scope="request" regex="" />
+            <parameter key="gradeId" toKey="gradeId" scope="request" regex="" />
+            <parameter key="gradeName" toKey="gradeName" scope="request" regex="" />
+            <parameter key="sex" toKey="sex" scope="request" regex="" />
+            <parameter key="xxtUid" toKey="xxtUid" scope="request" regex="" />
+            <parameter key="typeId" toKey="typeId" scope="request" regex="" />
+            <parameter key="orgId" toKey="orgId" scope="request" regex="" />
+        </input>
+        
+       <input uid="sendHeaRd" scope="control" service="userInfoService" method="sendLoginRd"  >
+            <parameter key="mobile" toKey="mobile" scope="request" regex="" />
+       </input>
+       
+       <input uid="heaLogOut" scope="control" service="" method="" >
+       </input>
+       
+       <input uid="getHeaUserInfo" scope="control" service="" method="">
+       </input>
+       
+       <input uid="verifyHeaOrder" scope="control" service="appOrderService" method="verifyHEAUserOrder"  >
+            <parameter key="hea_current_user.mobile" toKey="mobile" scope="session" regex="required;numField"/>
+            <parameter key="hea_current_user.userId" toKey="userId" scope="session" regex="numField"/>
+            <parameter key="hea_current_user.userName" toKey="userName" scope="session" regex=""/>
+            <parameter key="prodInfo" toKey="prodInfo" scope="request" regex="required"/>
+            <parameter key="isMutiApp" toKey="isMutiApp" scope="request" regex="required;numField"/>
+        </input>
+       
+        <input uid="unSubHeaOrder" scope="control" service="appOrderService" method="unSubHEAUserOrder"  >
+            <parameter key="hea_current_user.mobile" toKey="mobile" scope="session" regex="required;numField"/>
+            <parameter key="hea_current_user.userId" toKey="userId" scope="session" regex="numField"/>
+            <parameter key="hea_current_user.userName" toKey="userName" scope="session" regex=""/> 
+            <parameter key="prodInfo" toKey="prodInfo" scope="request" regex="required"/>
+            <parameter key="isMutiApp" toKey="isMutiApp" scope="request" regex="required;numField"/>
+        </input>
+       
+        <input uid="querySinglePtPriceSign" scope="control" service="appOrderService" method="getSinglePtPriceSign">
+           <parameter key="hea_login_user.mobile" toKey="mobile" scope="session" regex="numField"/> 
+           <parameter key="offerCode" toKey="offerCode" scope="request" regex="required"/> 
+        </input>
+        
+        <input uid="getCurrentUserAllInfo" service="userLastRoleService" method="getCRMUserAllRole" scope="control" >
+            <parameter key="hea_login_user.userId" toKey="userId" scope="session" regex=""/>
+            <parameter key="hea_login_user.mobile" toKey="mobile" scope="session" regex="numField"/>
+        </input>
+        
+        <input uid="getUserAllOrder" scope="control" service="orderService" method="getUserAllOrder"  >
+            <parameter key="hea_current_user.mobile" toKey="mobile" scope="session" regex="required;numField"/>
+        </input>
+        
+        <input uid="getHomeWorkDtlList" scope="control" service="workmarkService" method="getTeaWorkContentDtl" desc="作业完成未完成详情接口">
+       		<parameter key="hea_current_user.mobile" toKey="mobile" scope="session" regex="numField"/>
+       		<parameter key="hea_current_user.userId" toKey="userId" scope="session" regex="numField"/>
+       		<parameter key="hea_current_user.typeId" toKey="userType" scope="session" regex="numField"/>
+            <parameter key="gradeId"    toKey="gradeId"    scope="request" regex="" />
+            <parameter key="workIds"    toKey="workIds"    scope="request" regex="" />
+            <parameter key="status"    toKey="status"    scope="request" regex="" />
+       </input>
+       <output uid="getHomeWorkDtlList" convertor="" method="">
+           <parameter key="returnCode"    toKey="rtnCode" />
+     	   <parameter key="returnMessage" toKey="rtnMsg" />
+     	   <parameter key="beans" toKey="rtnInfo" />
+       </output>
+
+       <input uid="getHomeWorkRateDtlList" scope="control" service="workmarkService" method="getTeaWorkRateDtl" desc="作业未完成详情接口">
+            <parameter key="gradeId"    toKey="gradeId"    scope="request" regex="" />
+            <parameter key="workIds"    toKey="workIds"    scope="request" regex="" />
+       </input>
+       
+    </action>
+    <action path="/app/action/uploadApk">
+        <input uid="uploadApk8888" scope="control" service="" method="">
+            <parameter key="myfile"  toKey="myfile" scope="file" regex=""/>
+            <parameter key="name"   toKey="name" scope="request" regex=""/>
+        </input>
+    </action>
+</control>

@@ -1,0 +1,56 @@
+{
+    "packagePrice": "1",
+    "appDescPic": "app_resources/themes/2014/e2f20843-d276-4350-811c-6ce6c4ac8e33/appDescPic/appDescPic.jpg",
+    "roleState": "1",
+    "apphref": "http://v.xxt.cn/",
+    "isCollect": "0",
+    "contact": {
+        "phone": "03938807775",
+        "sms": "1111111",
+        "customer": "张三"
+    },
+    "twelvenormprice": "12",
+    "appDesc": "",
+    "isMutiApp": "1",
+    "threenormprice": "3",
+    "domain": "1,2",
+    "isnew": "1",
+    "orderState": "0",
+    "nodeUid": "e2f20843-d276-4350-811c-6ce6c4ac8e33",
+    "recmdpckg": "e2f20843-d276-4350-811c-6ce6c4ac8e33,63ca20db-dbcb-4948-9344-086521822f7b",
+    "threepromprice": "3",
+    "secMenu": "1",
+    "isActive": "1",
+    "appName": "小学生学习报+天天练",
+    "sixnormprice": "6",
+    "sixpromprice": "6",
+    "appPic": "app_resources/themes/2014/e2f20843-d276-4350-811c-6ce6c4ac8e33/appPic/appPic.jpg",
+    "cpackage": [
+        {
+            "appName": "小学生学习报+天天练",
+            "appPic": "app_resources/themes/2014/e2f20843-d276-4350-811c-6ce6c4ac8e33/appPic/appPic.jpg",
+            "nodeUid": "e2f20843-d276-4350-811c-6ce6c4ac8e33",
+            "appPicContentTypes": ".jpg",
+            "appID": "10.1"
+        },
+        {
+            "appName": "故事屋+天天练",
+            "appPic": "app_resources/themes/2014/63ca20db-dbcb-4948-9344-086521822f7b/appPic/appPic.png",
+            "nodeUid": "63ca20db-dbcb-4948-9344-086521822f7b",
+            "appPicContentTypes": ".png",
+            "appID": "10.2"
+        },
+        {
+            "appName": "故事屋+天天练",
+            "appPic": "app_resources/themes/2014/63ca20db-dbcb-4948-9344-086521822f7b/appPic/appPic.png",
+            "nodeUid": "63ca20db-dbcb-4948-9344-086521822f7b",
+            "appPicContentTypes": ".png",
+            "appID": "10.2"
+        }
+    ],
+    "rtnCode": "1",
+    "appMxPic": "app_resources/themes/2014/e2f20843-d276-4350-811c-6ce6c4ac8e33/appMxPic/appMxPic.png",
+    "twelvepromprice": "12",
+    "appID": "10.1",
+    "ishot": "1"
+}

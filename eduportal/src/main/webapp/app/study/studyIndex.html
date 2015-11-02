@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>学习</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<style>
+body {
+	background: #fff!important;
+}
+
+.ui-stdy-search-wrap {
+	background: #094462;
+	padding-bottom: 6px;
+}
+.ui-stdy-search-wrap input[type="search"] {
+	background: #5E8498;
+	height: 35px;
+}
+#J_cancel {
+	position: absolute;
+	right: 10px;
+	top: 8px;
+	color: #fff;
+	font-size: 15px;
+}
+.ui-search-result {
+	top: 51px;
+}
+
+/**
+ * 中间两部分内容滚动
+ * **/
+#wrapper, #wrapper2 {
+	position: absolute;
+	z-index: 1;
+	top: 51px;
+	bottom: 0;
+	left: 0;
+	width: 30%;
+	overflow: hidden;
+}
+
+#wrapper2 {
+	left: 30%;
+	width: 70%;
+}
+#scroller, #scroller2 {
+	position: absolute;
+	z-index: 1;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	width: 100%;
+	-webkit-transform: translateZ(0);
+	-moz-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	-o-transform: translateZ(0);
+	transform: translateZ(0);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-text-size-adjust: none;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+	-o-text-size-adjust: none;
+	text-size-adjust: none;
+}
+#J_menu {
+	background: #F5F5F5;
+}
+#J_menu li {
+	border-top: 1px solid #D9DEE2;
+	height: 60px;
+	line-height: 60px;
+	padding: 0 10px;
+	border-right: 1px solid #D9DEE2;
+	font-size: 15px;
+}
+#J_menu li:last-child {
+	border-bottom: 1px solid #D9DEE2;
+}
+#J_menu li.cur {
+	background: #fff;
+	border-right: 0;
+}
+#js-stdy-list:before, #js-stdy-list:after {
+	background: #fff;
+}
+</style>
+</head>
+<body>
+<div class="mui-content">
+	<div class="ui-stdy-search-wrap">
+		<input id="J_search" type="search" placeholder="搜索产品">
+		<a id="J_cancel" class="btn btn-link fn-hide" href="javascript:;">取消</a>
+	</div>
+	
+	<div class="ui-search-result">
+		<ul class="mui-table-view" id="J_search_list">
+			
+		</ul>
+	</div>
+
+	<div class="stu-content">
+		<div class="study-menu" id="wrapper">
+			<div id="scroller">
+				<ul id="J_menu">
+					
+				</ul>
+			</div>
+		</div>
+		
+		<div class="study-content" id="wrapper2">
+			<div id="scroller2">
+				<ul id="js-stdy-list" class="mui-table-view mui-grid-view"> 
+					
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="ui-loader ui-corner-all fn-hide" id="J_loading">
+    <span class="ui-icon-loading"></span>
+    <div class="ui-loader-verbose">正在加载数据...</div>
+</div>
+
+<script id="T_stdy_List" type="text/x-handlebars-template">
+	{{#each appLs}}
+	<li class="mui-table-view-cell mui-media mui-col-xs-6">
+		<a appId="{{appID}}" nodeUid="{{nodeUid}}" isMutiApp="{{isMutiApp}}" title="{{appName}}">
+			<img class="mui-media-object" src="{{appPath}}{{appPic}}" onload="loadImg();">
+			<div class="mui-media-body">{{appName}}</div>
+		</a>
+	</li>
+	{{/each}}
+</script>
+
+<script id="T_search_list" type="text/x-handlebars-template">
+	{{#each appLs}}
+		<li class="mui-table-view-cell mui-media">
+		    <a appId="{{appID}}" nodeUid="{{nodeUid}}" isMutiApp="{{isMutiApp}}" title="{{appName}}">
+		      	<img class="mui-media-object mui-pull-left" src="{{appPath}}{{appPic}}">
+		      	<div class="mui-media-body">
+		        	{{appName}}
+		      	</div>
+		    </a>
+		 </li>
+	{{/each}}
+</script>
+
+<script id="T_stdy_menu" type="text/x-handlebars-template">
+	{{#each rows}}
+	<li menuId="{{menuID}}">
+		{{menuName}}
+	</li>
+	{{/each}}
+</script>
+
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../lib/iscroll/5.0/iscroll.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script type="text/javascript">
+mui.init({swipeBack: true});
+var myScroll, myScroll2;
+
+srvMap.add('queryAppList','queryAppList.json','commonCMS.action?uid=queryAppList');//右侧列表
+srvMap.add('getStdMenuList', 'studyMenuList.json','commonCMS.action?uid=getStdMenuList');//左侧目录
+
+mui.plusReady(function(){
+	//搜索
+	initSearch();
+	
+	//左侧目录
+	initMenu();
+	
+	//详情页
+	initDtl();
+	
+	//监听筛选条件
+	window.addEventListener('getFilterCdt', function(e){
+		g_fltData = e.detail.datas?e.detail.datas:g_fltData;
+		loadMenuApps('',g_fltData, false);
+	})
+	
+})
+
+function initSearch(){
+	//开启搜索
+	$('#J_search').bind('focus',function(){
+		$(this).css('width','85%');
+		$('.ui-search-result, #J_cancel').show();
+	})
+	
+	//取消搜索
+	$('#J_cancel').bind('click',function(){
+		$('#J_search').val('').css('width','100%');
+		$('.ui-search-result, #J_cancel').hide();
+	})
+	
+	//搜索框value变化时发出请求
+	$('#J_search').bind('input',function(){
+		var _this = $(this);
+		var menuId = '';
+  		$('#J_menu li').each(function(){
+  			var _this = $(this);
+  			if (_this.hasClass('cur')) {
+  				menuId = _this.attr('menuid');
+  			};
+  		})
+		var reqstr = 'menuID='+menuId+'&keywords='+_this.val();
+		$("#J_loading").show();
+		Util.ajax.postJson(srvMap.get('queryAppList'),reqstr,function(json,status){
+			if (status) {
+				if(json.datas[0].appLs.length){
+					for(var i =0;i<json.datas[0].appLs.length;i++){
+						json.datas[0].appLs[i].appPath = srvMap.getAppPath();
+					}			
+					Util.ajax.loadTemp('#J_search_list',$('#T_search_list'),json.datas[0]);
+				}else{
+					$('#J_search_list').html('<div class="ui-load-error">暂无数据！</div>');
+				}
+			}else{
+				$('#J_search_list').html('<div class="ui-load-error">暂无数据！</div>');
+			}
+			setTimeout(function(){
+				$("#J_loading").hide();
+			}, 300)
+		});
+	})
+}
+
+function initMenu(){
+	Util.ajax.postJson(srvMap.get('getStdMenuList'),'',function(json,status){
+		if (status) {
+			Util.ajax.loadTemp('#J_menu',$('#T_stdy_menu'),json);
+			//菜单滚动
+			myScroll = new IScroll('#wrapper',{
+				click:true
+			});
+			//菜单绑定点击事件
+			$('#J_menu').on('tap','li',function(){
+				var _this = $(this);
+				_this.addClass('cur').siblings('li').removeClass('cur');
+				var menuId = _this.attr('menuId');
+				loadMenuApps(menuId,'',false);
+			});
+			
+			var menuId = json.rows[0].menuID;
+			$('#J_menu li').eq(0).addClass("cur");
+			//右侧列表
+			loadMenuApps(menuId,"",true);
+		}else{
+			$('#J_menu').html('<div class="ui-load-error">暂无数据！</div>')
+		}
+	});
+}
+
+function initDtl(){
+	setTimeout(function () {
+		getTemplate('studyDtl', '../temp/template.html');
+	},200);
+	$('#js-stdy-list,#J_search_list').on('tap','a', function(){
+		var _this = $(this);
+		var dataObject={
+			'appID':_this.attr('appID'),
+			'appName':_this.attr('title'),
+			'nodeUid':_this.attr('nodeUid'),
+			'isMutiApp':_this.attr('isMutiApp')
+		};
+		dataObject=JSON.stringify(dataObject);
+		Util.lStorage.setParam('studyDtl',dataObject);
+
+		var title = _this.attr('title');
+		var template = getTemplate('studyDtl');
+		var headerWebview = template.header;
+		var contentWebview = template.content;
+		mui.fire(headerWebview,'updateHeader',{title:title,showMenu:''});
+		contentWebview.loadURL("studyDtl.html");
+		headerWebview.show('slide-in-right', 150);
+	})
+}
+
+/**应用请求参数
+ *@param menuID   菜单ID
+ *@param teacher  适应老师
+ *@param student  适应学生
+ *@param ismuti   营销活动
+ *@param isfree   免费
+ *@param horder   已经订购
+ *@param norder   未订购
+ *@param keywords 关键词
+ */
+var g_fltData = '';//当前筛选条件
+var g_menuId = '';//当前选中菜单id
+function loadMenuApps(menuID,fltData, first){
+	setTimeout(function(){
+		$("#J_loading").show();
+	}, 30)
+	g_menuId = menuID?menuID:g_menuId;
+	var datas = 'menuID='+g_menuId+'&'+g_fltData;
+	Util.ajax.postJson(srvMap.get('queryAppList'),datas,function(json,status){
+		if (status) {
+			if(json.datas[0].appLs.length){
+				for(var i =0;i<json.datas[0].appLs.length;i++){
+					json.datas[0].appLs[i].appPath = srvMap.getAppPath();
+				}
+				
+				Util.ajax.loadTemp('#js-stdy-list',$('#T_stdy_List'),json.datas[0]);
+			}else{
+				$('#js-stdy-list').html('<div class="ui-load-error">暂无数据！</div>');
+			}
+		}else{
+			$('#js-stdy-list').html('<div class="ui-load-error">暂无数据！</div>');
+		}
+		setTimeout(function(){
+			$("#J_loading").hide();
+		}, 400)
+	});
+}
+
+function loadImg(){
+	if(myScroll2){
+		myScroll2.refresh();
+	}else{
+		myScroll2 = new IScroll('#wrapper2',{
+			click:true
+		});
+	}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE control SYSTEM "common-1.9.dtd">
+<control>
+	<action path="hn/action/common">
+	</action>
+   <include file="config/control-sub.xml" />
+   <include file="config/control-crm.xml" />
+   <include file="config/control-cms.xml" />
+   <include file="config/control-app.xml" />
+   <include file="config/control-edu.xml" />
+</control>

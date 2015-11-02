@@ -1,0 +1,779 @@
+{
+  "version": "1.0.0",
+  "protocol": [
+    "http",
+    "https"
+  ],
+  "rooturl": "",
+  "index": {
+    "href": "redirect.html",
+    "resources": [
+      "manifest.json",
+      "lib/mui/css/mui.css",
+      "lib/mui/fonts/mui.ttf",
+      "lib/mui/mui.min.js",
+      "common/config.js",
+      "common/pwdencode.js",
+      "lib/jquery/2.1.3/jquery.min.js",
+      "theme/common.css",
+      "theme/images/loginIcon.png",
+      "theme/images/arrows.png",
+      "theme/images/gd_icon.png",
+      "theme/images/word_icon.png",
+      "theme/images/nocontent.png",
+      "common/common.js",
+      "lib/handlebars/1.3.0/handlebars.js",
+      "theme/images/start_bg1.png"
+    ],
+    "refer": [
+      "login.html",
+      "care/choiceRole.html",
+      "index.html"
+    ],
+    "priority": 0
+  },
+  "pages": {
+    "care/examAna.html": {
+      "href": "care/examAna.html",
+      "priority": 4
+    },
+    "comuni/comuniDes.html": {
+      "href": "comuni/comuniDes.html",
+      "resources": [],
+      "priority": 1
+    },
+    "temp/temp_4.html": {
+      "href": "temp/temp_4.html",
+      "resources": [
+        "common/app.js"
+      ],
+      "priority": 2
+    },
+    "temp/temp_3.html": {
+      "href": "temp/temp_3.html",
+      "priority": 11
+    },
+    "care/hmwkAna.html": {
+      "href": "care/hmwkAna.html",
+      "resources": [
+        "lib/ichart/ichartjs.base.js",
+        "lib/handlebars/1.3.0/helpers.js",
+        "common/app.js",
+        "lib/ichart/ichartjs.pie.js"
+      ],
+      "priority": 2
+    },
+    "temp/template_2.html": {
+      "href": "temp/template_2.html",
+      "priority": 10
+    },
+    "temp/template.html": {
+      "href": "temp/template.html",
+      "priority": 4
+    },
+    "care/examDtl.html": {
+      "href": "care/examDtl.html",
+      "resources": [
+        "lib/handlebars/1.3.0/helpers.js",
+        "common/app.js"
+      ],
+      "priority": 5
+    },
+    "care/examScore.html": {
+      "href": "care/examScore.html",
+      "resources": [
+        "lib/handlebars/1.3.0/helpers.js"
+      ],
+      "refer": [
+        "temp/template_2.html",
+        "temp/temp_3.html",
+        "care/examAna.html",
+        "care/examDtl.html"
+      ],
+      "priority": 2
+    },
+    "care/examScoreSearch.html": {
+      "href": "care/examScoreSearch.html",
+      "priority": 12
+    },
+    "forgetpwd/forgetPwdF.html": {
+      "href": "forgetpwd/forgetPwdF.html",
+      "resources": [
+        "theme/images/success.png",
+        "lib/handlebars/1.3.0/helpers.js",
+        "theme/images/fail.png"
+      ],
+      "priority": 3
+    },
+    "forgetpwd/forgetPwdT.html": {
+      "href": "forgetpwd/forgetPwdT.html",
+      "resources": [
+        "lib/cryptojs/3.1.2/enc-base64-min.js",
+        "lib/cryptojs/3.1.2/core-min.js",
+        "lib/handlebars/1.3.0/helpers.js",
+        "common/base64.js",
+        "lib/cryptojs/3.1.2/md5.js"
+      ],
+      "refer": [
+        "temp/template.html",
+        "forgetpwd/forgetPwdF.html"
+      ],
+      "priority": 2
+    },
+    "forgetpwd/forgetPwdS.html": {
+      "href": "forgetpwd/forgetPwdS.html",
+      "resources": [
+        "lib/handlebars/1.3.0/helpers.js"
+      ],
+      "refer": [
+        "temp/template.html",
+        "forgetpwd/forgetPwdT.html"
+      ],
+      "priority": 1
+    },
+    "forgetpwd/forgetPwd.html": {
+      "href": "forgetpwd/forgetPwd.html",
+      "resources": [
+        "lib/handlebars/1.3.0/helpers.js"
+      ],
+      "refer": [
+        "temp/template.html",
+        "forgetpwd/forgetPwdS.html"
+      ],
+      "priority": 0
+    },
+    "regist/registerT.html": {
+      "href": "regist/registerT.html",
+      "resources": [
+        "theme/images/success.png",
+        "lib/handlebars/1.3.0/helpers.js",
+        "theme/images/fail.png"
+      ],
+      "priority": 3
+    },
+    "regist/registerS.html": {
+      "href": "regist/registerS.html",
+      "resources": [
+        "lib/cryptojs/3.1.2/enc-base64-min.js",
+        "lib/cryptojs/3.1.2/core-min.js",
+        "lib/handlebars/1.3.0/helpers.js",
+        "common/base64.js",
+        "lib/cryptojs/3.1.2/md5.js"
+      ],
+      "refer": [
+        "temp/template.html",
+        "regist/registerT.html"
+      ],
+      "priority": 2
+    },
+    "regist/register.html": {
+      "href": "regist/register.html",
+      "resources": [
+        "lib/handlebars/1.3.0/helpers.js"
+      ],
+      "refer": [
+        "temp/template.html",
+        "regist/registerS.html"
+      ],
+      "priority": 1
+    },
+    "login.html": {
+      "href": "login.html",
+      "resources": [
+        "common/base64.js",
+        "lib/cryptojs/3.1.2/md5.js",
+        "common/update.js",
+        "lib/cryptojs/3.1.2/core-min.js",
+        "lib/cryptojs/3.1.2/enc-base64-min.js"
+      ],
+      "refer": [
+        "forgetpwd/forgetPwd.html",
+        "regist/register.html",
+        "index.html",
+        "care/choiceRole.html",
+        "temp/template.html"
+      ],
+      "priority": 0
+    },
+    "my/myInfo.html": {
+      "href": "my/myInfo.html",
+      "resources": [
+        "theme/images/headIcon.png"
+      ],
+      "priority": 5
+    },
+    "study/studyDtl.html": {
+      "href": "study/studyDtl.html",
+      "priority": 11
+    },
+    "index.html": {
+      "href": "index.html",
+      "priority": 2
+    },
+    "my/myOrder.html": {
+      "href": "my/myOrder.html",
+      "resources": [
+        "lib/handlebars/1.3.0/helpers.js"
+      ],
+      "refer": [
+        "study/studyDtl.html",
+        "temp/temp_3.html"
+      ],
+      "priority": 6
+    },
+    "study/billResult.html": {
+      "href": "study/billResult.html",
+      "resources": [
+        "theme/images/success.png",
+        "lib/handlebars/1.3.0/helpers.js",
+        "theme/images/fail.png"
+      ],
+      "refer": [
+        "study/studyDtl.html",
+        "temp/temp_3.html",
+        "index.html",
+        "my/myOrder.html"
+      ],
+      "priority": 8
+    },
+    "study/billConfirm.html": {
+      "href": "study/billConfirm.html",
+      "resources": [
+        "lib/cryptojs/3.1.2/enc-base64-min.js",
+        "lib/cryptojs/3.1.2/core-min.js",
+        "lib/handlebars/1.3.0/helpers.js"
+      ],
+      "refer": [
+        "temp/temp_3.html",
+        "study/billResult.html"
+      ],
+      "priority": 7
+    },
+    "my/feedback.html": {
+      "href": "my/feedback.html",
+      "resources": [],
+      "priority": 7
+    },
+    "my/myIndex.html": {
+      "href": "my/myIndex.html",
+      "resources": [
+        "theme/images/icon_bill.png",
+        "common/update.js",
+        "theme/images/icon_version.png",
+        "theme/images/headIcon.png",
+        "theme/images/icon_feedback.png"
+      ],
+      "refer": [
+        "temp/template.html",
+        "login.html",
+        "my/myInfo.html",
+        "my/myOrder.html",
+        "my/feedback.html"
+      ],
+      "priority": 3
+    },
+    "comuni/comuniDtlTop.html": {
+      "href": "comuni/comuniDtlTop.html",
+      "resources": [
+        "common/jquery.form.js"
+      ],
+      "priority": 4
+    },
+    "comuni/comuniDtlContent.html": {
+      "href": "comuni/comuniDtlContent.html",
+      "priority": 6
+    },
+    "comuni/comuniDtlFoot.html": {
+      "href": "comuni/comuniDtlFoot.html",
+      "resources": [
+        "common/jquery.form.js",
+        "theme/images/J_imgAdd.png"
+      ],
+      "refer": [
+        "comuni/comuniDtlContent.html"
+      ],
+      "priority": 6
+    },
+    "comuni/comuniDtlBody.html": {
+      "href": "comuni/comuniDtlBody.html",
+      "resources": [
+        "comuni/comuni.css",
+        "comuni/pull-icon@2x.png",
+        "theme/images/J_imgAdd.png",
+        "theme/images/arecord.png",
+        "theme/images/astop.png",
+        "comuni/scrollbar.png",
+        "lib/iscroll/5.0/iscroll.js",
+        "common/jquery.form.js"
+      ],
+      "refer": [
+        "comuni/comuniDtlContent.html",
+        "comuni/comuniDtlFoot.html"
+      ],
+      "priority": 5
+    },
+    "comuni/comuniIndex.html": {
+      "href": "comuni/comuniIndex.html",
+      "resources": [
+        "comuni/comuni.js",
+        "theme/images/headIcon.png"
+      ],
+      "refer": [
+        "comuni/comuniDtlTop.html",
+        "comuni/comuniDtlBody.html"
+      ],
+      "priority": 4
+    },
+    "comuni/comuniRoleFoot.html": {
+      "href": "comuni/comuniRoleFoot.html",
+      "resources": [
+        "common/jquery.form.js"
+      ],
+      "refer": [
+        "comuni/comuniRoleBody.html"
+      ],
+      "priority": 5
+    },
+    "comuni/comuniRoleBody.html": {
+      "href": "comuni/comuniRoleBody.html",
+      "priority": 6
+    },
+    "comuni/choiceContacts.html": {
+      "href": "comuni/choiceContacts.html",
+      "resources": [],
+      "refer": [
+        "comuni/comuniRoleFoot.html",
+        "comuni/comuniRoleBody.html"
+      ],
+      "priority": 5
+    },
+    "care/noticeDtl.html": {
+      "href": "care/noticeDtl.html",
+      "resources": [
+        "lib/handlebars/1.3.0/helpers.js"
+      ],
+      "priority": 9
+    },
+    "care/notice.html": {
+      "href": "care/notice.html",
+      "resources": [
+        "theme/images/noticebg.png"
+      ],
+      "refer": [
+        "care/noticeDtl.html",
+        "temp/template_2.html"
+      ],
+      "priority": 9
+    },
+    "care/hmwkTime.html": {
+      "href": "care/hmwkTime.html",
+      "resources": [],
+      "priority": 12
+    },
+    "care/hmwkDtlDown.html": {
+      "href": "care/hmwkDtlDown.html",
+      "resources": [
+        "lib/handlebars/1.3.0/helpers.js",
+        "common/app.js"
+      ],
+      "priority": 13
+    },
+    "care/hmwkDtl.html": {
+      "href": "care/hmwkDtl.html",
+      "resources": [
+        "lib/handlebars/1.3.0/helpers.js",
+        "common/app.js"
+      ],
+      "refer": [
+        "temp/temp_3.html",
+        "care/hmwkTime.html",
+        "care/hmwkDtlDown.html"
+      ],
+      "priority": 11
+    },
+    "care/homeworkList.html": {
+      "href": "care/homeworkList.html",
+      "resources": [
+        "lib/handlebars/1.3.0/helpers.js"
+      ],
+      "refer": [
+        "temp/template_2.html",
+        "care/hmwkDtl.html"
+      ],
+      "priority": 10
+    },
+    "temp/temp_pullrefresh.html": {
+      "href": "temp/temp_pullrefresh.html",
+      "resources": [
+        "common/app.js"
+      ],
+      "priority": 11
+    },
+    "care/careIndex.html": {
+      "href": "care/careIndex.html",
+      "priority": 11
+    },
+    "care/choiceRole.html": {
+      "href": "care/choiceRole.html",
+      "priority": 1
+    },
+    "study/studyFilter.html": {
+      "href": "study/studyFilter.html",
+      "resources": [
+        "lib/iscroll/5.0/iscroll.js"
+      ],
+      "priority": 8
+    },
+    "study/studyIndex.html": {
+      "href": "study/studyIndex.html",
+      "resources": [
+        "lib/iscroll/5.0/iscroll.js"
+      ],
+      "refer": [
+        "temp/template.html",
+        "study/studyDtl.html"
+      ],
+      "priority": 10
+    },
+    "study/studyMenu.html": {
+      "href": "study/studyMenu.html",
+      "resources": [
+        "lib/iscroll/5.0/iscroll.js"
+      ],
+      "priority": 12
+    }
+  },
+  "idle": {
+    "resources": [
+      "care/.svn/text-base/hmwkDtl.html.svn-base",
+      "my/.svn/all-wcprops",
+      "theme/images/.svn/text-base/homework.png.svn-base",
+      "theme/images/.svn/prop-base/fail.png.svn-base",
+      "theme/images/course.png",
+      "care/.svn/text-base/choiceRole.html.svn-base",
+      "data/notice.json",
+      "study/.svn/text-base/studyFilter.html.svn-base",
+      "lib/cryptojs/3.1.2/.svn/text-base/enc-base64-min.js.svn-base",
+      "comuni/.svn/text-base/comuniIndex.html.svn-base",
+      "care/.svn/all-wcprops",
+      "data/.svn/text-base/studyMenuList.json.svn-base",
+      "data/.svn/all-wcprops",
+      "lib/jquery/2.1.3/.svn/text-base/jquery.min.js.svn-base",
+      "study/.svn/text-base/studyDtl.html.svn-base",
+      "theme/images/tsqz.png",
+      "theme/images/.svn/text-base/noticebg.png.svn-base",
+      "data/.svn/entries",
+      "data/.svn/text-base/teacherWorks.json.svn-base",
+      "data/.svn/text-base/examAnaTea.json.svn-base",
+      "theme/images/.svn/prop-base/icon_version.png.svn-base",
+      "data/.svn/text-base/queryAppList.json.svn-base",
+      "lib/cryptojs/.svn/entries",
+      ".svn/text-base/manifest.json.svn-base",
+      "theme/images/.svn/prop-base/chemistry.png.svn-base",
+      "theme/images/.svn/prop-base/ttl.png.svn-base",
+      "theme/images/.svn/prop-base/arecord.png.svn-base",
+      "theme/images/math.png",
+      "theme/images/prodDtl_intro.png",
+      ".svn/text-base/index.html.svn-base",
+      "theme/images/.svn/text-base/arrows.png.svn-base",
+      "lib/photoSwipe/default-skin/.svn/prop-base/preloader.gif.svn-base",
+      "theme/images/.svn/prop-base/arrows.png.svn-base",
+      "theme/images/.svn/text-base/start_bg1.png.svn-base",
+      "care/.svn/entries",
+      "lib/handlebars/1.3.0/.svn/all-wcprops",
+      "care/.svn/text-base/homeworkList.html.svn-base",
+      "theme/images/login_bg.png",
+      "theme/images/.svn/text-base/seat.png.svn-base",
+      "theme/images/.svn/prop-base/course.png.svn-base",
+      "data/isLogin.json",
+      "theme/images/.svn/text-base/loginIcon.png.svn-base",
+      "lib/mui/mui.js",
+      "theme/.svn/text-base/common.css.svn-base",
+      "forgetpwd/.svn/entries",
+      "lib/photoSwipe/default-skin/default-skin.svg",
+      "lib/photoSwipe/default-skin/.svn/text-base/default-skin.png.svn-base",
+      "theme/images/.svn/prop-base/ttl_b.png.svn-base",
+      "forgetpwd/.svn/text-base/forgetPwdF.html.svn-base",
+      "lib/ichart/.svn/text-base/ichartjs.base.js.svn-base",
+      "lib/cryptojs/3.1.2/.svn/entries",
+      "theme/images/jxhd.png",
+      "lib/photoSwipe/photoswipe.css",
+      "theme/images/.svn/text-base/J_imgAdd.png.svn-base",
+      "theme/images/.svn/text-base/ajax-loader.gif.svn-base",
+      "lib/mui/fonts/.svn/entries",
+      "lib/photoSwipe/default-skin/.svn/prop-base/default-skin.png.svn-base",
+      "data/.svn/text-base/choiceRole.json.svn-base",
+      "theme/images/.svn/prop-base/nocontent.png.svn-base",
+      "data/examAnaTea.json",
+      ".svn/text-base/appicon_48.png.svn-base",
+      "temp/.svn/text-base/temp_3.html.svn-base",
+      "data/teacherWorks.json",
+      "my/feedbackRes.html",
+      "theme/images/.svn/text-base/fail.png.svn-base",
+      "lib/iscroll/5.0/iscroll-probe.js",
+      "lib/photoSwipe/default-skin/.svn/text-base/default-skin.css.svn-base",
+      "lib/photoSwipe/.svn/all-wcprops",
+      "comuni/.svn/text-base/comuni.js.svn-base",
+      "care/.svn/text-base/hmwkDtlDown.html.svn-base",
+      "data/.svn/text-base/examSearchTeaDtl.json.svn-base",
+      "data/examDtl.json",
+      "comuni/.svn/text-base/pull-icon@2x.png.svn-base",
+      ".svn/text-base/appicon_144.png.svn-base",
+      "data/examSearchStu.json",
+      "data/.svn/text-base/notice.json.svn-base",
+      "lib/jquery/.svn/entries",
+      "care/.svn/text-base/hmwkTime.html.svn-base",
+      "my/.svn/text-base/feedback.html.svn-base",
+      ".svn/text-base/appicon_72.png.svn-base",
+      "lib/mui/.svn/entries",
+      "comuni/comuniDtl.html",
+      "comuni/.svn/text-base/comuniDtlFoot.html.svn-base",
+      "lib/.svn/entries",
+      "my/.svn/text-base/myOrder.html.svn-base",
+      "comuni/.svn/text-base/comuniDtlBody.html.svn-base",
+      "data/examSearchStudent.json",
+      "theme/images/chemistry.png",
+      "theme/images/.svn/text-base/proddtl.png.svn-base",
+      "comuni/iscroll.js",
+      "theme/images/.svn/text-base/tsqz.png.svn-base",
+      "data/queryAppList.json",
+      "data/careIndex.json",
+      "theme/images/.svn/text-base/jdgz.png.svn-base",
+      "theme/images/.svn/prop-base/common.png.svn-base",
+      ".svn/prop-base/appicon_96.png.svn-base",
+      "data/.svn/text-base/someTimeExam.json.svn-base",
+      "comuni/.svn/text-base/scrollbar.png.svn-base",
+      "theme/images/.svn/text-base/headIcon.png.svn-base",
+      "lib/mui/fonts/.svn/text-base/mui.ttf.svn-base",
+      "theme/images/.svn/text-base/ttl_b.png.svn-base",
+      "theme/images/jdgz.png",
+      "theme/images/.svn/text-base/chemistry.png.svn-base",
+      "lib/photoSwipe/default-skin/.svn/entries",
+      "theme/images/.svn/prop-base/astop.png.svn-base",
+      "data/.svn/text-base/prodDtl.json.svn-base",
+      "data/someTimeExam.json",
+      "lib/photoSwipe/.svn/text-base/photoswipe.js.svn-base",
+      "lib/iscroll/5.0/.svn/text-base/iscroll-lite.js.svn-base",
+      "care/.svn/text-base/noticeDtl.html.svn-base",
+      "lib/iscroll/.svn/text-base/iscroll-5.0.6-upgrade.js.svn-base",
+      ".svn/text-base/appicon_96.png.svn-base",
+      "lib/iscroll/.svn/entries",
+      "appicon_72.png",
+      "theme/images/.svn/text-base/gd_icon.png.svn-base",
+      "theme/images/.svn/text-base/prodDtl_intro.png.svn-base",
+      "theme/images/loading-bg.png",
+      "appicon_48.png",
+      "theme/images/.svn/prop-base/ajax-loader.gif.svn-base",
+      "lib/mui/css/mui.min.css",
+      "lib/photoSwipe/photoswipe-ui-default.js",
+      "theme/images/physics.png",
+      "comuni/.svn/text-base/choiceContacts.html.svn-base",
+      "theme/images/chinese.png",
+      "lib/mui/css/.svn/all-wcprops",
+      ".svn/text-base/login.html.svn-base",
+      "study/.svn/text-base/billConfirm.html.svn-base",
+      "study/.svn/text-base/studyIndex.html.svn-base",
+      "theme/images/.svn/text-base/math.png.svn-base",
+      "regist/.svn/entries",
+      "theme/images/.svn/prop-base/physics.png.svn-base",
+      "data/.svn/text-base/examAna.json.svn-base",
+      "data/.svn/text-base/prodVersion.json.svn-base",
+      "lib/photoSwipe/.svn/text-base/photoswipe-ui-default.min.js.svn-base",
+      "comuni/.svn/text-base/comuniDtlContent.html.svn-base",
+      "lib/photoSwipe/.svn/text-base/photoswipe.min.js.svn-base",
+      "theme/images/.svn/text-base/performance.png.svn-base",
+      "theme/images/notice.png",
+      "common/.svn/text-base/pwdencode.js.svn-base",
+      "lib/mui/fonts/.svn/all-wcprops",
+      "care/.svn/text-base/examScore.html.svn-base",
+      ".svn/entries",
+      "comuni/.svn/text-base/iscroll.js.svn-base",
+      "data/.svn/text-base/examSearchStudent.json.svn-base",
+      "data/.svn/text-base/hmwkDtl_tea.json.svn-base",
+      "lib/iscroll/5.0/iscroll-zoom.js",
+      "lib/handlebars/1.3.0/.svn/text-base/helpers.js.svn-base",
+      "common/.svn/text-base/base64.js.svn-base",
+      "data/prodVersion.json",
+      "theme/images/.svn/prop-base/tsqz.png.svn-base",
+      "lib/jquery/.svn/all-wcprops",
+      "theme/images/.svn/prop-base/loginIcon.png.svn-base",
+      "theme/images/.svn/prop-base/headIcon.png.svn-base",
+      ".svn/prop-base/appicon_144.png.svn-base",
+      "theme/images/.svn/text-base/icon_version.png.svn-base",
+      "temp/.svn/all-wcprops",
+      "appicon_96.png",
+      "common/.svn/text-base/webSQL.js.svn-base",
+      "theme/images/seat.png",
+      "lib/iscroll/5.0/iscroll-infinite.js",
+      "lib/photoSwipe/.svn/text-base/photoswipe.css.svn-base",
+      "theme/images/.svn/all-wcprops",
+      "theme/images/.svn/prop-base/math.png.svn-base",
+      "lib/photoSwipe/default-skin/preloader.gif",
+      "lib/cryptojs/.svn/all-wcprops",
+      "common/.svn/text-base/common.js.svn-base",
+      "data/.svn/text-base/hmwkAna.json.svn-base",
+      "lib/mui/.svn/text-base/mui.min.js.svn-base",
+      "data/comuni/getMsgRoles.json",
+      "theme/images/.svn/prop-base/icon_feedback.png.svn-base",
+      "theme/images/.svn/prop-base/performance.png.svn-base",
+      "study/.svn/text-base/billResult.html.svn-base",
+      "temp/.svn/text-base/temp_pullrefresh.html.svn-base",
+      "theme/images/proddtl.png",
+      ".svn/all-wcprops",
+      "lib/photoSwipe/default-skin/default-skin.png",
+      "lib/mui/fonts/.svn/prop-base/mui.ttf.svn-base",
+      "data/examAna.json",
+      "theme/images/.svn/prop-base/seat.png.svn-base",
+      "lib/iscroll/5.0/.svn/entries",
+      "data/.svn/text-base/examSearchTea.json.svn-base",
+      "theme/images/.svn/prop-base/loading-bg.png.svn-base",
+      "care/.svn/text-base/examScoreSearch.html.svn-base",
+      "data/comuni/getMsg.json",
+      "lib/ichart/.svn/text-base/ichartjs.pie.js.svn-base",
+      "lib/iscroll/5.0/iscroll-lite.js",
+      "my/.svn/entries",
+      "lib/.svn/all-wcprops",
+      "lib/ichart/.svn/entries",
+      "theme/images/english.png",
+      "temp/.svn/text-base/template_2.html.svn-base",
+      "lib/cryptojs/3.1.2/.svn/all-wcprops",
+      "forgetpwd/.svn/text-base/forgetPwd.html.svn-base",
+      "temp/.svn/text-base/template.html.svn-base",
+      "common/.svn/text-base/SMSValidCode.js.svn-base",
+      ".svn/text-base/redirect.html.svn-base",
+      "lib/handlebars/.svn/entries",
+      "data/hmwkAna.json",
+      "theme/images/.svn/prop-base/word_icon.png.svn-base",
+      "lib/ichart/.svn/all-wcprops",
+      "theme/images/.svn/prop-base/jdgz.png.svn-base",
+      "lib/photoSwipe/default-skin/.svn/text-base/preloader.gif.svn-base",
+      "lib/handlebars/1.3.0/handlebars.runtime.js",
+      "lib/iscroll/5.0/.svn/text-base/iscroll-zoom.js.svn-base",
+      "lib/handlebars/1.3.0/.svn/text-base/handlebars.js.svn-base",
+      "comuni/.svn/prop-base/scrollbar.png.svn-base",
+      "care/.svn/text-base/examDtl.html.svn-base",
+      "theme/images/.svn/text-base/success.png.svn-base",
+      "lib/iscroll/iscroll-5.0.6-upgrade.js",
+      "study/.svn/text-base/studyMenu.html.svn-base",
+      "theme/images/.svn/text-base/physics.png.svn-base",
+      "theme/images/.svn/text-base/word_icon.png.svn-base",
+      "comuni/.svn/text-base/comuniDtlTop.html.svn-base",
+      "lib/handlebars/.svn/all-wcprops",
+      "theme/images/.svn/prop-base/start_bg1.png.svn-base",
+      "theme/images/.svn/text-base/astop.png.svn-base",
+      "data/prodDtl.json",
+      "theme/images/.svn/text-base/notice.png.svn-base",
+      "common/SMSValidCode.js",
+      "comuni/.svn/text-base/comuniRoleBody.html.svn-base",
+      "study/.svn/all-wcprops",
+      "lib/photoSwipe/.svn/entries",
+      "forgetpwd/.svn/text-base/forgetPwdS.html.svn-base",
+      "lib/jquery/2.1.3/.svn/entries",
+      "common/webSQL.js",
+      "common/.svn/text-base/jquery.form.js.svn-base",
+      "theme/images/homework.png",
+      "comuni/.svn/text-base/comuniDes.html.svn-base",
+      "theme/images/.svn/text-base/ttl.png.svn-base",
+      "lib/photoSwipe/default-skin/.svn/all-wcprops",
+      "theme/images/.svn/text-base/arecord.png.svn-base",
+      "theme/images/.svn/text-base/nocontent.png.svn-base",
+      "forgetpwd/.svn/all-wcprops",
+      "theme/images/login_bg2.png",
+      "lib/mui/css/.svn/text-base/mui.min.css.svn-base",
+      "care/.svn/text-base/careIndex.html.svn-base",
+      "theme/images/.svn/prop-base/noticebg.png.svn-base",
+      "theme/images/.svn/prop-base/login_bg2.png.svn-base",
+      "theme/images/.svn/text-base/icon_bill.png.svn-base",
+      "lib/cryptojs/3.1.2/.svn/text-base/core-min.js.svn-base",
+      "regist/.svn/text-base/registerS.html.svn-base",
+      "data/examSearchTea.json",
+      "theme/images/.svn/prop-base/jxhd.png.svn-base",
+      "data/comuni/.svn/text-base/getMsg.json.svn-base",
+      "theme/images/.svn/text-base/english.png.svn-base",
+      "data/.svn/text-base/examDtl.json.svn-base",
+      "lib/mui/.svn/all-wcprops",
+      "common/.svn/text-base/update.js.svn-base",
+      ".svn/prop-base/appicon_48.png.svn-base",
+      "data/examSearchTeaDtl.json",
+      "lib/iscroll/5.0/.svn/all-wcprops",
+      "common/.svn/text-base/config.js.svn-base",
+      "theme/images/.svn/prop-base/prodDtl_intro.png.svn-base",
+      "theme/images/.svn/text-base/login_bg.png.svn-base",
+      "data/choiceRole.json",
+      "comuni/.svn/text-base/comuni.css.svn-base",
+      "theme/images/common.png",
+      "theme/images/.svn/prop-base/J_imgAdd.png.svn-base",
+      "data/.svn/text-base/examSearchStu.json.svn-base",
+      "comuni/.svn/entries",
+      "theme/images/ttl_b.png",
+      "lib/photoSwipe/photoswipe-ui-default.min.js",
+      "comuni/.svn/text-base/comuniDtl.html.svn-base",
+      "theme/images/.svn/prop-base/homework.png.svn-base",
+      "care/.svn/text-base/hmwkAna.html.svn-base",
+      "my/.svn/text-base/myInfo.html.svn-base",
+      "lib/iscroll/5.0/.svn/text-base/iscroll-probe.js.svn-base",
+      "theme/images/.svn/prop-base/proddtl.png.svn-base",
+      "lib/jquery/2.1.3/.svn/all-wcprops",
+      "forgetpwd/.svn/text-base/forgetPwdT.html.svn-base",
+      "study/.svn/entries",
+      "comuni/.svn/prop-base/pull-icon@2x.png.svn-base",
+      "comuni/.svn/all-wcprops",
+      "data/studyMenuList.json",
+      "my/.svn/text-base/myIndex.html.svn-base",
+      "data/hmwkDtl_tea.json",
+      "theme/images/ttl.png",
+      "lib/mui/css/.svn/entries",
+      "theme/.svn/all-wcprops",
+      "lib/photoSwipe/default-skin/.svn/text-base/default-skin.svg.svn-base",
+      "care/.svn/text-base/examAna.html.svn-base",
+      "lib/iscroll/5.0/.svn/text-base/iscroll-infinite.js.svn-base",
+      "comuni/.svn/text-base/comuniRoleFoot.html.svn-base",
+      "theme/images/.svn/prop-base/gd_icon.png.svn-base",
+      "lib/mui/.svn/text-base/mui.js.svn-base",
+      "theme/images/.svn/text-base/login_bg2.png.svn-base",
+      "theme/images/ajax-loader.gif",
+      "theme/images/.svn/text-base/common.png.svn-base",
+      "regist/.svn/text-base/register.html.svn-base",
+      "theme/images/.svn/text-base/course.png.svn-base",
+      "temp/.svn/entries",
+      "theme/images/.svn/text-base/loading-bg.png.svn-base",
+      "theme/images/.svn/text-base/jxhd.png.svn-base",
+      "lib/mui/css/.svn/text-base/mui.css.svn-base",
+      "theme/images/.svn/prop-base/icon_bill.png.svn-base",
+      "lib/iscroll/.svn/all-wcprops",
+      "lib/cryptojs/3.1.2/.svn/text-base/md5.js.svn-base",
+      "my/.svn/text-base/feedbackRes.html.svn-base",
+      "temp/.svn/text-base/temp_4.html.svn-base",
+      "appicon_144.png",
+      "theme/images/performance.png",
+      "care/.svn/text-base/notice.html.svn-base",
+      "data/comuni/.svn/entries",
+      "theme/images/.svn/text-base/chinese.png.svn-base",
+      "common/.svn/entries",
+      "theme/images/.svn/prop-base/success.png.svn-base",
+      "lib/iscroll/5.0/.svn/text-base/iscroll.js.svn-base",
+      "regist/.svn/text-base/registerT.html.svn-base",
+      "data/.svn/text-base/isLogin.json.svn-base",
+      "lib/photoSwipe/photoswipe.min.js",
+      "lib/photoSwipe/default-skin/default-skin.css",
+      "lib/photoSwipe/photoswipe.js",
+      "lib/handlebars/1.3.0/.svn/entries",
+      "data/.svn/text-base/careIndex.json.svn-base",
+      "data/comuni/.svn/all-wcprops",
+      "lib/photoSwipe/.svn/text-base/photoswipe-ui-default.js.svn-base",
+      "lib/handlebars/1.3.0/.svn/text-base/handlebars.runtime.js.svn-base",
+      "theme/images/.svn/prop-base/notice.png.svn-base",
+      "common/.svn/text-base/app.js.svn-base",
+      ".svn/prop-base/appicon_72.png.svn-base",
+      "theme/images/.svn/text-base/icon_feedback.png.svn-base",
+      "data/comuni/.svn/text-base/getMsgRoles.json.svn-base",
+      "theme/.svn/entries",
+      "theme/images/.svn/prop-base/login_bg.png.svn-base",
+      "theme/images/.svn/prop-base/english.png.svn-base",
+      "theme/images/.svn/entries",
+      "regist/.svn/all-wcprops",
+      "common/.svn/all-wcprops",
+      "theme/images/.svn/prop-base/chinese.png.svn-base"
+    ]
+  }
+}

@@ -1,0 +1,75 @@
+{
+    "rows": [
+        {
+            "isActive": "2",
+            "menuDomain": "1,2,3",
+            "order": "1",
+            "menuName": "家校互动",
+            "menuID": "jxhd"
+        },
+        {
+            "isActive": "2",
+            "menuDomain": "1,2,3",
+            "order": "2",
+            "menuName": "下载",
+            "menuID": "xz"
+        },
+        {
+            "isActive": "2",
+            "menuDomain": "1,2,3",
+            "order": "3",
+            "menuName": "学科学习",
+            "menuID": "xkxx"
+        },
+        {
+            "isActive": "2",
+            "menuDomain": "1,2,3",
+            "order": "4",
+            "menuName": "教育社区",
+            "menuID": "jysq"
+        },
+        {
+            "isActive": "2",
+            "menuDomain": "1,2,3",
+            "order": "5",
+            "menuName": "讲座与活动",
+            "menuID": "jzyhd"
+        },
+        {
+            "isActive": "2",
+            "menuDomain": "1,2,3",
+            "order": "6",
+            "menuName": "阅读与写作",
+            "menuID": "ydyxz"
+        },
+        {
+            "isActive": "1",
+            "menuDomain": "1,2,3",
+            "order": "7",
+            "menuName": "组合产品",
+            "menuID": "ZHCP"
+        },
+        {
+            "isActive": "1",
+            "menuDomain": "1,2,3",
+            "order": "8",
+            "menuName": "增值服务",
+            "menuID": "zzfw"
+        },
+        {
+            "isActive": "2",
+            "menuDomain": "1,2,3",
+            "order": "9",
+            "menuName": "名家名博",
+            "menuID": "mjmb"
+        },
+        {
+            "isActive": "2",
+            "menuDomain": "2",
+            "order": "91",
+            "menuName": "校务管理",
+            "menuID": "xwgl"
+        }
+    ],
+    "rtnCode": 1
+}

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<style>
+	html,body {
+		background-color: #efeff4;
+	}
+	.mui-bar .mui-segmented-control .mui-control-item{
+		 width: 72px; 
+		 line-height: 30px;
+	}
+	header.mui-bar .mui-segmented-control{
+		width: 218px;
+		position: absolute;
+		left: 50%;
+		margin-left: -109px;
+	}
+	.mui-segmented-control {
+		background: #fff;
+	}
+	.hmwk .mui-control-item {
+		color: #5DBABE!important;
+		border-color: #5DBABE!important;
+	}
+	.hmwk .mui-active {
+		color: #fff!important;
+		background-color: #5DBABE!important;
+	}
+	.stu_body {
+		background: #094462!important;
+	}
+	.stu_mui-bar-nav {
+		box-shadow: none!important;
+	}
+</style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+		<a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<!--<div id="J_notice_type" class="mui-segmented-control">
+			<a class="mui-control-item mui-active" noticeType="1">全部公告</a>
+			<a class="mui-control-item" noticeType="2">我的收藏</a>
+			<a class="mui-control-item" noticeType="3">学校公告</a>
+		</div>-->
+		<h1 id="J_notice_type" class="mui-title">我的公告</h1>
+		<h1 id="" class="mui-title J_hmwk_type" style="display: none;">作业</h1>
+		<a id="J_hmwk_type" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right J_hmwk_type"></a>
+		<!--<div id="J_hmwk_type" class="mui-segmented-control hmwk" style="display: none;">
+			<a class="mui-control-item mui-active" hmwkType="1">全部作业</a>
+			<a class="mui-control-item" hmwkType="2">未完成</a>
+			<a class="mui-control-item" hmwkType="3">已完成</a>
+		</div>-->
+		<h1 id="title" class="mui-title">作业</h1>
+	</header>
+	<div class="mui-content"></div>
+</body>
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../common/app.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script type="text/javascript">
+mui.init();
+mui.plusReady(function(){
+	var hmwkType = document.getElementById('J_hmwk_type'),
+		noticeType = document.getElementById('J_notice_type'),
+		titleDiv = document.getElementById('title'),
+		userInfo = Util.lStorage.getParam('userInfo');
+		userInfo = JSON.parse(userInfo);
+		
+	window.addEventListener("updateHeader", function(e) {
+		var title = e.detail.title;
+		if (title == '作业') {
+			var userInfo = Util.lStorage.getParam('userInfo');
+			var typeId = JSON.parse(userInfo).typeId;
+			$(".J_hmwk_type").css("display","block");
+			if(typeId == '2'){
+				$("#J_hmwk_type").css("display","none");
+			}else{
+				$("#J_hmwk_type").css("display","block");
+			}
+			noticeType.style.display = 'none';
+			titleDiv.style.display = 'none';
+			$("body").removeClass("stu_body");
+			$(".mui-bar-nav").removeClass("stu_mui-bar-nav");
+		} else{
+			$(".J_hmwk_type").css("display","none");
+			noticeType.style.display = 'block';
+			titleDiv.style.display = 'none';
+			$("body").addClass("stu_body");
+			$(".mui-bar-nav").addClass("stu_mui-bar-nav");
+		}
+	});
+	
+	//加载不同公告类型
+	mui('#J_notice_type').on('tap', 'a', function(){
+		var noticeType = this.getAttribute('noticeType');
+		mui.fire(plus.webview.currentWebview().children()[0],'noticeType',{noticeType:noticeType});
+	})
+	//加载不同作业类型
+//	mui('#J_hmwk_type').on('tap', 'a', function(){
+//		var hmwkType = this.getAttribute('hmwkType');
+//		mui.fire(plus.webview.currentWebview().children()[0],'hmwkType',{hmwkType:hmwkType});
+//	})
+
+	var contentWebview = null;
+	document.getElementById("J_hmwk_type").addEventListener('tap', function(e) {
+		e.stopPropagation();
+		if(contentWebview==null){
+			contentWebview = plus.webview.currentWebview().children()[0];
+		}
+		contentWebview.evalJS('mui("#topPopover").popover("toggle")');
+	});
+})
+</script>
+</html>

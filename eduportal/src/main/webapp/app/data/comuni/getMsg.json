@@ -1,0 +1,74 @@
+{
+    "rtnMsg": "调用成功",
+    "rtnCode": "1",
+    "retInfo": [
+        {
+            "destid": "689746,",
+            "startdate": "2015-05-19 11:46:05",
+            "destinfo": "刘淑娜",
+            "enddate": "2015-05-21 19:28:21",
+            "msg": [
+                {
+                    "content": "范志乐,郝遂芳,胡巧丽,刘淑娜,刘婷婷,孟转,王晓飞,许坤峰,杨慧丽,杨连菊,张保须,甄二江,今天下午中心校抽考，以上人员2:10到中心校开会监考，没有监考任务的在学校上课。【办公室】",
+                    "filepath": "http://mfile.xxt.cn/",
+                    "msgid": 550985760,
+                    "msgtype": "cc",
+                    "createdate": "2015-05-19 11:46:05",
+                    "filename": "",
+                    "filetype": 0,
+                    "destusertype": 0,
+                    "filetimelong": null,
+                    "msgsendtype": 2
+                },
+                {
+                    "content": "3——6班主任老师2：10到校给学生念考号！胡巧丽,冯彩霞,郭爱玉,郝遂芳,刘淑娜,刘婷婷,王晓飞,许坤峰,杨慧丽,杨连菊,张保须,甄二江,    以上12位教师2：10到校去监考。【办公室】",
+                    "filepath": "http://mfile.xxt.cn/",
+                    "msgid": 551008664,
+                    "msgtype": "cc",
+                    "createdate": "2015-05-19 14:00:00",
+                    "filename": "",
+                    "filetype": 0,
+                    "destusertype": 0,
+                    "filetimelong": null,
+                    "msgsendtype": 2
+                },
+                {
+                    "content": "今天下午5:00前把有问题的试卷教导处反馈，过期不再反馈。【刘淑娜】",
+                    "filepath": "http://mfile.xxt.cn/",
+                    "msgid": 551412984,
+                    "msgtype": "cc",
+                    "createdate": "2015-05-20 15:18:16",
+                    "filename": "",
+                    "filetype": 0,
+                    "destusertype": 0,
+                    "filetimelong": null,
+                    "msgsendtype": 2
+                },
+                {
+                    "content": "明天上午前两节检查作业、教案，听课记录，作业各级各科拿5本，教案，反思，听课记录标好数量送到教导处，切记前两节。【办公室】",
+                    "filepath": "http://mfile.xxt.cn/",
+                    "msgid": 551985202,
+                    "msgtype": "cc",
+                    "createdate": "2015-05-21 19:25:49",
+                    "filename": "",
+                    "filetype": 0,
+                    "destusertype": 0,
+                    "filetimelong": null,
+                    "msgsendtype": 2
+                },
+                {
+                    "content": "按11周检查【办公室】",
+                    "filepath": "http://mfile.xxt.cn/",
+                    "msgid": 551986164,
+                    "msgtype": "cc",
+                    "createdate": "2015-05-21 19:28:21",
+                    "filename": "",
+                    "filetype": 0,
+                    "destusertype": 0,
+                    "filetimelong": null,
+                    "msgsendtype": 2
+                }
+            ]
+        }
+    ]
+}

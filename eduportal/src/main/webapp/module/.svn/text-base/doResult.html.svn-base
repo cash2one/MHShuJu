@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="renderer" content="webkit" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+<meta name="keywords" content="河南移动，教育门户，校讯通，同步课堂，中小学学习报" />
+<meta name="Description" content="河南移动教育门户————河南移动各类教育产品统一管理门户网站" />
+<title>办理结果</title>
+<link rel="stylesheet" type="text/css" href="../theme/common.css?v=20141112"/>
+<link rel="stylesheet" type="text/css" href="../lib/dialog/4.1.7/skins/blue.css"/>
+</head>
+<body>
+<div class="ui-wrapper">
+	<div class="ui-head">
+		<div style="width:1024px;margin:0 auto;">
+			<div class="ui-hello fn-left">您好，请用河南移动手机号码<a class="ui-nav-login" href="login.html">登录</a>！</div>
+			<ul class="ui-nav-list">
+			    <li class="ui-nav-hej"><a href="javascript:;">和教育</a></li>
+				<li class="ui-nav-index"><a href="index.html">首页</a></li>
+				<li class="ui-nav-app"><a href="javascript:;">我的订单</a></li>
+				<li class="ui-nav-collect"><a href="javascript:;">我的收藏</a></li>
+				<!-- <li class="ui-nav-info"><a href="#nogo">个人资料</a></li> -->
+				<li class="ui-nav-choiceRole"><a href="javascript:;">切换角色</a></li>
+				<li class="ui-nav-loginout"><a href="javascript:;">退出</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="ui-cont fn-clear">
+		<div class="ui-search">
+			<a class="ui-logo" href="index.html"></a>
+			<div class="ui-search-cont">
+				<input class="ui-search-ipt" id="J_search_ipt" type="text" value="请输入关键字搜索" onblur="if(this.value=='') {this.value='请输入关键字搜索';this.style.color='#999';}" onfocus="if(this.value=='请输入关键字搜索') {this.value='';this.style.color='#333';}" />
+				<ul class="ui-hot-kwd fn-clear" id="J_hot_kwd"></ul>
+			</div>
+			<a class="ui-btn ui-btn-red ui-myCart" href="javascript:;">我的购物车(<span>0</span>)</a>
+		</div>
+		<div class="ui-pers-cent">
+			<ul class="ui-pers-list">
+				<li class="ui-pers-cart"><a href="sCart.html"><b></b>查看购物车</a></li>
+				<li class="ui-pers-order ui-pers-list-cur"><a href="myOrder.html"><b></b>我的订单</a></li>
+				<li class="ui-pers-clt"><a href="myCollect.html"><b></b>我的收藏</a></li>
+				<li class="ui-pers-accBind"><a href="accountBinding.html"><b></b>账号绑定</a></li>
+				<li class="ui-pers-choiceRole"><a href="javascript:;"><b></b>切换角色</a></li>
+			</ul>
+		</div>
+		<div class="ui-right-cont">
+			<!-- 面包屑 -->
+			<div class="ui-crumbs-wrap">
+				<ul class="ui-crumbs fn-clear" style="margin: 0 auto;">
+					<li class="ui-step ui-step-done">
+						<div class="ui-step-num">STEP.01</div>
+						<div class="ui-step-text">查看购物车</div>
+					</li>
+					<li class="ui-arrows ui-arrows-done"></li>
+					<li class="ui-step ui-step-done">
+						<div class="ui-step-num">STEP.02</div>
+						<div class="ui-step-text">确认订单信息</div>
+					</li>
+					<li class="ui-arrows ui-arrows-done"></li>
+					<li class="ui-step ui-step-cur">
+						<div class="ui-step-num">STEP.03</div>
+						<div class="ui-step-text">办理结果</div>
+					</li>
+				</ul>
+				<div class="ui-split-solid"></div>
+			</div>
+			<div>
+		        <div class="ui-success">
+	            	<div class="ui-success-cont">
+	            		<div class="ui-scs-congra">恭喜！您已成功提交订单！</div>
+	            		 <div class="ui-scs-remind"></div> 
+	            	</div>
+	            </div>
+			</div>
+			<div class="ui-circle-tl">
+				<div class="ui-circle-tr"><span></span></div>
+				<div class="ui-circle-body"  style="padding:10px 30px;">
+					<ul class="ui-plist fn-clear" id="J_plist">
+						<div class="ui-loading"><h1><img src="../theme/images/loading.gif" alt="loading">正在为您加载，请稍等 ...</h1></div>
+					</ul>
+				</div>
+				<div class="ui-circle-bl"><em><span></span></em></div>
+			</div>
+			<div class="ui-btn-wrap" style="margin-top:30px;">
+				<a class="ui-btn ui-btn-sky" href="myOrder.html" style="margin-left:670px;">查看所有订单</a>
+        	</div>
+		</div>
+	</div>
+</div>
+
+<script id="T_plist" type="text/x-handlebars-template">
+{{#if this.length}}
+	{{#each this}}
+		<li class="fn-clear" data-collect="{{isCollect}}">
+			<a href="prodDtl.html?appID={{appID}}&nodeUid={{nodeUid}}&month={{month}}" target="_blank" class="fn-left">
+				<img src="../{{appPic}}" width="100" height="56">
+			</a>
+			<div class="ui-plist-info">
+				<a href="prodDtl.html?appID={{appID}}&nodeUid={{nodeUid}}&month={{month}}" class="ui-plist-name" target="_blank">{{appName}}</a>
+				<div class="ui-plist-dtl">
+					<span>包月：{{month}}个月</span>
+					<span>开通日期：<span class="nowDate"></span></span>
+				</div>
+			</div>
+			<div class="ui-plist-price">
+				金额：<span style="color:#FE631F;">{{price}}元</span>
+			</div>
+		</li>
+	{{/each}}
+{{else}}
+	<li style="padding:30px 0;font-size:16px;">当前没有已订购成功的产品，快去订购吧~</li>
+{{/if}}
+</script>
+
+<script type="text/javascript" src="../lib/json2/1.0.0/json2.js"></script>
+<script type="text/javascript" src="../lib/jquery/1.8.1/jquery.js"></script>
+<script type="text/javascript" src="../lib/jqueryui/1.11.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../lib/cookie/1.2.0/jquery.cookie.js"></script>
+<script type="text/javascript" src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script type="text/javascript" src="../lib/handlebars/1.3.0/helpers.js"></script>
+<script type="text/javascript" src="../lib/cryptojs/3.1.2/core-min.js"></script>
+<script type="text/javascript" src="../lib/cryptojs/3.1.2/enc-base64-min.js"></script>
+<script type="text/javascript" src="../lib/dialog/4.1.7/artDialog.js"></script>
+<script type="text/javascript" src="../lib/dialog/4.1.7/iframeTools.js"></script>
+<script type="text/javascript" src="../common/config.js"></script>
+<script type="text/javascript" src="../common/common.js?v=20141112"></script>
+<script type="text/javascript">
+$(function(){
+	var rtnMsg = Util.browser.getParameter('rtnMsg');
+	srvMap.add('getOrder', 'getOrder.json','commonCMS-GetOrderCacheInfo.action?uid=getOrdCache');
+	if(rtnMsg){
+		$('.ui-success').addClass('ui-fail');
+		$('.ui-scs-congra').text('对不起，订购失败！');
+		$('.ui-scs-remind').text(Util.transDecoding(rtnMsg));
+		Util.ajax.postJson(srvMap.get('getOrder'),'',function(json,status){
+			if (status) {
+				    var prodInfo = JSON.parse(json.rtnMsg);
+				    Util.ajax.loadTemp('#J_plist',$('#T_plist'),prodInfo);
+					var now = Util.date.dateTime2str(new Date(),'yyyy-MM-dd');
+					$('.nowDate').text(now);
+			}
+			payFlag = true;
+		})
+	}else{
+		Util.ajax.postJson(srvMap.get('getOrder'),'',function(json,status){
+			if (status) {
+				    var prodInfo = JSON.parse(json.rtnMsg);
+				    Util.ajax.loadTemp('#J_plist',$('#T_plist'),prodInfo);
+				    var now = Util.date.dateTime2str(new Date(),'yyyy-MM-dd');
+					$('.nowDate').text(now);
+			}
+			payFlag = true;
+		})
+	}
+})
+</script>
+</body>
+</html>

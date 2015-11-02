@@ -1,0 +1,16 @@
+{
+    "rtnMsg": "call success.",
+    "beans": [
+        {
+            "otherName": "中小学_1",
+            "otherId": "1",
+            "isBind": "0"
+        },
+        {
+            "otherName": "中小学_2",
+            "otherId": "3",
+            "isBind": "1"
+        }
+    ],
+    "rtnCode": "1"
+}

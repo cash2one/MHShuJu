@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/Eduportal/!svn/ver/1863/code/eduportal/src/main/java/com/ai/eduportal/remote
+END
+RemoteCallerFactoryI.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/Eduportal/!svn/ver/1161/code/eduportal/src/main/java/com/ai/eduportal/remote/RemoteCallerFactoryI.java
+END
+RemoteCallerF4AppFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/Eduportal/!svn/ver/3215/code/eduportal/src/main/java/com/ai/eduportal/remote/RemoteCallerF4AppFactory.java
+END
+MD5.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/Eduportal/!svn/ver/1167/code/eduportal/src/main/java/com/ai/eduportal/remote/MD5.java
+END
+RemoteRespHelper.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/Eduportal/!svn/ver/2365/code/eduportal/src/main/java/com/ai/eduportal/remote/RemoteRespHelper.java
+END
+RemoteCallerFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/Eduportal/!svn/ver/3107/code/eduportal/src/main/java/com/ai/eduportal/remote/RemoteCallerFactory.java
+END
+RemoteHttpCallerI.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/Eduportal/!svn/ver/2675/code/eduportal/src/main/java/com/ai/eduportal/remote/RemoteHttpCallerI.java
+END
+CodeUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/Eduportal/!svn/ver/2328/code/eduportal/src/main/java/com/ai/eduportal/remote/CodeUtil.java
+END
+RemoteCallerF4AppFactoryI.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/Eduportal/!svn/ver/1855/code/eduportal/src/main/java/com/ai/eduportal/remote/RemoteCallerF4AppFactoryI.java
+END
+DES.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/Eduportal/!svn/ver/1134/code/eduportal/src/main/java/com/ai/eduportal/remote/DES.java
+END
+RemoteHttpCaller.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/Eduportal/!svn/ver/2676/code/eduportal/src/main/java/com/ai/eduportal/remote/RemoteHttpCaller.java
+END

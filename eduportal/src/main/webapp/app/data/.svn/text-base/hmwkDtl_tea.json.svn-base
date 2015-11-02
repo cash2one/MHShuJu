@@ -1,0 +1,104 @@
+{
+    "rtnCode": "1",
+    "rows": [
+        {
+            "userNm": "小明",
+            "sex": "1",
+            "gradeId": "10001",
+            "schoolNm": "郑州小学",
+            "userId": "90004",
+            "gradeNm": "三年级1班",
+            "schoolId": "40001",
+            "userTp": "1",
+            "status": "0"
+        },
+        {
+            "userNm": "小朋",
+            "sex": "1",
+            "gradeId": "10001",
+            "schoolNm": "郑州小学",
+            "userId": "90001",
+            "gradeNm": "三年级1班",
+            "schoolId": "40001",
+            "userTp": "1",
+            "status": "1"
+        },
+        {
+            "userNm": "小李",
+            "sex": "1",
+            "gradeId": "10001",
+            "schoolNm": "郑州小学",
+            "userId": "90002",
+            "gradeNm": "三年级1班",
+            "schoolId": "40001",
+            "userTp": "1",
+            "status": "0"
+        },
+        {
+            "userNm": "小花",
+            "sex": "1",
+            "gradeId": "10001",
+            "schoolNm": "郑州小学",
+            "userId": "90003",
+            "gradeNm": "三年级1班",
+            "schoolId": "40001",
+            "userTp": "1",
+            "status": "0"
+        },
+        {
+            "userNm": "小月",
+            "sex": "1",
+            "gradeId": "10001",
+            "schoolNm": "郑州小学",
+            "userId": "6087160",
+            "gradeNm": "三年级1班",
+            "schoolId": "40001",
+            "userTp": "1",
+            "status": "0"
+        },
+        {
+            "userNm": "小王",
+            "sex": "1",
+            "gradeId": "10002",
+            "schoolNm": "郑州小学",
+            "userId": "30005",
+            "gradeNm": "三年级2班",
+            "schoolId": "40001",
+            "userTp": "1",
+            "status": "0"
+        },
+        {
+            "userNm": "小刘",
+            "sex": "1",
+            "gradeId": "10002",
+            "schoolNm": "郑州小学",
+            "userId": "30006",
+            "gradeNm": "三年级2班",
+            "schoolId": "40001",
+            "userTp": "1",
+            "status": "0"
+        },
+        {
+            "userNm": "小锚",
+            "sex": "1",
+            "gradeId": "10002",
+            "schoolNm": "郑州小学",
+            "userId": "30007",
+            "gradeNm": "三年级2班",
+            "schoolId": "40001",
+            "userTp": "1",
+            "status": "0"
+        },
+        {
+            "userNm": "小严",
+            "sex": "1",
+            "gradeId": "10002",
+            "schoolNm": "郑州小学",
+            "userId": "30008",
+            "gradeNm": "三年级2班",
+            "schoolId": "40001",
+            "userTp": "1",
+            "status": "0"
+        }
+    ]
+}

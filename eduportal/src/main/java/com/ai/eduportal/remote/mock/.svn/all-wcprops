@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/Eduportal/!svn/ver/1863/code/eduportal/src/main/java/com/ai/eduportal/remote/mock
+END
+RemoteCallerFactoryMock.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/Eduportal/!svn/ver/1177/code/eduportal/src/main/java/com/ai/eduportal/remote/mock/RemoteCallerFactoryMock.java
+END
+RemoteCallerFactoryMock1.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/Eduportal/!svn/ver/2298/code/eduportal/src/main/java/com/ai/eduportal/remote/mock/RemoteCallerFactoryMock1.java
+END
+AppRemoteCallerMock.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/Eduportal/!svn/ver/2680/code/eduportal/src/main/java/com/ai/eduportal/remote/mock/AppRemoteCallerMock.java
+END

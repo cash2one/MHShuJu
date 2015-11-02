@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>学习</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<style>
+.mui-switch.mui-active {
+	background-color: #6BC8E0;
+	border-color: #6BC8E0;
+}
+</style>
+</head>
+<body>
+<div class="mui-content">
+  	<ul class="mui-table-view" id="J_flt_cdt">
+		<li class="mui-table-view-cell">
+			适用角色：<span>老师</span>
+			<div class="mui-switch mui-switch-mini" val="teacher">
+				<div class="mui-switch-handle"></div>
+			</div>
+		</li>
+		<li class="mui-table-view-cell">
+			适用角色：<span>家长/学生</span>
+			<div class="mui-switch mui-switch-mini" val="student">
+				<div class="mui-switch-handle"></div>
+			</div>
+		</li>
+		<li class="mui-table-view-cell">
+			营销活动
+			<div class="mui-switch mui-switch-mini" val="ismuti">
+				<div class="mui-switch-handle"></div>
+			</div>
+		</li>
+		<li class="mui-table-view-cell">
+			免费
+			<div class="mui-switch mui-switch-mini" val="isfree">
+				<div class="mui-switch-handle"></div>
+			</div>
+		</li>
+		<li class="mui-table-view-cell">
+			已订购
+			<div class="mui-switch mui-switch-mini" val="horder">
+				<div class="mui-switch-handle"></div>
+			</div>
+		</li>
+		<li class="mui-table-view-cell">
+			未订购
+			<div class="mui-switch mui-switch-mini" val="norder">
+				<div class="mui-switch-handle"></div>
+			</div>
+		</li>
+    </ul>
+</div>
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../lib/iscroll/5.0/iscroll.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script type="text/javascript">
+mui.plusReady(function(){
+	mui('#J_flt_cdt').on('tap','.mui-switch', function(){
+		var filterVal = [],datas = [];
+		$('#J_flt_cdt .mui-switch').each(function(){
+			var _this = $(this);
+			if (_this.hasClass('mui-active')) {
+				filterVal.push($(this).attr('val'));
+			};
+		})
+		for (var i = 0; i < filterVal.length; i++) {
+			datas.push(filterVal[i]+'='+true);
+		};
+		datas = datas.join("&");
+		var studyIndex = plus.webview.getWebviewById('study/studyIndex.html');
+		mui.fire(studyIndex,'getFilterCdt',{datas:datas})
+	})
+})
+</script>
+</body>
+</html>

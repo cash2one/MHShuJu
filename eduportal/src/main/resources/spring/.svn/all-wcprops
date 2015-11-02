@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/Eduportal/!svn/ver/1539/code/eduportal/src/main/resources/spring
+END
+spring-scheduled.xml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/Eduportal/!svn/ver/1539/code/eduportal/src/main/resources/spring/spring-scheduled.xml
+END
+spring-service.xml
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/Eduportal/!svn/ver/2765/code/eduportal/src/main/resources/spring/spring-service.xml
+END
+spring-props.xml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/Eduportal/!svn/ver/11/code/eduportal/src/main/resources/spring/spring-props.xml
+END
+spring-all.xml
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/Eduportal/!svn/ver/125/code/eduportal/src/main/resources/spring/spring-all.xml
+END
+spring-action.xml
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/Eduportal/!svn/ver/2464/code/eduportal/src/main/resources/spring/spring-action.xml
+END

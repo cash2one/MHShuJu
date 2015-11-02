@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="struts-edu1" extends="projectstruts" namespace="/">
+        <action name="local_login_auth" class="localLoginAuthAction" method="localLoginAuth">
+            <result name="success" type="redirect">http://10.87.30.144:49000/edu/module/choiceRole.html</result>
+            <result name="error"   type="redirect">http://10.87.30.144:49000/edu/module/index.html</result>
+            <result name="index"   type="redirect">http://10.87.30.144:49000/edu/module/index.html</result>
+        </action>
+        
+         <!-- interface1 -->
+        <action name="login_check" class="eduPlatformAction" method="loginCheck">
+        </action>
+         <!-- interface2 -->
+        <action name="user_detail" class="eduPlatformAction" method="getUserDtl">
+        </action>
+        <!-- interface4 -->
+        <action name="jump" class="eduPlatformAction" method="gotoDump">
+        </action>
+        
+        <!-- interface6 -->
+        <action name="auth" class="eduPlatformAction" method="eduAuth">
+            <result name="success" type="redirect">http://10.87.30.144:49000/edu/module/choiceRole.html</result>
+            <result name="index"   type="redirect">http://10.87.30.144:49000/edu/module/index.html</result>
+        </action>
+         <!-- interface7 -->
+        <action name="logout" class="eduPlatformAction" method="eduLogout">
+        </action>
+    </package>
+    <package name="struts-edu2" extends="projectstruts" namespace="/class">
+        <!-- interface3 -->
+        <action name="student_parent" class="eduPlatformAction" method="getStdPrt">
+        </action>
+        <!-- interface9 -->
+        <action name="teacher" class="eduPlatformAction" method="classTeacher">
+        </action>
+    </package>
+    <!-- interface8 -->
+    <package name="struts-edu3" extends="projectstruts" namespace="/user">
+        <action name="order" class="eduPlatformAction" method="userOrder">
+        </action>
+    </package>
+    <!-- interface18 -->
+    <package name="struts-edu4" extends="projectstruts" namespace="/sync">
+        <action name="password" class="eduPlatformAction" method="synUserpwd2Local">
+        </action>
+    </package>
+    <!-- interface21 -->
+    <package name="struts-edu5" extends="projectstruts" namespace="/products">
+        <action name="group" class="eduPlatformAction" method="queryproductsgroup">
+        </action>
+    </package>
+    <!-- interface22 -->
+    <package name="struts-edu6" extends="projectstruts" namespace="/group">
+        <action name="boss_code" class="eduPlatformAction" method="groupBossCode">
+        </action>
+    </package>
+    <!-- interface19(23) -->
+    <package name="struts-edu7" extends="projectstruts" namespace="/order">
+        <action name="group" class="eduPlatformAction" method="orderGroup">
+        </action>
+    </package>
+    <!-- crm sync info to HeEdu's transfers interface10~~17,19,20,24 -->
+    <package name="struts-edu8" extends="projectstruts" namespace="/transfers">
+        <action name="user" class="eduPlatformAction" method="syncEduUser">
+        </action>
+        <action name="user_class" class="eduPlatformAction" method="syncUserClass">
+        </action>
+        <action name="user_relationship" class="eduPlatformAction" method="syncUserRelationship">
+        </action>
+        <action name="class" class="eduPlatformAction" method="syncClass">
+        </action>
+        <action name="school" class="eduPlatformAction" method="syncSchool">
+        </action>
+        <action name="user_order" class="eduPlatformAction" method="syncUserOrder">
+        </action>
+        <action name="password" class="eduPlatformAction" method="syncHeEduPwd">
+        </action>
+        <action name="products" class="eduPlatformAction" method="queryproducts">
+        </action>
+        <action name="groups" class="eduPlatformAction" method="querygroups">
+        </action>
+        <action name="orderGroup" class="eduPlatformAction" method="syncOrderGroup">
+        </action>
+    </package>            
+</struts>

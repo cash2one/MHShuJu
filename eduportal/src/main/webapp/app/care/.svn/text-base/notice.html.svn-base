@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>公告</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<style>
+
+.ui-ntc-content {
+	padding: 20px 20px 0 20px;
+}
+.readAll {
+	color: #000;
+	font-size: 16px;
+	border-top: 1px solid #ddd;
+	padding: 10px 0;
+	margin: 20px 0;
+	height: 45px;
+}
+.content {
+	margin-top: 20px;
+}
+.ui-ntc-wrap {
+	background: url(../theme/images/noticebg.png) 0 0 no-repeat;
+	height: 100%;
+	position: relative;
+	left: 0;
+	width: 100%;
+	top: 0;
+	background-color: #C4DDDB;
+}
+.ui-ntc-wrap a:active {
+	color: #8E8E8E;
+}
+</style>
+
+</head>
+<body>
+<div class="mui-content">
+	<div class="" id="J_notice">
+		<!--数据列表-->
+		<ul class="ui-ntc-wrap">
+			
+		</ul>
+	</div>
+</div>
+<div class="ui-loader ui-corner-all" id="J_loading">
+    <span class="ui-icon-loading"></span>
+    <div class="ui-loader-verbose">正在加载数据...</div>
+</div>
+<script id="T_notice" type="text/x-handlebars-template">
+{{#each retInfo}}
+	<li class="ui-ntc-list">
+		<a class="ui-ntc-content" title="{{title}}" content="{{content}}">
+			<h4>{{retSubStr title 12}}</h4>
+			<p class="content">{{retSubStr content 16}}</p>
+			<p class="readAll">阅读全文</p>
+		</a>
+	</li>
+{{/each}}
+</script>
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script type="text/javascript">
+var userInfo = Util.lStorage.getParam('userInfo');
+	userInfo = JSON.parse(userInfo);
+mui.init({
+	swipeBack: true
+});
+var old_back = mui.back;
+mui.back = function(){
+	var cwebview = plus.webview.getWebviewById('temp_2-sub');
+	if(cwebview){
+		var self = plus.webview.currentWebview();
+		self.remove(cwebview);
+		cwebview.close();
+	}
+	old_back();
+}
+
+mui.plusReady(function(){
+	
+	srvMap.add('notice', 'notice.json','commonOuter.action?uid=getNoticeCountsList');
+	loadNotice('1');
+	window.addEventListener("noticeType", function(e) {
+		var noticeType = e.detail.noticeType;
+		loadNotice(noticeType);
+	});
+	
+	//初始化模板
+	setTimeout(function () {
+		getTemplate('temp_2', '../temp/template_2.html');
+	},300);
+	mui('.ui-ntc-wrap').on('tap','a.ui-ntc-content', function() {
+		var content = this.getAttribute('content'),
+			title = this.getAttribute('title');
+		
+		Util.lStorage.setParam('noticeDtl',content);
+		
+		var template = getTemplate('temp_2');
+		var headerWebview = template.header;
+		var contentWebview = template.content;
+		mui.fire(headerWebview,'updateHeader_2',{title:title,content:content,pageId:'notice'});
+		contentWebview.loadURL('noticeDtl.html');
+		contentWebview.show();
+		headerWebview.show('slide-in-right', 150);
+	});
+})
+
+
+function loadNotice (noticeType) {
+	Util.ajax.postJson(srvMap.get('notice'),'schoolID='+userInfo.schoolId+'&start=0&limit=100',function(json,status){
+		if (status) {
+			if(json && json.retInfo.length){
+				if($(".nocontent").length){
+					$(".nocontent").remove();
+				}
+				Util.ajax.loadTemp('.ui-ntc-wrap',$('#T_notice'),json);
+			}else{
+				$("body").append("<div class='nocontent'></div>");
+				$(".ui-ntc-wrap").remove();
+			}
+		}else{
+			$('#J_notice').html(json.rtnMsg);
+			$(".ui-ntc-wrap").remove();
+		}
+	})
+}
+
+///**
+// * 下拉刷新具体业务实现
+// */
+//function pulldownRefresh() {
+//	setTimeout(function() {
+//		Util.ajax.postJson(srvMap.get('notice'),'',function(json,status){
+//	  		if (status) {
+//	  			var template = Handlebars.compile($('#T_notice').html());
+//	  			$('.ui-ntc-wrap').prepend(template(json));
+//	  		}else{
+//	  			$('.ui-ntc-wrap').html(json.rtnMsg);
+//	  		}
+//	  	})
+//		mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+//	}, 1500);
+//}
+//var count = 0;
+///**
+// * 上拉加载具体业务实现
+// */
+//function pullupRefresh() {
+//	setTimeout(function() {
+//		mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+//		
+//		Util.ajax.postJson(srvMap.get('notice'),'',function(json,status){
+//	  		if (status) {
+//	  			var template = Handlebars.compile($('#T_notice').html());
+//	  			$('.ui-ntc-wrap').append(template(json));
+//	  		}else{
+//	  			$('.ui-ntc-wrap').html(json.rtnMsg);
+//	  		}
+//	  	})
+//	}, 1500);
+//}
+//if (mui.os.plus) {
+//	mui.plusReady(function() {
+//		setTimeout(function() {
+//			mui('#pullrefresh').pullRefresh().pullupLoading();
+//		}, 1000);
+//
+//	});
+//} else {
+//	mui.ready(function() {
+//		mui('#pullrefresh').pullRefresh().pullupLoading();
+//	});
+//}
+</script>
+</body>
+</html>

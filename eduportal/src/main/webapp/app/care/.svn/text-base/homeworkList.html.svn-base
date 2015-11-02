@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>作业</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<style>
+.mui-table-view-divider {
+	padding: 10px 15px;
+}
+.tit {
+	color: #000;
+	font-size: 18px;
+	height: 30px;
+}
+.tea-name {
+	color: #67C6EA;
+}
+.mui-table-view li>a>span {
+	top: 43%;
+}
+.hmwkIcon {
+	width: 60px!important;
+	height: 60px!important;
+	line-height: 60px!important;
+	font-size: 24px;
+	max-width: 60px!important;
+	margin-top: 5px;
+}
+#topPopover {
+	position: fixed;
+	top: 16px;
+	right: 6px;
+	width: 120px;
+}
+#topPopover .mui-popover-arrow {
+	left: auto;
+	right: 6px;
+}
+</style>
+</head>
+<body>
+<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+	<div class="mui-scroll">
+		<ul class="mui-table-view" id="J_worklist">
+			
+		</ul>
+	</div>
+</div>
+<div id="topPopover" class="mui-popover">
+	<div class="mui-popover-arrow"></div>
+	<div class="mui-scroll-wrapper">
+		<div class="mui-scroll">
+			<ul class="mui-table-view" id="J_hmwk_type">
+				<li class="mui-table-view-cell" hmwkType="2">全部作业</li>
+				<li class="mui-table-view-cell" hmwkType="0">未完成</li>
+				<li class="mui-table-view-cell" hmwkType="1">已完成</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="ui-loader ui-corner-all fn-hide" id="J_loading">
+    <span class="ui-icon-loading"></span>
+    <div class="ui-loader-verbose">正在加载数据...</div>
+</div>
+
+<script id="T_careStudent" type="text/x-handlebars-template">
+	{{#each retInfo}}
+		<li class="mui-table-view-divider">{{date}}</li>
+		{{#each datas}}
+			<li class="mui-table-view-cell mui-media">	
+				<a title="{{title}}" href="#" data-tempjson="{{retJson2Str this}}" date = "{{../date}}">
+					{{retNewScoreName courseId 'hmwkIcon'}}
+					<div class="mui-media-body">
+		  	        	<p class="mui-ellipsis tit">{{retSubStr title 11}}(预估{{estime}}分钟)</p>
+		  	        	<p class='mui-ellipsis'>任课老师：<span class="tea-name">{{teacher}}</span></p>
+		  	        	<p class='mui-ellipsis'>{{grade}}</p>
+		  	      	</div>
+	  	    		<span class="res {{showHidden 2 workstate}}">已完成</span>
+					<span class="res {{showHidden 1 workstate}}" style="color:red;">未完成</span>
+				</a>
+			</li>
+		{{/each}}
+	{{/each}}
+</script>
+<script id="T_careTeacher" type="text/x-handlebars-template">
+	{{#each retInfo}}
+	<li class="mui-table-view-divider">{{date}}</li>
+		{{#each datas}}
+		<li class="mui-table-view-cell mui-media">	
+			<a title="{{title}}" href="#" data-tempjson="{{retJson2Str this}}" date = "{{../date}}">
+				{{retNewScoreName courseId 'hmwkIcon'}}
+				<div class="mui-media-body">
+	  	        	<p class="mui-ellipsis tit">{{title}}(预估{{estime}}分钟)</p>
+	  	        	<p class='mui-ellipsis'>任课老师：<span class="tea-name">{{teacher}}</span></p>
+	  	        	<p class='mui-ellipsis'>{{grade}}</p>
+	  	      	</div>
+				{{#if finishedNum}}
+	  	    		{{#if_eq finishedNum compare='100%'}}
+	  	    		<span>全部完成</span>
+					{{else}}
+					<span style="color:red;">完成率</span>
+ 					<span style="color:red;top: 66%;">{{finishedNum}}</span>
+					{{/if_eq}}
+				{{else}}
+					<span style="color:red;">0%完成</span>
+				{{/if}}
+			</a>
+		</li>
+		{{/each}}
+	{{/each}}
+</script>
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../lib/handlebars/1.3.0/helpers.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script type="text/javascript">
+mui.init({
+	swipeBack: true,
+	pullRefresh: {
+		container: '#pullrefresh',
+		up: {
+			contentdown: '上拉显示更多',
+			contentrefresh: '正在加载...',
+			contentnomore: '没有更多数据了',
+			callback: pullupRefresh
+		}
+	}
+});
+var old_back = mui.back;
+mui.back = function(){
+  var cwebview = plus.webview.getWebviewById('hmwkDtl-sub');
+  if(cwebview){
+    var self = plus.webview.currentWebview();
+    self.remove(cwebview);
+    cwebview.close();
+  }
+  old_back();
+}
+var firstDataId;
+
+var userId, typeId, param, posturl, tplId,
+	userInfo = Util.lStorage.getParam('userInfo');//当前登录用户信息
+userInfo = JSON.parse(userInfo);
+
+mui.plusReady(function(){
+	srvMap.add('teacherWorks', 'teacherWorks.json','commonOuter.action?uid=getHomeworkList');
+	srvMap.add('studentWorks', 'teacherWorks.json','commonOuter.action?uid=getHomeworkList');//学生
+	
+	userId = userInfo.userId;
+	typeId = userInfo.typeId;
+	param  = 'schoolId='+userInfo.schoolId+'&start=0&limit=20';//学生
+	posturl= srvMap.get('studentWorks');
+	tplId  = '#T_careStudent';
+	if(typeId == '2'){//老师角色
+		param  = 'schoolId='+userInfo.schoolId+'&start=0&limit=20';//老师
+		posturl= srvMap.get('teacherWorks');
+		tplId  = '#T_careTeacher';
+	}
+	loadHmwk('2');
+	
+	mui("#J_hmwk_type").on("tap", 'li', function(){
+		var hmwkType = $(this).attr("hmwkType");
+		loadHmwk(hmwkType);
+		mui("#topPopover").popover("toggle");
+	})
+
+	//初始化模板
+	setTimeout(function () {
+		getTemplate('hmwkDtl', '../temp/template_2.html');
+	},300);
+	mui('#J_worklist').on('tap','a', function() {
+		var title = this.getAttribute('title');
+		var tempJson = $(this).data('tempjson');
+		tempJson.date = this.getAttribute("date");
+		tempJson.zindex = $(this).parent().index();
+		var hmwkDatas = JSON.stringify(tempJson);
+		Util.lStorage.setParam('hmwkDatas',hmwkDatas);
+		var template = getTemplate('hmwkDtl');
+		var headerWebview = template.header;
+		var contentWebview = template.content;
+		mui.fire(headerWebview,'updateHeader_2',{title:title,pageId:'hmwk', typeId: typeId});
+		contentWebview.loadURL('hmwkDtl.html');
+		contentWebview.show();
+		headerWebview.show('slide-in-right', 150);
+	});
+})
+
+function loadHmwk(hmwkType){
+	$("#J_loading").show();
+	Util.ajax.postJson(posturl,param+"&status="+hmwkType,function(json,status){
+		if (status) {
+			if(json && json.retInfo.length){
+				if($(".nocontent").length){
+					$(".nocontent").remove();
+				}
+				firstDataId = json.retInfo[0].workId;
+				Util.ajax.loadTemp('#J_worklist',$(tplId),json);
+			}else{
+				$("#J_worklist").html("");
+				$("body").append("<div class='nocontent'></div>");
+			}
+		}else{
+			Util.alert(json.rtnMsg || "加载失败！");
+			$("#J_worklist").html("");
+			$("body").append("<div class='nocontent'></div>");
+		}
+		$("#J_loading").hide();
+	})
+}
+
+var countUp = 1;
+/**
+ * 上拉加载具体业务实现
+ */
+function pullupRefresh() {
+	param  = 'schoolId='+userInfo.schoolId+'&start='+(countUp*20)+'&limit=20';
+	Util.ajax.postJson(posturl,param,function(json,status){
+  		if (status) {
+  			if(json && json.retInfo.length){
+  				
+  				if(json.retInfo[0].workId != firstDataId){
+  					countUp++;
+		  			var template = Handlebars.compile($(tplId).html());
+		  			$('#J_worklist').append(template(json));
+		  			mui('#pullrefresh').pullRefresh().endPullupToRefresh(false); //参数为true代表没有更多数据了。
+  				}else{
+  					mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+  				}
+  			}else{
+  				mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+  			}
+  		}else{
+  			Util.alert(json.rtnMsg);
+  		}
+  	})
+}
+
+Handlebars.registerHelper("showHidden", function(type, value, fn){
+	if((type == '1' && value == '1') || (type == '2' && value == '0')){
+		return "fn-hide";
+	}else{
+		return "";
+	}
+})
+
+window.addEventListener("resetWorkState", function(e){
+	var index = e.detail.zindex;
+	var zreset = e.detail.zreset;
+	var workstate = e.detail.workstate;
+	var worktime = e.detail.worktime;
+	var oldJson = $("#J_worklist li").eq(index).find("a").data("tempjson");
+	oldJson.workstate = workstate;
+	oldJson.worktime = worktime;
+	$("#J_worklist li").eq(index).find("a").data("tempjson", oldJson);
+	if(zreset == '1'){
+		$("#J_worklist li").eq(index).find("a .res").eq(0).show().siblings(".res").hide();
+	}else{
+		$("#J_worklist li").eq(index).find("a .res").eq(1).show().siblings(".res").hide();
+	}
+})
+</script>
+</body>
+</html>

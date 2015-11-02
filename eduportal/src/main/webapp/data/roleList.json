@@ -1,0 +1,56 @@
+{
+    "rtnMsg": "call success.",
+    "parents": [
+        {
+            "region": "金水区",
+            "imgUrl": "../theme/images/ico_stu.png",
+            "typeName": "学生",
+            "subName": null,
+            "schoolName": "郑州二中",
+            "userId": "2",
+            "grade": "二年级",
+            "userName": "李四_2",
+            "city": "郑州市",
+            "mobile": "13585718072"
+        },
+        {
+            "region": "金水区",
+            "imgUrl": "../theme/images/ico_stu.png",
+            "typeName": "学生",
+            "subName": null,
+            "schoolName": "郑州三中",
+            "userId": "3",
+            "grade": "三年级",
+            "userName": "李四_3",
+            "city": "郑州市",
+            "mobile": "13585718072"
+        },
+        {
+            "region": "金水区",
+            "imgUrl": "../theme/images/ico_stu.png",
+            "typeName": "学生",
+            "subName": null,
+            "schoolName": "郑州一中",
+            "userId": "1",
+            "grade": "一年级",
+            "userName": "李四_1",
+            "city": "郑州市",
+            "mobile": "13585718072"
+        }
+    ],
+    "rtnCode": "1",
+    "teacher": [
+        {
+            "region": "金水区",
+            "imgUrl": "../theme/images/ico_tea.png",
+            "typeName": "老师",
+            "subName": null,
+            "schoolName": "郑州一中",
+            "userId": "1",
+            "grade": null,
+            "userName": "家长_1",
+            "city": "郑州市",
+            "mobile": "13585718072"
+        }
+    ]
+}

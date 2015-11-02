@@ -1,0 +1,21 @@
+{
+    "rtnCode": "1",
+    "rtnMsg": "call success",
+    "bean": {
+        "sysType": "1",
+        "sex": "",
+        "email": "",
+        "typename": "",
+        "typeid": "2",
+        "userId": "1",
+        "favoritesize": "1",
+        "cityCode": "",
+        "userName": "家长_1",
+        "IMGURL": "../theme/images/ico_tea.png",
+        "otherUserId": "1",
+        "isMulRole":"1",
+        "realName": "",
+        "mobile": "13585718072"
+    },
+    "beans": []
+}

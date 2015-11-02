@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/Eduportal/!svn/ver/2212/code/eduportal/src/main/java/com/ai/eduportal/service
+END
+CmsServiceClient.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/Eduportal/!svn/ver/2988/code/eduportal/src/main/java/com/ai/eduportal/service/CmsServiceClient.java
+END
+ApkOtherUpload.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/Eduportal/!svn/ver/2206/code/eduportal/src/main/java/com/ai/eduportal/service/ApkOtherUpload.java
+END
+DownLoadPic.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/Eduportal/!svn/ver/1918/code/eduportal/src/main/java/com/ai/eduportal/service/DownLoadPic.java
+END
+CmsServiceClientParams.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/Eduportal/!svn/ver/1741/code/eduportal/src/main/java/com/ai/eduportal/service/CmsServiceClientParams.java
+END
+CoreServiceUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/Eduportal/!svn/ver/2792/code/eduportal/src/main/java/com/ai/eduportal/service/CoreServiceUtil.java
+END
+Cms4App.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/Eduportal/!svn/ver/3099/code/eduportal/src/main/java/com/ai/eduportal/service/Cms4App.java
+END
+ApkpackageService.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/Eduportal/!svn/ver/2208/code/eduportal/src/main/java/com/ai/eduportal/service/ApkpackageService.java
+END
+CallCoreServiceImp.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/Eduportal/!svn/ver/1541/code/eduportal/src/main/java/com/ai/eduportal/service/CallCoreServiceImp.java
+END
+ApkOtherUploadI.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/Eduportal/!svn/ver/2189/code/eduportal/src/main/java/com/ai/eduportal/service/ApkOtherUploadI.java
+END

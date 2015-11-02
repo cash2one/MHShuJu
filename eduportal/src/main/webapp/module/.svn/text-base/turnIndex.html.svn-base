@@ -1,0 +1,23 @@
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="renderer" content="webkit" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+<meta name="keywords" content="河南移动，教育门户，校讯通，同步课堂，中小学学习报" />
+<meta name="Description" content="河南移动教育门户————河南移动各类教育产品统一管理门户网站" />
+<title>首页</title>
+<script type="text/javascript" src="../lib/jquery/1.8.1/jquery.js"></script>
+<script type="text/javascript" src="../common/config.js"></script>
+<script type="text/javascript" src="../common/common.js?v=20141112"></script>
+<script type="text/javascript" src="../common/base64.js"></script>
+</head>
+<script>
+	$.ajax({
+		url:'../hn/login/isLogin.action?uid=isLogin',
+		type:'post',
+		success:function(){},
+		error:function(){}
+	});
+	var cacheKey = Util.browser.getParameter('cacheKey');
+	
+	window.location.href='http://www.ha.10086.cn/edu/hn/action/forwordTo.action?forword=indexPg&ssoprev=ssocacheKey&cacheKey='+cacheKey;
+</script>

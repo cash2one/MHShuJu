@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<style>
+.mui-table-view-cell.mui-media{
+	padding: 17px 15px;
+}
+.mui-table-view .mui-media-object.mui-pull-left {
+	margin-right: 15px;
+}
+.mui-content .mui-table-view .mui-table-view-cell .mui-icon {
+	position: relative;
+	left: 0;
+	font-size: 26px;
+	color: #F00;
+	margin-right: 10px;
+	margin-left: -3px;
+	width: 20px;
+}
+</style>
+</head>
+<body>
+<div class="mui-content" id="">
+	<ul class="mui-table-view" id="J_list">
+		<li class="mui-table-view-cell mui-media">
+         	<a id="J_myInfo" class="mui-navigate-right">
+	           	<img class="mui-media-object mui-pull-left" src="../theme/images/headIcon.png">
+	           	<div class="mui-media-body">
+	             	 <span id="J_userName"></span>
+	             	<p class='mui-ellipsis' id="J_mobile"></p>
+	           	</div>
+         	</a>
+      	</li>
+      	<li class="mui-table-view-cell">
+			<a id="J_myorder" class="mui-navigate-right">
+				<img class="ui-busi-img" src="../theme/images/icon_bill.png" width="20"/>
+				我的订单
+			</a>
+		</li>
+		<!--<li class="mui-table-view-cell">
+			<a id="J_feedback" class="mui-navigate-right">
+				<img class="ui-busi-img" src="../theme/images/icon_feedback.png" width="20"/>
+				反馈中心
+			</a>
+		</li>-->
+		<li class="mui-table-view-cell">
+			<a id="J_version" class="mui-navigate-right">
+				<img class="ui-busi-img" src="../theme/images/icon_version.png" width="20"/>
+				版本中心
+				<span class="mui-badge" id="J_version_cent">1.0.0</span>
+			</a>
+		</li>
+		<li class="mui-table-view-cell" id="J_loginOutBtn">
+			<span class="mui-icon mui-icon-person"></span>
+			退出
+		</li>
+	</ul>
+</div>
+<!--<div class="ui-loader ui-corner-all" id="J_loading">
+    <span class="ui-icon-loading"></span>
+    <div class="ui-loader-verbose">正在加载数据...</div>
+</div>-->
+
+<script id="T_careIndex" type="text/x-handlebars-template">
+   
+</script>
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script src="../common/update.js"></script>
+<script type="text/javascript">
+var old_back = mui.back;
+mui.back = function(){
+  var cwebview = plus.webview.getWebviewById('myInfo-sub');
+  var cwebview2 = plus.webview.getWebviewById('myOrder-sub');
+  var cwebview3 = plus.webview.getWebviewById('feedback-sub');
+  if(cwebview){
+    var self = plus.webview.currentWebview();
+    self.remove(cwebview);
+    cwebview.close();
+  }
+  if(cwebview2){
+    var self = plus.webview.currentWebview();
+    self.remove(cwebview2);
+    cwebview2.close();
+  }
+  if(cwebview3){
+    var self = plus.webview.currentWebview();
+    self.remove(cwebview3);
+    cwebview3.close();
+  }
+  old_back();
+}
+
+mui.plusReady(function(){
+	//检查更新
+	initUpdate();
+	
+	setTimeout(function () {
+		getTemplate('myInfo', '../temp/template.html');
+	},200);
+	$('#J_myInfo').bind('tap', function(){
+		var _this = $(this);
+		var template = getTemplate('myInfo');
+		var headerWebview = template.header;
+		var contentWebview = template.content;
+		mui.fire(headerWebview,'updateHeader',{title:'个人信息'});
+	    var reload = true;
+	    contentWebview.loadURL('myInfo.html');
+		headerWebview.show('slide-in-right', 150);
+	})
+	
+	setTimeout(function () {
+		getTemplate('myOrder', '../temp/template.html');
+	},400);
+	$('#J_myorder').bind('tap', function(){
+		var _this = $(this);
+		var template = getTemplate('myOrder');
+		var headerWebview = template.header;
+		var contentWebview = template.content;
+		mui.fire(headerWebview,'updateHeader',{title:'我的订单'});
+		contentWebview.loadURL('myOrder.html');
+		contentWebview.show();
+		headerWebview.show('slide-in-right', 150);
+	})
+	
+	setTimeout(function () {
+		getTemplate('feedback', '../temp/template.html');
+	},400);
+	$('#J_feedback').bind('tap', function(){
+		var _this = $(this);
+		var template = getTemplate('feedback');
+		var headerWebview = template.header;
+		var contentWebview = template.content;
+		mui.fire(headerWebview,'updateHeader',{title:'反馈中心'});
+		var reload = true;
+		if (!template.loaded) {
+			if (contentWebview.getURL().indexOf('feedback.html') == -1) {
+				contentWebview.loadURL('feedback.html');
+			} else {
+				reload = false;
+			}
+		} else {
+			reload = false;
+		}
+		(!reload) && contentWebview.show();
+		headerWebview.show('slide-in-right', 150);
+	})
+	
+	//修改用户姓名 
+	//BUG:该方法只作用一次,最好每次打开页面时候执行一次
+	resetUserInfo();
+	
+	mui(".mui-table-view").on("tap", "#J_loginOutBtn", function(){
+		var userInfoHasRole = Util.lStorage.getParam('userInfoHasRole');
+		if(userInfoHasRole && userInfoHasRole == '1'){//无角色
+			Util.lStorage.clearParam();//清除所有
+			Util.alert("退出")
+			mui.openWindow({
+				url: '../login.html', 
+				id:'login'
+			});
+		}else{
+			var index = plus.webview.getWebviewById('index.html');
+			mui.fire(index, 'removeSub');
+		}
+		
+	})
+	
+	mui(".mui-table-view").on("tap", "#J_version", function(){
+		Util.alert("正在检查更新...");
+		//检查更新
+		initUpdate();
+	})
+	
+	$("#J_version_cent").html(plus.runtime.version);
+})
+
+window.addEventListener('resetUserInfoMyIndex', function(){
+	resetUserInfo();
+})
+
+function resetUserInfo(){
+	var loginInfo = Util.lStorage.getParam('loginInfo');
+	if(loginInfo!=null){
+	  var mobile = loginInfo.split('&')[0].split('=')[1];
+	  $('#J_mobile').text('手机号码:'+mobile);
+	}
+	var userInfo = Util.lStorage.getParam('userInfo');
+	if(userInfo!=null){
+		var dataObj=JSON.parse(userInfo);
+		$('#J_userName').text(dataObj.userName);
+	}
+}
+</script>
+</body>
+</html>

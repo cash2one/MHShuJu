@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE control SYSTEM "common-sub-1.9.dtd">
+<control>
+    <action path="/hn/action/common">
+        <input uid="getOrderRole" service="remoteService" method="executeRemote" scope="control" >
+           <parameter key="phoneNum"        toKey="mobile"      scope="request" />
+           <parameter key="offerId"         toKey="OfferId"     scope="request" />
+           <parameter key="orderRole.bcode" toKey="busiCode"    scope="properties" />
+        </input>
+        <output uid="getOrderRole" convertor="com.ai.frame.web.convertor.CommonConvert" method="convert">
+           <parameter key="RETINFO"       toKey="retInfo" />
+           <parameter key="returnCode"    toKey="rtnCode" />
+     	   <parameter key="returnMessage" toKey="rtnMsg" />
+        </output>
+        <input uid="orderProd" service="remoteService" method="executeRemote" scope="control" >
+           <parameter key="phoneNum"        toKey="mobile"   scope="request" />
+           <parameter key="smsCode"         toKey="smsCode"  scope="request" />
+           <parameter key="source"          toKey="source"   scope="request" />
+           <parameter key="orderProd.bcode" toKey="busiCode" scope="properties" />
+        </input>
+        <output uid="orderProd" convertor="com.ai.frame.web.convertor.CommonConvert" method="convert">
+           <parameter key="RETINFO"       toKey="retInfo" />
+           <parameter key="returnCode"    toKey="rtnCode" />
+     	   <parameter key="returnMessage" toKey="rtnMsg" />
+        </output>
+        <input uid="getIsOrder" service="remoteService" method="executeRemote" scope="control" >
+           <parameter key="phoneNum"        toKey="mobile"   scope="request" />
+           <parameter key="offerCode"       toKey="offerCode"  scope="request" />
+           <parameter key="isOrder.bcode"   toKey="busiCode" scope="properties" />
+        </input>
+        <output uid="getIsOrder" convertor="com.ai.frame.web.convertor.CommonConvert" method="convert">
+           <parameter key="RETINFO"       toKey="retInfo" />
+           <parameter key="returnCode"    toKey="rtnCode" />
+     	   <parameter key="returnMessage" toKey="rtnMsg" />
+        </output>
+        <input uid="getOrderInfo" service="remoteService" method="executeRemote" scope="control" >
+           <parameter key="phoneNum"        toKey="mobile"      scope="request" />
+           <parameter key="queryDate"       toKey="queryDate"   scope="request" />
+           <parameter key="orderInfo.bcode" toKey="busiCode"    scope="properties" />
+        </input>
+        <output uid="getOrderInfo" convertor="com.ai.frame.web.convertor.CommonConvert" method="convert2List">
+           <parameter key="ProdName"      toKey="prodName" />
+           <parameter key="ProdCode"      toKey="prodCode" />
+           <parameter key="CreateDate"    toKey="createDate" />
+           <parameter key="returnCode"    toKey="rtnCode" />
+     	   <parameter key="returnMessage" toKey="rtnMsg" />
+        </output>
+        <input uid="sendSms" service="remoteService" method="executeRemote" scope="control" >
+           <parameter key="phoneNum"      toKey="mobile"      scope="request" />
+           <parameter key="smsContent"    toKey="smsContent"  scope="request" />
+           <parameter key="sendSms.bcode" toKey="busiCode"    scope="properties" />
+           
+        </input>
+        <output uid="sendSms" convertor="com.ai.frame.web.convertor.CommonConvert" method="convert">
+           <parameter key="RETINFO"       toKey="retInfo" />
+           <parameter key="returnCode"    toKey="rtnCode" />
+     	   <parameter key="returnMessage" toKey="rtnMsg" />
+        </output>
+    </action>
+</control>

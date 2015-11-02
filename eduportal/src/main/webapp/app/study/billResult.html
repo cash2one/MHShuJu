@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>学习</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<style>
+.mui-content{background-color: #fff;}
+.ui-opera-wrap a {
+	height: 55px;
+	line-height: 55px;
+}
+.ui-opera-wrap a:active {
+	color: #fff;
+}
+.ui-resut-wrap {
+	margin: 0 auto;
+	width: 80%;
+	background-color: #fff;
+	padding: 20px 0;
+}
+.ui-resut-wrap img {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	width: 40%;
+	display: inline-block;
+	vertical-align: 40px;
+	padding-right: 20px;
+}
+.ui-resut-wrap .ui-result-txt {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	width: 50%;
+	float: none;
+	display: inline-block;
+}
+</style>
+</head>
+<body>
+<div class="mui-content">
+	<div class="ui-sucess" style="display: none;">
+		<div class="ui-resut-wrap fn-clear">
+			<img src="../theme/images/success.png" width="90" />
+			<div class="ui-result-txt">
+				<div style="font-size: 18px;font-weight: 700;margin: 10px 0;word-wrap: break-word;" id="J_result">本操作已受理，订单号为：2015061111B3516072006086A</div>
+				<div style="font-size: 16px;" id="J_appName">家园互动+平安短信</div>
+				<div style="font-size: 16px;">价格：<span style="color:red;" id="J_price">30元</span></div>
+			</div>
+		</div>
+		<p class="ui-bill-remind" style="margin: 30px auto;">注意：该产品订购后无法退订，谢谢！</p>
+		<div class="ui-intro">
+			<div class="ui-intro-title">推荐</div>
+			<div class="ui-intro-line"></div>
+		</div>
+		<div id="J_billConfirm">
+		
+		</div>
+		<div class="ui-opera-wrap">
+			<a class="ui-look-again">继续逛逛</a>
+			<a class="ui-my-order">我的订单</a>
+		</div>
+	</div>
+	<div class="ui-fail" style="display: none;">
+		<div class="ui-resut-wrap fn-clear">
+			<img src="../theme/images/fail.png" width="90" />
+			<div class="ui-result-txt">
+				<div style="font-size: 18px;font-weight: 700;margin: 10px 0;">抱歉，订购失败了..</div>
+				<div style="font-size: 16px;">失败原因：</div>
+				<div id="J_error_reason" style="font-size: 16px;"></div>
+			</div>
+		</div>
+		<div class="ui-opera-wrap">
+			<a class="ui-look-again">继续逛逛</a>
+			<a class="ui-order-again" id="J_OrderAgin">重新订购</a>
+		</div>
+	</div>
+</div>
+
+<script id="T_billConfirm" type="text/x-handlebars-template">
+   <ul class="ui-intro-app fn-clear">
+    {{#each recdApps}}			
+             <li>
+				<a href="../study/studyDtl.html" appID="{{appID}}" nodeUid="{{nodeUid}}" title="{{appName}}">
+					<img src="{{appPath}}{{appPic}}" width="70" height="44">
+					<div>{{appName}}</div>
+				</a>
+			</li>
+    {{/each}}
+   </ul>
+</script>
+
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../lib/handlebars/1.3.0/helpers.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script type="text/javascript">
+var prodInfo = '';
+mui.init({
+	swipeBack: true
+});
+var old_back = mui.back;
+mui.back = function(){
+  var cwebview = plus.webview.getWebviewById('myOrder-sub');
+  if(cwebview){
+    var self = plus.webview.currentWebview();
+    self.remove(cwebview);
+    cwebview.close();
+  }
+  old_back();
+}
+mui.plusReady(function(){
+	prodInfo = Util.lStorage.getParam('appDatas');
+	prodInfo = JSON.parse(prodInfo);
+	var billResult = Util.lStorage.getParam('billResult');
+	billResult = JSON.parse(billResult);
+	if(prodInfo.orderState=='1'){
+		$('#J_OrderAgin').text('重新退订');
+	}
+	if (billResult.rtnCode == '1') {
+		for(var i =0;i<billResult.recdApps.length;i++){
+			billResult.recdApps[i].appPath = srvMap.getAppPath();
+		}
+		Util.ajax.loadTemp('#J_billConfirm',$('#T_billConfirm'),billResult);
+        $('#J_appName').text(prodInfo.appName);
+        $('#J_price').text(prodInfo.price+"元");
+        if(prodInfo.isMutiApp=='2'){
+        	$('.ui-bill-remind').hide();
+        }
+        $('#J_result').text(billResult.rtnMsg);  
+		setTimeout(function(){
+			$('.ui-sucess').show();
+			$('.ui-fail').hide();
+		},100)
+		//成功后删除缓存数据
+		Util.lStorage.removeParam('appDatas');
+	} else{
+		$('.ui-sucess').hide();
+		$('.ui-fail').show();
+		$('#J_error_reason').text(billResult.rtnMsg);
+	}
+	
+	var pageIndex = mui.preload({
+		id:'index.html',
+		url:'../index.html',
+		styles: {
+			top:'0px',
+			bottom:'0px'
+		}
+	});
+	$('.ui-look-again').bind('tap',function(){
+		mui.fire(pageIndex,'showTab',{title:'学习', lookAgin: true});
+		pageIndex.show('slide-in-right', 150);
+	})
+	$('.ui-order-again').bind('tap',function(){
+//		plus.webview.hide('billResult-main','slide-out-right',150);
+		var cWebView = plus.webview.getWebviewById('billResult-main');
+		cWebView.hide();
+	})
+	setTimeout(function () {
+		getTemplate('myOrder', '../temp/temp_3.html');
+	},200);
+	$('.ui-my-order').bind('tap',function(){
+		var template = getTemplate('myOrder');
+		var headerWebview = template.header;
+		var contentWebview = template.content;
+		mui.fire(headerWebview,'updateHeader_3',{title:'我的订单',showMenu:'false'});
+		contentWebview.loadURL("../my/myOrder.html");
+		headerWebview.show('slide-in-right', 150);
+	})
+	setTimeout(function () {
+		getTemplate('studyDtl', '../temp/temp_3.html');
+	},200);
+	mui('#J_billConfirm').on('tap', '.ui-intro-app a', function() {
+		var template = getTemplate('studyDtl');
+		var headerWebview = template.header;
+		var contentWebview = template.content;
+		mui.fire(headerWebview,'updateHeader_3',{title:'学习',showMenu:'false'});
+		var appID = this.getAttribute('appID'),
+		nodeUid = this.getAttribute('nodeUid');
+		var dataObject={
+			'appID':appID,
+			'nodeUid':nodeUid
+		};
+		dataObject=JSON.stringify(dataObject);
+		Util.lStorage.setParam('studyDtl',dataObject);
+		contentWebview.loadURL("../study/studyDtl.html");
+		headerWebview.show('slide-in-right', 150);
+	})
+})
+</script>
+</body>
+</html>

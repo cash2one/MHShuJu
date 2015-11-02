@@ -1,0 +1,97 @@
+{
+    "teacher": [
+        {
+            "imgUrl": "../theme/images/headIcon.png",
+            "city": "郑州",
+            "schoolId": "1234",
+            "mobile": "1234",
+            "typeId": "2",
+            "userName": "刘海丽",
+            "region": "金水区",
+            "schoolName": "测试大学",
+            "userId": "6087160"
+        }
+    ],
+    "rtnMsg": "call success",
+    "rtnCode": "1",
+    "parents": [
+        {
+            "imgUrl": "../theme/images/headIcon.png",
+            "gradeName": "技术",
+            "gradeId": "12345",
+            "city": "郑州",
+            "schoolId": "1234",
+            "mobile": "1234",
+            "typeId": "1",
+            "userName": "刘海丽1",
+            "region": "二七区",
+            "schoolName": "郑州家长俱乐部学校",
+            "userId": "58441357"
+        },
+        {
+            "imgUrl": "../theme/images/headIcon.png",
+            "gradeName": "李培红三年级",
+            "gradeId": "12345",
+            "city": "郑州",
+            "schoolId": "1234",
+            "mobile": "1234",
+            "typeId": "3",
+            "userName": "刘海丽",
+            "region": "二七区",
+            "schoolName": "郑州家长俱乐部学校",
+            "userId": "64229940"
+        },
+        {
+            "imgUrl": "../theme/images/headIcon.png",
+            "gradeName": "手机客户端测试",
+            "gradeId": "12345",
+            "city": "郑州",
+            "schoolId": "1234",
+            "mobile": "1234",
+            "typeId": "4",
+            "userName": "刘海丽",
+            "region": "二七区",
+            "schoolName": "郑州家长俱乐部学校",
+            "userId": "78705391"
+        },
+        {
+            "imgUrl": "../theme/images/headIcon.png",
+            "gradeName": "李培红三年级",
+            "gradeId": "12345",
+            "city": "郑州",
+            "schoolId": "1234",
+            "mobile": "1234",
+            "typeId": "5",
+            "userName": "刘海丽",
+            "region": "二七区",
+            "schoolName": "郑州家长俱乐部学校",
+            "userId": "64229940"
+        },
+        {
+            "imgUrl": "../theme/images/headIcon.png",
+            "gradeName": "手机客户端测试",
+            "gradeId": "12345",
+            "city": "郑州",
+            "schoolId": "1234",
+            "mobile": "1234",
+            "typeId": "6",
+            "userName": "刘海丽",
+            "region": "二七区",
+            "schoolName": "郑州家长俱乐部学校",
+            "userId": "78705391"
+        },
+        {
+            "imgUrl": "../theme/images/headIcon.png",
+            "gradeName": "李培红三年级",
+            "gradeId": "12345",
+            "city": "郑州",
+            "schoolId": "1234",
+            "mobile": "1234",
+            "typeId": "7",
+            "userName": "刘海丽",
+            "region": "二七区",
+            "schoolName": "郑州家长俱乐部学校",
+            "userId": "64229940"
+        }
+    ]
+}

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/Eduportal/!svn/ver/2457/code/eduportal/src/main/java/com/ai/eduportal/remote/outer
+END
+EduPlatformHttclient.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/Eduportal/!svn/ver/3087/code/eduportal/src/main/java/com/ai/eduportal/remote/outer/EduPlatformHttclient.java
+END
+EduSyncRunner.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/Eduportal/!svn/ver/2916/code/eduportal/src/main/java/com/ai/eduportal/remote/outer/EduSyncRunner.java
+END
+EduPlatformSvcI.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/Eduportal/!svn/ver/2872/code/eduportal/src/main/java/com/ai/eduportal/remote/outer/EduPlatformSvcI.java
+END
+EduPlatformSvc.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/Eduportal/!svn/ver/2907/code/eduportal/src/main/java/com/ai/eduportal/remote/outer/EduPlatformSvc.java
+END

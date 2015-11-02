@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>404 - 页面不存在</title>
+<link rel="stylesheet" type="text/css" href="../theme/common.css"/>
+</head>
+<body>
+    <div id="go404">
+        <a href="../module/index.html" class="ui-back-index">返回首页</a>
+    </div>
+</body>
+</html>

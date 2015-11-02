@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<style>
+.mui-table-view-cell.mui-media{
+	padding: 11px 15px;
+}
+.mui-table-view .mui-media-object.mui-pull-left {
+	margin-right: 15px;
+}
+.mui-table-view .mui-media-object.mui-pull-right {
+	margin-right: 29px;
+}
+.mui-table-view .mui-media-object {
+	max-width: 50px;
+	height: 50px;
+	line-height: 42px;
+}
+.mui-table-view-cell > a > .mui-badge{
+	right: 5px;background-color: #fff; color: #999;
+}
+</style>
+</head>
+<body>
+<div class="mui-content" id="J_ListDiv">
+	<!--<ul class="mui-table-view" id="J_list">
+		<li class="mui-table-view-cell mui-media">
+         	<a class="mui-navigate-right">
+	           	<img class="mui-media-object mui-pull-right" src="../theme/images/headIcon.png">
+	           	<div class="mui-media-body" style="margin-top:16px;">
+	             	头像
+	           	</div>
+         	</a>
+      	</li>
+      	<li class="mui-table-view-cell">
+			<a class="mui-navigate-right">
+				姓名
+	           	<span class="mui-badge">田亮</span>
+			</a>
+		</li>
+      	<li class="mui-table-view-cell">
+			<a class="mui-navigate-right">
+				性别
+	           	<span class="mui-badge">男</span>
+			</a>
+		</li>
+      	<li class="mui-table-view-cell">
+			<a class="mui-navigate-right">
+				个性签名
+	           	<span class="mui-badge">一切为了孩子</span>
+			</a>
+		</li>
+		<li class="mui-table-view-divider">角色信息 - 家长</li>
+		<li class="mui-table-view-cell mui-media">
+         	<a>
+	           	<img class="mui-media-object mui-pull-left" src="../theme/images/headIcon.png">
+	           	<div class="mui-media-body">
+	             	班主任
+	             	<p class='mui-ellipsis'>郑州小学 五年级</p>
+	           	</div>
+         	</a>
+      	</li>
+		<li class="mui-table-view-cell mui-media">
+         	<a>
+	           	<img class="mui-media-object mui-pull-left" src="../theme/images/headIcon.png">
+	           	<div class="mui-media-body">
+	             	班主任
+	             	<p class='mui-ellipsis'>郑州小学 五年级</p>
+	           	</div>
+         	</a>
+      	</li>
+		<li class="mui-table-view-cell mui-media">
+         	<a>
+	           	<img class="mui-media-object mui-pull-left" src="../theme/images/headIcon.png">
+	           	<div class="mui-media-body">
+	             	班主任
+	             	<p class='mui-ellipsis'>郑州小学 五年级</p>
+	           	</div>
+         	</a>
+      	</li>
+		<li class="mui-table-view-divider">角色信息 - 家长</li>
+		<li class="mui-table-view-cell mui-media">
+         	<a>
+	           	<img class="mui-media-object mui-pull-left" src="../theme/images/headIcon.png">
+	           	<div class="mui-media-body">
+	             	田亮
+	             	<p class='mui-ellipsis'>郑州小学 五年级</p>
+	           	</div>
+         	</a>
+      	</li>
+	</ul>-->
+</div>
+<div class="ui-loader ui-corner-all" id="J_loading">
+    <span class="ui-icon-loading"></span>
+    <div class="ui-loader-verbose">正在加载数据...</div>
+</div>
+
+<script id="T_ListDiv" type="text/x-handlebars-template">
+	<ul class="mui-table-view" id="J_list">
+		<li class="mui-table-view-cell mui-media">
+         	<a class="mui-navigate-right">
+	           	<img class="mui-media-object mui-pull-right" src="../theme/images/headIcon.png" id="J_imgUrl">
+	           	<div class="mui-media-body" style="margin-top:16px;">
+	             	头像
+	           	</div>
+         	</a>
+      	</li>
+      	<li class="mui-table-view-cell">
+			<a class="mui-navigate-right">
+				姓名
+	           	<span class="mui-badge" id="J_userName">田亮</span>
+			</a>
+		</li>
+      	<li class="mui-table-view-cell">
+			<a class="mui-navigate-right">
+				性别
+	           	<span class="mui-badge" id="J_sex">男</span>
+			</a>
+		</li>
+        {{#if parents.length}}
+           <li class="mui-table-view-divider">角色信息 - 家长</li>
+            {{#each parents}}
+		     <li class="mui-table-view-cell mui-media">
+         	   <a>
+	           	   <img class="mui-media-object mui-pull-left" src="{{imgUrl}}">
+	           	     <div class="mui-media-body">
+	             	    {{userName}}
+	             	    <p class='mui-ellipsis'>{{city}}{{region}}{{schoolName}}{{gradeName}}</p>
+	           	     </div>
+         	   </a>
+      	      </li>
+            {{/each}}
+		{{/if}}
+        {{#if teacher.length}}
+            <li class="mui-table-view-divider">角色信息 - 老师</li>
+            {{#each teacher}}
+		    <li class="mui-table-view-cell mui-media">
+         	   <a>
+	              <img class="mui-media-object mui-pull-left" src="{{imgUrl}}">
+	           	  <div class="mui-media-body">
+	             	{{userName}}      
+	             	<p class='mui-ellipsis'>{{city}}{{region}}{{schoolName}}{{gradeName}}</p>
+	           	  </div>
+         	  </a>
+      	    </li>
+           {{/each}}
+		{{/if}}
+	</ul>
+</script>
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script type="text/javascript">
+$(function(){
+	srvMap.add('getUserAllRole', 'choiceRole.json','commonOuterNormal.action?uid=getCurrentUserAllInfo');
+	Util.ajax.postJson(srvMap.get('getUserAllRole'),'',function(json,status){
+		if (status) {
+			Util.ajax.loadTemp('#J_ListDiv',$('#T_ListDiv'),json);
+			if(json.userInfo.userName!=null&&json.userInfo.userName.length>0){
+			  var userInfoObj=json.userInfo;	
+			  $('#J_imgUrl').attr('src',userInfoObj.imgUrl); 
+			  $('#J_userName').text(userInfoObj.userName);
+			  if(userInfoObj.sex=='1'){
+				  $('#J_sex').text('男');
+			  }else{
+				  $('#J_sex').text('女');
+			  }
+			}
+		}else{
+			$('#J_ListDiv').html('<div class="ui-load-error">加载失败!</div>')
+		}})
+})
+</script>
+</body>
+</html>

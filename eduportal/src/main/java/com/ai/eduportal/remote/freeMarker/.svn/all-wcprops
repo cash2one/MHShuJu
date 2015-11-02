@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/Eduportal/!svn/ver/1034/code/eduportal/src/main/java/com/ai/eduportal/remote/freeMarker
+END
+JarTemplateLoader.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/Eduportal/!svn/ver/1034/code/eduportal/src/main/java/com/ai/eduportal/remote/freeMarker/JarTemplateLoader.java
+END
+FreeMarkerUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/Eduportal/!svn/ver/1034/code/eduportal/src/main/java/com/ai/eduportal/remote/freeMarker/FreeMarkerUtil.java
+END
+Resource.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/Eduportal/!svn/ver/1034/code/eduportal/src/main/java/com/ai/eduportal/remote/freeMarker/Resource.java
+END
+ClassPathResource.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/Eduportal/!svn/ver/1034/code/eduportal/src/main/java/com/ai/eduportal/remote/freeMarker/ClassPathResource.java
+END

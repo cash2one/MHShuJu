@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="struts-action" extends="projectstruts" namespace="/hn/action">
+        <action name="common" class="commonAction" method="excute" />
+        <action name="forwordTo" class="commonAction" method="forwordTo">
+
+        	<result name="myOrder" type="redirect">http://10.87.30.144:49000/edu/module/myOrder.html</result>
+        	<result name="myCollect" type="redirect">http://10.87.30.144:49000/edu/module/myCollect.html</result>
+        	<result name="choiceRole" type="redirect">http://10.87.30.144:49000/edu/module/choiceRole.html</result>
+        	<result name="accountBinding" type="redirect">http://10.87.30.144:49000/edu/module/accountBinding.html</result>
+        	<result name="sCart" type="redirect">http://10.87.30.144:49000/edu/module/sCart.html</result>
+        	<result name="confirmBill" type="redirect">http://10.87.30.144:49000/edu/module/confirmBill.html?cacheKey=${cacheKey}</result>
+        	<result name="indexPg" type="redirect">http://10.87.30.144:49000/edu/module/choiceRole.html?cacheKey=${cacheKey}</result>
+
+        </action>
+        <action name="commonCMS-*" class="commonAction" method="excute{1}" >
+        	<result name="logOut" type="redirect">http://10.87.30.144:49000/edu/module/index.html</result>
+        </action>
+        <action name="imOrderGo" class="commonAction" method="imOrderGo" />
+        <action name="verifyAllOrder" class="commonAction" method="verifyAllOrder"/>
+        
+        <!-- interface5 -->
+        <action name="gotoHeEdu" class="eduPlatformAction" method="gotoHeEdu">
+        </action>
+    </package>
+    
+    <package name="login-action" extends="projectstruts" namespace="/hn/login">
+    	
+        <action name="loginAuth" class="localLoginAuthAction" method="loginAuth">
+            <result name="success" type="redirect">/module/index.html</result>
+        </action>
+        <action name="anonymousLogin" class="localLoginAuthAction" method="anonymousLogin">
+            <result name="success" type="redirect">http://10.87.30.144:49000/edu/module/index.html</result>
+        </action>
+        <action name="noSessionGo" class="localLoginAuthAction" method="noSessionGoto">
+            <result name="success" type="redirect">http://10.87.30.144:49000/edu/module/index.html</result>
+        </action>
+        
+        <action name="login" class="loginAction" method="login">
+        	<result name="success" type="redirect">/module/index.html</result>
+        </action>
+        <action name="sendRandNum" class="loginAction" method="sendRandNum" />
+        <action name="checkRandNum" class="loginAction" method="checkRandNum" />
+        <action name="switchRole" class="loginAction" method="switchRole" />
+        <action name="isLogin" class="loginAction" method="isLogin" />
+        <action name="user-*" class="loginAction" method="excute{1}">
+        	<result name="loginPg" type="redirect">http://10.87.30.144:49000/edu/module/login.html</result>
+        </action>
+    </package>
+    
+</struts>

@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE control SYSTEM "common-sub-1.9.dtd">
+<control>
+    <action path="/hn/action/common">
+          <!-- regex="" 目前要可以取值如下:
+               required:必须
+               urlField:验证是否url格式的值
+               strRange:字符串范围验证,strRange{n,m}|{n,m]|[n,m}|[n,m]
+                        {，}为不包含,[,]为包含
+               numRange:验证数字范围,配置格式如strRange
+               dateRange:日期范围,如strRange
+               dateField:日期验证
+               numField:数字
+               emailField:email验证
+               regex:配置正则做校验,配置正则需要用{}包裹起来,如: regex{[a-z0-9]}
+               
+                 注:当有多个验证时以半角;隔开，当使用regex验证时，且正则表达式里面有半角;时请不要使用多个验证.
+          -->
+      <input uid="saveUserInfo" service="userService" method="saveUserInfo" scope="control" >
+           <parameter key="phoneNum"        toKey="mobile"      scope="request" regex="numField"/>
+           <parameter key="userName"      toKey="userName"      scope="session" />
+           <parameter key="appOper.add"    toKey="appOperlog"    scope="properties" regex="" />
+           <parameter key="edu_login_user.userId"  toKey="logOperator"      scope="session" regex="" />
+       </input>
+       <output uid="saveUserInfo" convertor="com.ai.frame.web.convertor.CommonConvert" method="convertSingleData">
+           <parameter key="returnCode"    toKey="rtnCode" />
+     	   <parameter key="returnMessage" toKey="rtnMsg" />
+       </output>
+      
+        
+        <input uid="bindAccount" service="userService" method="saveAccountBindRel" scope="control" >
+           <parameter key="userId"        toKey="userId"      scope="request" regex="required;numField"/>
+           <parameter key="otherId"        toKey="otherUserId"      scope="request" regex="required;numField"/>
+           <parameter key="otherName"        toKey="otherUserName"      scope="request" regex=""/>
+           <parameter key="roleType"        toKey="userType"      scope="request" regex="required;numRange[1,3]"/>
+           <parameter key="busiType"        toKey="sysType"      scope="request" regex="required;numRange[1,3]"/>
+           <parameter key="edu_current_user.mobile"        toKey="mobile"      scope="session" regex="numField"/>
+           <parameter key="edu_current_user.userName"      toKey="userName"      scope="session" />
+           <parameter key="appOper.add"    toKey="appOperlog"    scope="properties" regex="" />
+           <parameter key="edu_current_user.userId"  toKey="logOperator"      scope="session" regex="" />
+       </input>
+       <output uid="bindAccount" convertor="com.ai.frame.web.convertor.CommonConvert" method="convertSingleData">
+           <parameter key="returnCode"    toKey="rtnCode" />
+     	   <parameter key="returnMessage" toKey="rtnMsg" />
+       </output>
+       
+       <input uid="unbindAccount" service="userService" method="deleteAccountBindRel" scope="control" >
+           <parameter key="userId"        toKey="userId"      scope="request" regex="required;numField"/>
+           <parameter key="otherId"        toKey="otherUserId"      scope="request" regex="required;numField"/>
+           <parameter key="roleType"        toKey="userType"      scope="request" regex="required;numField"/>
+           <parameter key="busiType"        toKey="sysType"      scope="request" regex="required;numField"/>
+           <parameter key="edu_current_user.mobile"        toKey="mobile"      scope="session" regex="numField"/>
+           <parameter key="edu_current_user.userName"      toKey="userName"      scope="session" />
+           <parameter key="appOper.del"    toKey="appOperlog"    scope="properties" regex="" />
+           <parameter key="edu_current_user.userId"  toKey="logOperator"      scope="session" regex="" />
+       </input>
+       <output uid="unbindAccount" convertor="com.ai.frame.web.convertor.CommonConvert" method="convertSingleData">
+           <parameter key="returnCode"    toKey="rtnCode" />
+     	   <parameter key="returnMessage" toKey="rtnMsg" />
+       </output>
+       
+        <input uid="saveAppfavorite" service="favoriteService" method="saveAppFavorite" scope="control">
+            <parameter key="appName"    toKey="appName"    scope="request" regex="" />
+            <parameter key="appID"      toKey="appID"      scope="request" regex="" />
+            <parameter key="isMutiApp"  toKey="appType"    scope="request" regex="" />
+            <parameter key="appPic"     toKey="appPic"     scope="request" regex="" />
+            <parameter key="nodeUid"    toKey="nodeUid"    scope="request" regex="" />
+            
+            <parameter key="appOper.add"    toKey="appOperlog"    scope="properties" regex="" />
+            <parameter key="edu_current_user.userId"  toKey="logOperator"      scope="session" regex="" />
+            <parameter key="edu_current_user.mobile"    toKey="favoriteUserId"    scope="session" regex="" />
+            <parameter key="edu_current_user.userName"  toKey="favoriteUser"      scope="session" regex="" />
+        </input>
+        <output uid="saveAppfavorite" convertor="com.ai.frame.web.convertor.CommonConvert" method="convertSingleData">
+        	<parameter key="returnCode"    toKey="rtnCode" />
+        	<parameter key="returnMessage" toKey="rtnMsg" />
+        </output>
+        <input uid="cancelFavorite" service="favoriteService" method="cancelFavorite" scope="control">
+            <parameter key="appID"      toKey="appId"      scope="request" regex="" />
+            
+            <parameter key="appOper.del"    toKey="appOperlog"    scope="properties" regex="" />
+            <parameter key="edu_current_user.userId"  toKey="logOperator"      scope="session" regex="" />
+            <parameter key="edu_current_user.mobile"  toKey="fUserId"    scope="session" regex="" />
+        </input>
+        <output uid="cancelFavorite" convertor="com.ai.frame.web.convertor.CommonConvert" method="convertSingleData">
+        	<parameter key="returnCode"    toKey="rtnCode" />
+        	<parameter key="returnMessage" toKey="rtnMsg" />
+        </output>
+        
+        <input uid="footmark" service="favoriteService" method="footmark" scope="control">
+            <parameter key="appID" toKey="appId"      scope="request" regex="" />
+            <parameter key="edu_current_user.mobile"  toKey="userId"  scope="session" regex="" />
+        </input>
+        <output uid="footmark" convertor="com.ai.frame.web.convertor.CommonConvert" method="convertSingleData">
+        	<parameter key="returnCode"    toKey="rtnCode" />
+        	<parameter key="returnMessage" toKey="rtnMsg" />
+        </output>
+        
+        <input uid="getAppfavorite" service="favoriteService" method="getUserAppFavorite" scope="control">
+            <parameter key="startNum" toKey="startNum" scope="request" regex="" />
+            <parameter key="endNum"   toKey="endNum"   scope="request" regex="" />
+            <parameter key="edu_current_user.mobile" toKey="mobile" scope="session" regex="" />
+        </input>
+        <output uid="getAppfavorite" convertor="com.ai.eduportal.convertor.CmsResultConvert" method="convertFavorite">
+        	<parameter key="favoriteId"    toKey="favoriteId" />
+            <parameter key="appName"       toKey="appName"   />
+            <parameter key="appID"         toKey="appID"     />
+            <parameter key="appType"       toKey="appType"   />
+            <parameter key="appPic"        toKey="appPic"   />
+            <parameter key="nodeUid"       toKey="nodeUid" />
+            <parameter key="orderState"    toKey="orderState" />
+            <parameter key="byOrdered"     toKey="byOrdered" />
+            <parameter key="apphref"       toKey="apphref" />
+            <parameter key="favoriteUserId"       toKey="fUserId"   />
+            <parameter key="favoriteUser"         toKey="fUser"     />
+        	<parameter key="returnCode"    toKey="rtnCode"   />
+        	<parameter key="returnMessage" toKey="rtnMsg"    />
+        </output>
+        <input uid="saveAppCar" service="appcarSv" method="saveAppCar" scope="control">
+            <parameter key="month" toKey="month" scope="request" regex="" />
+            <parameter key="appID" toKey="appid" scope="request" regex="" />
+            <parameter key="edu_current_user.userId" toKey="userid" scope="session" regex="" />
+            <parameter key="edu_current_user.typeid" toKey="roleid" scope="session" regex="" />
+        </input>
+        <output uid="saveAppCar" convertor="com.ai.frame.web.convertor.CommonConvert" method="convertSingleData">
+        	<parameter key="returnCode"    toKey="rtnCode"   />
+        	<parameter key="returnMessage" toKey="rtnMsg"    />
+        </output>
+        <input uid="delAppCarById" service="appcarSv" method="delAppCarById" scope="control">
+            <parameter key="carId" toKey="carId" scope="request" regex="" />
+        </input>
+        <output uid="delAppCarById" convertor="com.ai.frame.web.convertor.CommonConvert" method="convertSingleData">
+        	<parameter key="returnCode"    toKey="rtnCode"   />
+        	<parameter key="returnMessage" toKey="rtnMsg"    />
+        </output>
+        <input uid="getAppCar" service="appcarSv" method="getAppCar" scope="control">
+            <parameter key="edu_current_user.userId" toKey="userId" scope="session" regex="" />
+            <parameter key="edu_current_user.typeid" toKey="roleId" scope="session" regex="" />
+            <parameter key="edu_current_user.mobile" toKey="mobile" scope="session" regex="" />
+        </input>
+        <output uid="getAppCar" convertor="com.ai.eduportal.convertor.CmsResultConvert" method="convertAppcar">
+        	<parameter key="carid"         toKey="carId"   />
+        	<parameter key="appid"         toKey="appID"   />
+        	<parameter key="userid"        toKey="userId"   />
+        	<parameter key="roleid"        toKey="roleId"   />
+        	<parameter key="month"         toKey="month"   />
+        	<parameter key="iscollect"     toKey="iscollect"   />
+        	<parameter key="returnCode"    toKey="rtnCode"   />
+        	<parameter key="returnMessage" toKey="rtnMsg"    />
+        </output>
+        
+        <input uid="x0001" service="crmCallerService" method="getPhoneNumInfo" scope="control" desc="注册时，校验是否是河南本地号码。">
+			<parameter key="SvcNum"        toKey="SvcNum"      scope="request" regex="numField"/>
+        </input>
+         <output uid="x0001" convertor="com.ai.frame.web.convertor.CommonConvert" method="convertSingleData">
+        	<parameter key="returnCode"    toKey="rtnCode"   />
+        	<parameter key="returnMessage" toKey="rtnMsg"    />
+         </output>
+    </action>
+    <action path="/hn/action/commonCMS-GetCache">
+    	<input uid="getCache" service="" method="" scope="control">
+            <parameter key="cacheKey" toKey="cacheKey" scope="request" regex=""/>
+        </input>
+        <output uid="getCache" convertor="com.ai.frame.web.convertor.CommonConvert" method="convert2List">
+        	<parameter key="appID"   toKey="appID"/>
+        	<parameter key="appName" toKey="appName"/>
+        	<parameter key="nodeUid" toKey="nodeUid"/>
+        	<parameter key="price"  toKey="price"/>
+        	<parameter key="month"  toKey="month"/>
+        	<parameter key="phone"  toKey="phone"/>
+        	<parameter key="customer"  toKey="customer"/>
+        	<parameter key="sms"    toKey="sms"/>
+        	<parameter key="appPic" toKey="appPic"/>
+        	<parameter key="returnCode" toKey="rtnCode"/>
+        	<parameter key="returnMessage" toKey="rtnMsg"/>
+        </output>
+    </action>
+    <!-- 
+    <action path="/hn/action/commonCMS-GetCarCache">
+    	<input uid="getCarCache" service="" method="" scope="control">
+            <parameter key="cacheKey" toKey="cacheKey" scope="request" regex=""/>
+        </input>
+        <output uid="getCarCache" convertor="com.ai.frame.web.convertor.CommonConvert" method="convert2List">
+        	<parameter key="appID"   toKey="appID"/>
+        	<parameter key="appName" toKey="appName"/>
+        	<parameter key="nodeUid" toKey="nodeUid"/>
+        	<parameter key="price"  toKey="price"/>
+        	<parameter key="month"  toKey="month"/>
+        	<parameter key="phone"  toKey="phone"/>
+        	<parameter key="customer"  toKey="customer"/>
+        	<parameter key="sms"    toKey="sms"/>
+        	<parameter key="appPic" toKey="appPic"/>
+        	<parameter key="returnCode" toKey="rtnCode"/>
+        	<parameter key="returnMessage" toKey="rtnMsg"/>
+        </output>
+    </action>
+     -->
+    <action path="/hn/action/commonCMS-GetCommonCache">
+    	<input uid="getCommonCache" service="" method="" scope="control">
+            <parameter key="cacheKey" toKey="cacheKey" scope="request" regex=""/>
+        </input>
+        <output uid="getCommonCache" convertor="com.ai.eduportal.convertor.CmsResultConvert" method="convert2list">
+        	<parameter key="carId"   toKey="carId"/>
+        	<parameter key="prev"    toKey="prev"/>
+        	<parameter key="appID"   toKey="appID"/>
+        	<parameter key="appName" toKey="appName"/>
+        	<parameter key="nodeUid" toKey="nodeUid"/>
+        	<parameter key="price"  toKey="price"/>
+        	<parameter key="month"  toKey="month"/>
+        	<parameter key="phone"  toKey="phone"/>
+        	<parameter key="customer"  toKey="customer"/>
+        	<parameter key="sms"     toKey="sms"/>
+        	
+        	<parameter key="offerId"   toKey="offerId"/>
+        	<parameter key="smsCode"   toKey="smsCode"/>
+        	<parameter key="offerCode" toKey="offerCode"/>
+        	
+        	<parameter key="sysType" toKey="sysType"/>
+        	<parameter key="appPic"  toKey="appPic"/>
+        	<parameter key="returnCode" toKey="rtnCode"/>
+        	<parameter key="returnMessage" toKey="rtnMsg"/>
+        </output>
+    </action>
+    <action path="/hn/action/commonCMS-Logout">
+    	<input uid="Logout" service="" method="" scope="control">
+        </input>
+        <output uid="Logout" convertor="com.ai.frame.web.convertor.CommonConvert" method="convertSingleData">
+        	<parameter key="phoneNum"   toKey="phoneNum"/>
+        	<parameter key="returnCode" toKey="rtnCode"/>
+        	<parameter key="returnMessage" toKey="rtnMsg"/>
+        </output>
+    </action>
+    <action path="/hn/action/imOrderGo">
+    	<input uid="imOrderGo" service="orderService" method="imOrderGo" scope="control">
+ 			<parameter key="appID"    toKey="appID"   scope="request" regex=""/>
+            <parameter key="nodeUid"  toKey="nodeUid" scope="request" regex=""/>
+            <parameter key="price"    toKey="price"   scope="request" regex=""/>
+            <parameter key="sysType"  toKey="sysType" scope="request" regex=""/>
+            <parameter key="isMutiApp" toKey="appType" scope="request" regex=""/>
+            <parameter key="month"    toKey="month"   scope="request" regex=""/>
+            <parameter key="redirect" toKey="orderUrl"  scope="request" regex=""/>
+            <parameter key="offerId"   toKey="offerId"/>
+        	<parameter key="smsCode"   toKey="smsCode"/>
+        	<parameter key="offerCode" toKey="offerCode"/>
+            
+            <parameter key="cacheKey" toKey="cacheKey" scope="request" regex=""/>
+            <parameter key="edu_login_user.userId" toKey="userId"  scope="session" regex=""/>
+        </input>
+    </action>
+    <action path="/hn/action/commonCMS-HomeNewHotApp">
+    	<input uid="cmsH" scope="request" service="favoriteService" method="getAppfavorite">
+    		<parameter key="edu_current_user.mobile" toKey="userId"   scope="session" />
+    		<parameter key="start"  toKey="startNum" scope="request" />
+            <parameter key="limit"  toKey="endNum"   scope="request" />
+    	</input>
+    </action>
+    <action path="/hn/action/commonCMS-HomeBodyApps">
+    	<input uid="cmsBD" scope="request" service="favoriteService" method="getUserAppFavorite">
+    		<parameter key="edu_login_user.mobile" toKey="mobile"   scope="session" />
+    		<parameter key="myTrack" toKey="myTrack" scope="request" />
+    		<parameter key="start"   toKey="startNum" scope="request" />
+            <parameter key="limit"   toKey="endNum"   scope="request" />
+    	</input>
+    </action>
+    <action path="/hn/action/commonCMS-AppDetail">
+    	<input uid="appDetails" scope="control" service="crmCallerService" method="getOrderSate">
+    		<parameter key="nodeUid"  toKey="appId"   scope="request" regex="" />
+    		<parameter key="appID"    toKey="appcode" scope="request" regex="" />
+    		<parameter key="edu_current_user.userId"  toKey="userId"  scope="session" regex="" />
+    		<parameter key="edu_current_user.mobile"  toKey="mobile"  scope="session" regex="" />
+    	</input>
+    </action>
+    
+    <!-- <action path="/hn/action/commonCMS-GetAllCartOrder">
+    	<input uid="pkgPrice" scope="control" service="crmCallerService" method="getCombPkgPrice">
+    		<parameter key="appID"    toKey="appCode" scope="request" regex="" />
+    		<parameter key="edu_current_user.userId"    toKey="userId"  scope="session" regex="" />
+    	</input>
+    </action> -->
+    
+     <action path="/hn/action/verifyAllOrder">
+    	<input uid="verifyOrder" scope="control" service="orderService" method="verifyAllOrder">
+    		<parameter key="prodInfo"    toKey="prodInfo" scope="request" regex="required" />
+    		<parameter key="edu_current_user.userId"    toKey="userId"  scope="session" regex="" />
+    		<parameter key="edu_current_user.userName"    toKey="userName"  scope="session" regex="" />
+    		<parameter key="edu_current_user.mobile"    toKey="mobile"  scope="session" regex="required" />
+    	</input>
+     </action>
+    
+    <action path="/hn/action/commonCMS-GetAllAllOrder">
+    	<input uid="allOrders" scope="control" service="orderService" method="getUserAllOrder">
+    		<parameter key="edu_current_user.mobile"    toKey="mobile" scope="session" regex="required" />
+    		<parameter key="edu_current_user.userId"    toKey="userId"  scope="session" regex="" />
+    	</input>
+    </action>
+    
+    <action path="/hn/login/loginAuth">
+        <input uid="loginAuth" scope="control" service="eduPlatformSvc" method="loginAuth">
+            <parameter key="mobile"    toKey="account"   scope="request" regex="required;regex{(13[4-9]{1}[0-9]{8})|(15[0,1,2,5,6,7,8,9]{1}[0-9]{8})|(18[2,3,4,7,8]{1}[0-9]{8})|(147[0-9]{8})}"/>
+            <parameter key="passwd"    toKey="pwd"       scope="request" regex="required"/>
+            <parameter key="authCode"  toKey="authCode"  scope="request" regex="required"/>
+            <parameter key="isFirst"   toKey="isFirst"  scope="request" />
+        </input>
+        <output uid="loginAuth" convertor="com.ai.frame.web.convertor.CommonConvert" method="convertSingleData">
+            <parameter key="userId"        toKey="userId"/>
+            <parameter key="userName"      toKey="userName"/>
+            <parameter key="mobile"        toKey="account"/>
+            <parameter key="returnCode"    toKey="rtnCode"/>
+            <parameter key="returnMessage" toKey="rtnMsg"/>
+        </output>
+    </action>
+    <action path="/hn/login/login">
+  	 	<input uid="login" scope="control" service="crmCallerService" method="getLoginUserInfo">
+  	 		<parameter key="mobile"    toKey="mobile"    scope="request" regex="required;regex{^[1][34578][0-9]{9}$}"/>
+            <parameter key="passwd"    toKey="passwd"    scope="request" regex="required"/>
+  	 	</input>
+    </action>
+    
+    <action path="/hn/login/switchRole">
+  	 	<input uid="swRole" scope="control" service="userService" method="getUserAllBindIdNoraml">
+  	 	   <parameter key="edu_login_user.mobile"    toKey="mobile" scope="session" regex="required" />
+  	 	   <parameter key="userType"    toKey="userType"    scope="request" regex="numField"/>
+           <parameter key="userId"      toKey="userId"      scope="request" regex="numField"/>
+           <parameter key="userName"    toKey="userName"      scope="request" regex="required"/>
+           <parameter key="imgUrl"      toKey="imgUrl"      scope="request" regex="required"/>
+           <parameter key="orgId"       toKey="orgId"      scope="request" regex=""/>
+           <parameter key="sex"         toKey="sex"      scope="request" regex=""/>
+           <parameter key="cacheKey"    toKey="cacheKey"    scope="request" regex=""/>
+  	 	</input>
+    </action>
+    
+    <action path="/hn/login/sendRandNum">
+  	 	<input uid="sdRn" scope="control" service="loginService" method="sendRandomNum">
+  	 	   <parameter key="phoneNum"        toKey="mobile"      scope="request" regex="required;numField"/>
+  	 	</input>
+    </action>
+    
+    <action path="/hn/login/checkRandNum">
+  	 	<input uid="ckRn" scope="control" service="userService" method="checkUserRegRelInfo">
+  	 	   <parameter key="phoneNum"        toKey="mobile"      scope="request" regex="required;numField"/>
+  	 	   <parameter key="smsValidate"        toKey="smsValidate"      scope="request" regex="required"/>
+  	 	</input>
+    </action>
+    
+    <action path="/hn/login/isLogin">
+  	 	<input uid="isLogin" scope="request" service="appcarSv" method="getAppCar">
+  	 		<parameter key="edu_current_user.userId" toKey="userId" scope="session" regex="" />
+            <parameter key="edu_current_user.typeid" toKey="roleId" scope="session" regex="" />
+  	 	</input>
+  	 	<output uid="isLogin" convertor="com.ai.frame.web.convertor.CommonConvert" method="convertSingleData">
+  	 		<parameter key="returnCode"    toKey="rtnCode" />
+  	 		<parameter key="returnMessage" toKey="rtnMsg" />
+  	 		<parameter key="userId"   toKey="userId" />
+  	 		<parameter key="mobile"   toKey="mobile" />
+  	 		<parameter key="userName" toKey="userName" />
+  	 		<parameter key="realName" toKey="realName" />
+  	 		<parameter key="sex"      toKey="sex" />
+  	 		<parameter key="email"    toKey="email" />
+  	 		<parameter key="cityCode" toKey="cityCode" />
+  	 		<parameter key="typeid"   toKey="userType" />
+  	 		<parameter key="typename" toKey="typeName" />
+  	 	</output>
+    </action>
+
+	<action path="/hn/login/user-GetAllUserInfo">
+		<input uid="allInfo" scope="request" service="userService" method="getCrmUserInfoAndXxtBindInfo"  >
+            <parameter key="edu_current_user.mobile" toKey="mobile" scope="session" regex="required;numField"/>
+            <parameter key="edu_login_user.userId"  toKey="userId" scope="session" regex="numField"/> 
+       </input>
+	</action>
+
+	<action path="/hn/login/user-GetXXTAccountInfo">
+		<input uid="xxtInfo" scope="control" service="userService" method="getCrmUserInfoAndBindInfo">
+			<parameter key="edu_login_user.mobile"  toKey="mobile" scope="session" regex="numField"/>
+			<parameter key="edu_login_user.userId"  toKey="userId" scope="session" regex="numField"/>
+			<parameter key="cacheKey"    toKey="cacheKey"    scope="request" regex=""/>
+		</input>
+	</action>
+    
+    <action path="/hn/login/user-GetDefaultInfo">
+		<input uid="xxtDfInfo" scope="request" service="orderService" method="getEduCallSerialNo">
+		</input>
+	</action>
+    
+    <action path="/hn/login/user-GetSysAccoutInfo">
+		<input uid="sysBindInfo" scope="control" service="userService" method="getUserAllBindIdBySysType">
+		   <parameter key="roleType"        toKey="userType"      scope="request" regex="required;numRange[1,3]"/>
+           <parameter key="busiType"        toKey="sysType"      scope="request" regex="required;numRange[1,3]"/>
+           <parameter key="edu_current_user.mobile"        toKey="mobile"      scope="session" regex="numField"/>
+		</input>
+	</action>
+	
+	<action path="/hn/action/commonCMS-GetOrderCacheInfo">
+    	<input uid="getOrdCache" service="" method="" scope="control">
+             <parameter key="edu_current_user.userId" toKey="userId" scope="session" regex="" />
+            <parameter key="edu_current_user.mobile" toKey="mobile" scope="session" regex="" />
+        </input>
+        <output uid="getOrdCache" convertor="com.ai.frame.web.convertor.CommonConvert" method="convertSingleData">
+        	<parameter key="returnCode" toKey="rtnCode"/>
+        	<parameter key="returnMessage" toKey="rtnMsg"/>
+        </output>
+    </action>
+    
+    <action path="/hn/login/user-SaveUserIcon">
+		<input uid="saveIcon" scope="control" service="userService" method="saveUserChooseImageUrl">
+			<parameter key="edu_current_user.mobile"  toKey="mobile" scope="session" regex="numField"/>
+			<parameter key="edu_current_user.userId"  toKey="userId" scope="session" regex="numField"/>
+			<parameter key="edu_current_user.typeid"  toKey="userType" scope="session" regex="numField"/>
+			<parameter key="userIcon"  toKey="userIcon" scope="request" regex="numField"/>
+		</input>
+	</action>
+	
+    <action path="/hn/login/user-EduResetPwd">
+       <input uid="resetPwd" scope="control" service="userService" method="eduUserResetPwd">
+  	 	   <parameter key="mobile"        toKey="mobile"      scope="request" regex="required;numField"/>
+  	 	   <parameter key="pwd"           toKey="pwd"         scope="request" regex="required"/>
+  	 	</input>
+	</action>
+	
+    <action path="/hn/login/user-EduChangPwd">
+       <input uid="changPwd" scope="control" service="userService" method="eduUserChangPwd">
+  	 	   <parameter key="edu_login_user.mobile"  toKey="mobile" scope="session" regex="required;numField"/>
+  	 	   <parameter key="oldPwd"  toKey="oldPwd" scope="request" regex="required"/>
+  	 	   <parameter key="newPwd"  toKey="newPwd" scope="request" regex="required;"/>
+  	 	</input>
+	</action>
+	<action path="/hn/login/user-EduBackLoginCleSession">
+		<input uid="backLoginCleSession" scope="control" service="userService" method="eduUserChangPwd"/>
+	</action>
+	
+	<action path="/hn/login/user-SendSms">
+       <input uid="sdSms" scope="control" service="userService" method="sendEduSms">
+  	 	   <parameter key="mobile"        toKey="mobile"      scope="request" regex="required;numField"/>
+  	 	</input>
+	</action>
+	
+    <action path="/hn/login/user-CheckFirstLogin">
+       <input uid="checkFtLg" scope="control" service="userService" method="isFirstLogin">
+  	 	   <parameter key="mobile"        toKey="mobile"      scope="request" regex="required;numField"/>
+  	 	</input>
+	</action>
+	
+	<action path="/hn/login/user-CheckPwdRt">
+       <input uid="checkPwdRg" scope="control" service="userService" method="checkUserPwdUpFirstFlag">
+  	 	   <parameter key="mobile"        toKey="mobile"   scope="request" regex="required;numField"/>
+  	 	   <parameter key="pwd"           toKey="pwd"      scope="request" regex="required"/>
+  	 	</input>
+	</action>
+	
+</control>

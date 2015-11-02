@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>沟通</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<style>
+.zfooter {
+	background: #E6E6E4;
+	padding: 0;
+	border-top: 1px solid #C5C5C5;
+}
+.zfooter .mui-btn-primary {
+	position: absolute;
+	right: 10px;
+	top: 7px;
+}
+.chos_list {
+	width: 80%;
+	overflow: hidden;
+	height: 50px;
+}
+.chos_list li {
+	float: left;
+	height: 38px;
+	line-height: 38px;
+	background: #007AFF;
+	color: #fff;
+	margin: 5px;
+	padding: 0 10px;
+	border-radius: 10px;
+	width: 60px;
+	overflow: hidden;
+}
+</style>
+</head>
+<body>
+<nav class="mui-bar mui-bar-tab zfooter">
+	<ul class="chos_list fn-clear" id="chos_list">
+		
+	</ul>
+	<button class="mui-btn mui-btn-primary" type="button" id="J_start_btn">开始</button>
+</nav>
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script src="../common/jquery.form.js"></script>
+<script type="text/javascript">
+mui.init({swipeBack: true});
+var bodyWebview = null;
+
+var userInfo = JSON.parse(Util.lStorage.getParam('userInfo'));
+
+mui.plusReady(function(){
+	bodyWebview = plus.webview.getWebviewById('comuniRoleBody.html');
+	
+	mui("#chos_list").on("tap", "li", function(){
+		var _self = $(this);
+		var _id = _self.attr("id");
+		mui.fire(bodyWebview, "removeMen", {value: _id} );
+		_self.remove();
+	})
+	
+	mui(".zfooter").on("tap", "#J_start_btn", function(){
+		var destid = [], name = [], destUserType = [];
+		if($("#chos_list li").length){
+			$("#chos_list li").each(function(){
+				destid.push($(this).attr("id"));
+				name.push($(this).text());
+				destUserType.push($(this).attr('destUserTyp'));
+			})
+			destid = destid.join(',').replace(/(^\s*)|(\s*$)/g, "")+",";
+			var title = name.toString();
+			title = title.length > 15 ? title.substring(0, 15)+'...' : title;
+			
+			var comuniIndex = plus.webview.getWebviewById('comuni/comuniIndex.html');
+			mui.fire(comuniIndex, "newChat",{title: title, destid: destid, destUserType: destUserType} );
+			
+		}
+	})
+})
+
+var win_destUserTyp = "";
+window.addEventListener("pickMen", function (e) {
+    var type = e.detail.type;
+    var value = e.detail.value;
+	if(type == '1'){//删除
+		$("#chos_list li").each(function(){
+			var _id = $(this).attr("id");
+			if(value == _id){
+				$(this).remove();
+			}
+		})
+	}else if(type == '2'){//添加
+		var tit = e.detail.tit;
+		var destUserTyp = e.detail.destUserTyp;
+		var len = $("#chos_list li").length;
+		if(win_destUserTyp !== "" && destUserTyp !== win_destUserTyp){//destUserTyp不相同，清空已选择
+			for(var i=0; i<len; i++){
+				var _self = $("#chos_list li").eq(i);
+				var _id = _self.attr("id");
+				mui.fire(bodyWebview, "removeMen", {value: _id} );
+			}
+			$("#chos_list").html("");
+		}
+		var _li = '<li id="'+value+'" destUserTyp="'+destUserTyp+'">'+tit+'</li>';
+		win_destUserTyp = destUserTyp;
+		$("#chos_list").prepend(_li);
+	}
+});
+</script>
+</body>
+</html>

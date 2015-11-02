@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE control SYSTEM "common-sub-1.9.dtd">
+<control>
+    <action path="/hn/eduPlatformAction">
+        <input uid="localLoginAuth" service="eduPlatformSvc" method="localLoginAuth" scope="control" desc="本地登录">
+           <parameter key="id"           toKey="id"          scope="request" />
+           <parameter key="channelType"  toKey="channelType" scope="request" />
+           <parameter key="role"         toKey="role"        scope="request" />
+           <parameter key="accesstoken"  toKey="accesstoken" scope="request" />
+        </input>
+        
+        <input uid="loginCheck" service="eduPlatformSvc" method="loginCheck" scope="control" desc="接口1">
+           <parameter key="account"   toKey="account"  scope="request" />
+           <parameter key="password"  toKey="password" scope="request" />
+           <parameter key="role"      toKey="role"     scope="request" />
+           <parameter key="extend"    toKey="extend"   scope="request" />
+        </input>
+        <output uid="loginCheck" convertor="" method="convert">
+            <parameter key="returnCode" toKey="ret" /> 
+            <parameter key="bean"       toKey="body" /> 
+            <parameter key="returnMessage" toKey="msg" />
+        </output>
+        <input uid="getUserDtl" service="eduPlatformSvc" method="getUserDtl" scope="control" desc="接口2">
+           <parameter key="account"   toKey="account"  scope="request" />
+           <parameter key="extend"    toKey="extend"   scope="request" />
+        </input>
+        <output uid="getUserDtl" convertor="" method="convert">
+            <parameter key="returnCode" toKey="ret" /> 
+            <parameter key="bean"       toKey="body" /> 
+            <parameter key="returnMessage" toKey="msg" />
+        </output>
+        <input uid="getStudentParent" service="eduPlatformSvc" method="getStudentParent" scope="control" desc="接口3">
+           <parameter key="classId"   toKey="classId"  scope="request" />
+           <parameter key="extend"    toKey="extend"   scope="request" />
+        </input>
+         <output uid="getStudentParent" convertor="" method="convert">
+            <parameter key="returnCode" toKey="ret" /> 
+            <parameter key="bean"       toKey="body" /> 
+            <parameter key="returnMessage" toKey="msg" />
+        </output>
+        <input uid="gotoDump" service="eduPlatformSvc" method="checkUserId" scope="control" desc="接口4">
+           <parameter key="id"     toKey="id"     scope="request" />
+           <parameter key="role"   toKey="role"   scope="request" />
+           <parameter key="accesstoken"   toKey="accesstoken"   scope="request" />
+           <parameter key="extend" toKey="extend" scope="request" />
+        </input>
+        <output uid="gotoDump" convertor="" method="convertMp">
+            <parameter key="returnCode" toKey="ret" />  
+            <parameter key="returnMessage" toKey="msg" />
+            <parameter key="callbackurl" toKey="callbackurl" />
+            <parameter key="accesstoken" toKey="accesstoken" />
+        </output>
+        <input uid="heEduquth" service="eduPlatformSvc" method="checkUserId" scope="control" desc="接口6">
+           <parameter key="userId"  toKey="id"    scope="request" />
+           <parameter key="roleId"  toKey="role"  scope="request" />
+           <parameter key="extend"  toKey="extend"   scope="request" />
+        </input>
+        <output uid="heEduquth" convertor="" method="convertMp">
+            <parameter key="returnCode"    toKey="ret" />  
+            <parameter key="returnMessage" toKey="msg" />
+            <parameter key="userId"        toKey="userId" />
+            <parameter key="userName"      toKey="userName" />
+            <parameter key="sex"           toKey="sex" />
+            <parameter key="area"          toKey="area" />
+            <parameter key="subArea"       toKey="subArea" />
+            <parameter key="mobile"        toKey="mobile" />
+        </output>
+        
+        <input uid="gotoHeEdu" service="" method="" scope="control" desc="接口5">
+           <parameter key="edu_login_user.userId"    toKey="id"    scope="session" />
+           <parameter key="edu_current_user.typeid"  toKey="role"  scope="session" />
+           <parameter key="edu.he.xxtcode"           toKey="xxtCode"    scope="properties" />
+           <parameter key="type"      toKey="type"      scope="request" />
+           <parameter key="productId" toKey="productId" scope="request" />
+        </input>
+        <input uid="EDUlogout" service="eduPlatformSvc" method="checkUserId" scope="control" desc="接口7">
+           <parameter key="id"       toKey="id"      scope="request" />
+           <parameter key="xxtCode"  toKey="xxtCode" scope="request" />
+           <parameter key="extend"   toKey="extend"  scope="request" />
+        </input>
+        
+        <input uid="edu_userOrder" service="eduPlatformSvc" method="queryXxtUserOrder" scope="control" desc="接口8">
+           <parameter key="phone"    toKey="phone"    scope="request" />
+           <parameter key="extend"   toKey="extend"   scope="request" />
+        </input>
+        <output uid="edu_userOrder" convertor="" method="convertBeans">
+            <parameter key="returnCode"    toKey="ret" />  
+            <parameter key="returnMessage" toKey="msg" />
+            <parameter key="beans"         toKey="orders" />
+            <parameter key="name"          toKey="name" />
+            <parameter key="status"        toKey="status" />
+        </output>
+        <input uid="classTeacher" service="eduPlatformSvc" method="queryXxtTeaInfoInClass" scope="control" desc="接口9">
+           <parameter key="id"     toKey="id"     scope="request" />
+           <parameter key="extend" toKey="extend" scope="request" />
+        </input>
+        <output uid="classTeacher" convertor="" method="convertBeans">
+            <parameter key="returnCode"    toKey="ret" />  
+            <parameter key="returnMessage" toKey="msg" />
+            <parameter key="beans"         toKey="users" />
+            <parameter key="id"            toKey="id" />
+            <parameter key="name"          toKey="name" />
+            <parameter key="nickName"      toKey="nickName" />
+            <parameter key="account"       toKey="account" />
+            <parameter key="password"      toKey="password" />
+            <parameter key="type"          toKey="type" />
+            <parameter key="mail"          toKey="mail" />
+            <parameter key="phone"         toKey="phone" />
+            <parameter key="province"      toKey="province" />
+            <parameter key="city"          toKey="city" />
+            <parameter key="userStatus"    toKey="userStatus" />
+            <parameter key="sex"           toKey="sex" />
+            <parameter key="subject"       toKey="subject" />
+            <parameter key="address"       toKey="address" />
+        </output>
+        
+        <input uid="syncEduUser" service="" method="" scope="control" desc="接口10">
+           <parameter key="timeStamp"  toKey="timeStamp"  scope="request" />
+           <parameter key="operation"  toKey="operation"  scope="request" />
+           <parameter key="id"         toKey="id"         scope="request" />
+           <parameter key="name"       toKey="name"       scope="request" />
+           <parameter key="nickName"   toKey="nickName"   scope="request" />
+           <parameter key="account"    toKey="account"    scope="request" />
+           <parameter key="type"       toKey="type"       scope="request" />
+           <parameter key="mail"       toKey="mail"       scope="request" />
+           <parameter key="phone"      toKey="phone"      scope="request" />
+           <parameter key="province"   toKey="province"   scope="request" />
+           <parameter key="city"       toKey="city"       scope="request" />
+           <parameter key="userStatus" toKey="userStatus" scope="request" />
+           <parameter key="sex"        toKey="sex"        scope="request" />
+           <parameter key="subject"    toKey="subject"    scope="request" />
+           <parameter key="address"    toKey="address"    scope="request" />
+        </input>
+        <input uid="syncUserClass" service="" method="" scope="control" desc="接口11">
+           <parameter key="timeStamp"  toKey="timeStamp"  scope="request" />
+           <parameter key="operation"  toKey="operation"  scope="request" />
+           <parameter key="userId"     toKey="userId"     scope="request" />
+           <parameter key="classId"    toKey="classId"    scope="request" />
+           <parameter key="role"       toKey="role"       scope="request" />
+        </input>
+        <input uid="syncUserRelationship" service="" method="" scope="control" desc="接口12">
+           <parameter key="timeStamp"  toKey="timeStamp"  scope="request" />
+           <parameter key="operation"  toKey="operation"  scope="request" />
+           <parameter key="id"         toKey="id"         scope="request" />
+           <parameter key="parentId"   toKey="parentId"   scope="request" />
+        </input>
+        <input uid="syncEduClass" service="" method="" scope="control" desc="接口13">
+           <parameter key="timeStamp"   toKey="timeStamp"   scope="request" />
+           <parameter key="operation"   toKey="operation"   scope="request" />
+           <parameter key="id"          toKey="id"          scope="request" />
+           <parameter key="name"        toKey="name"        scope="request" />
+           <parameter key="type"        toKey="type"        scope="request" />
+           <parameter key="schoolId"    toKey="schoolId"    scope="request" />
+           <parameter key="schoolNme"   toKey="schoolNme"   scope="request" />
+           <parameter key="relation_id" toKey="relation_id" scope="request" />
+        </input>
+        <input uid="syncEduSchool" service="" method="" scope="control" desc="接口14">
+           <parameter key="timeStamp"   toKey="timeStamp"   scope="request" />
+           <parameter key="operation"   toKey="operation"   scope="request" />
+           <parameter key="id"          toKey="id"          scope="request" />
+           <parameter key="name"        toKey="name"        scope="request" />
+           <parameter key="province"    toKey="province"    scope="request" />
+           <parameter key="city"        toKey="city"        scope="request" />
+           <parameter key="district"    toKey="district"    scope="request" />
+           <parameter key="type"        toKey="type"        scope="request" />
+           <parameter key="address"     toKey="address"     scope="request" />
+        </input>
+        <input uid="syncEduUserOrder" service="" method=""  scope="control" desc="接口15">
+           <parameter key="timeStamp"   toKey="timeStamp"   scope="request" />
+           <parameter key="phone"       toKey="phone"       scope="request" />
+           <parameter key="name"        toKey="name"        scope="request" />
+           <parameter key="status"      toKey="status"      scope="request" />
+        </input>
+        <input uid="syncHeEduPwd" service="" method=""  scope="control" desc="接口17">
+           <parameter key="timeStamp"   toKey="timeStamp" scope="request" />
+           <parameter key="id"          toKey="id"        scope="request" />
+           <parameter key="account"     toKey="account"   scope="request" />
+           <parameter key="password"    toKey="password"  scope="request" />
+        </input>
+        <input uid="syncHeEduPwd2Local" service="eduPlatformSvc" method="eduUserChangePasswordByID"  scope="control" desc="接口18">
+           <parameter key="timeStamp"   toKey="timeStamp" scope="request" />
+           <parameter key="id"          toKey="id"        scope="request" />
+           <parameter key="password"    toKey="password"  scope="request" />
+           <parameter key="extend"      toKey="extend"    scope="request" />
+        </input>
+        <output uid="syncHeEduPwd2Local" convertor="" method="convertMp">
+            <parameter key="returnCode"    toKey="ret" />  
+            <parameter key="returnMessage" toKey="msg" />
+        </output>
+        
+        <input uid="queryproducts" service="" method=""  scope="control" desc="接口19">
+           <parameter key="timeStamp"   toKey="timeStamp" scope="request" />
+           <parameter key="province"    toKey="province"  scope="request" />
+           <parameter key="groupCode"   toKey="groupCode" scope="request" />
+        </input>
+        <output uid="queryproducts" convertor="" method="convertBeans">
+            <parameter key="returnCode"    toKey="ret" />  
+            <parameter key="returnMessage" toKey="msg" />
+            <parameter key="beans"         toKey="products" />
+            <parameter key="code"          toKey="code" />
+            <parameter key="name"          toKey="name" />
+            <parameter key="type"          toKey="type" />
+            <parameter key="onlineTime"    toKey="onlineTime" />
+        </output>
+        <input uid="querygroups" service="" method=""  scope="control" desc="接口20">
+           <parameter key="timeStamp"   toKey="timeStamp" scope="request" />
+           <parameter key="province"    toKey="province"  scope="request" />
+        </input>
+        <output uid="querygroups" convertor="" method="convertBeans">
+            <parameter key="returnCode"    toKey="ret" />  
+            <parameter key="returnMessage" toKey="msg" />
+            <parameter key="beans"         toKey="groups" />
+            <parameter key="code"          toKey="code" />
+            <parameter key="name"          toKey="name" />
+            <parameter key="desc"          toKey="desc" />
+            <parameter key="icon"          toKey="icon" />
+        </output>
+        <input uid="queryproductsgroup" service="" method=""  scope="control" desc="接口21">
+           <parameter key="timeStamp"    toKey="timeStamp"    scope="request" />
+           <parameter key="province"     toKey="province"     scope="request" />
+           <parameter key="bossCode"     toKey="bossCode"     scope="request" />
+           <parameter key="productCodes" toKey="productCodes" scope="request" />
+           <parameter key="groupName"    toKey="groupName"    scope="request" />
+           <parameter key="groupDesc"    toKey="groupDesc"    scope="request" />
+           <parameter key="groupIcon"    toKey="groupIcon"    scope="request" />
+        </input>
+        <output uid="queryproductsgroup" convertor="" method="convertMp">
+            <parameter key="returnCode"    toKey="ret" />  
+            <parameter key="returnMessage" toKey="msg" />
+            <parameter key="groupCode"     toKey="groupCode" />
+        </output>
+        <input uid="groupBoss_code" service="" method=""  scope="control" desc="接口22">
+           <parameter key="timeStamp"    toKey="timeStamp"    scope="request" />
+           <parameter key="province"     toKey="province"     scope="request" />
+           <parameter key="bossCode"     toKey="bossCode"     scope="request" />
+           <parameter key="groupCode"    toKey="groupCode"    scope="request" />
+        </input>
+        <output uid="groupBoss_code" convertor="" method="convertMp">
+            <parameter key="returnCode"    toKey="ret" />
+            <parameter key="returnMessage" toKey="msg" />
+        </output>
+        <input uid="order_group" service="eduPlatformSvc" method="orderGroup"  scope="control" desc="接口19(23)">
+           <parameter key="dn"         toKey="dn"        scope="request" />
+           <parameter key="unionId"    toKey="unionId"   scope="request" />
+           <parameter key="type"       toKey="type"      scope="request" />
+           <parameter key="bossCode"   toKey="bossCode"  scope="request" />
+           <parameter key="extend"   toKey="extend"  scope="request" />
+           <parameter key="groupBillingId"  toKey="groupBillingId" scope="request" />
+        </input>
+        <output uid="order_group" convertor="" method="convertMp">
+            <parameter key="returnCode"    toKey="ret" />  
+            <parameter key="returnMessage" toKey="msg" />
+        </output>
+        <input uid="syncOrderGroup" service="" method=""  scope="control" desc="接口20(24)">
+           <parameter key="timeStamp"  toKey="timeStamp" scope="request" />
+           <parameter key="province"   toKey="province"  scope="request" />
+            <parameter key="dn"        toKey="dn"        scope="request" />
+           <parameter key="type"       toKey="type"      scope="request" />
+           <parameter key="bossCode"   toKey="bossCode"  scope="request" />
+           <parameter key="source"     toKey="source"    scope="request" />
+           <parameter key="orderTime"  toKey="orderTime" scope="request" />
+           <parameter key="quitTime"   toKey="quitTime"  scope="request" />
+           <parameter key="startTime"  toKey="startTime" scope="request" />
+           <parameter key="endTime"    toKey="endTime"   scope="request" />
+           <parameter key="unionId"    toKey="unionId"   scope="request" />
+           <parameter key="groupBillingId"  toKey="groupBillingId" scope="request" />
+        </input>
+    </action>
+</control>

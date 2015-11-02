@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/Eduportal/!svn/ver/1696/code/eduportal
+END
+.classpath
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/Eduportal/!svn/ver/5/code/eduportal/.classpath
+END
+.project
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/Eduportal/!svn/ver/6/code/eduportal/.project
+END
+pom.xml
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/Eduportal/!svn/ver/2822/code/eduportal/pom.xml
+END

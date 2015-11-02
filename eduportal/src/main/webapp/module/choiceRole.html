@@ -1,0 +1,236 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="renderer" content="webkit" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+<meta name="keywords" content="河南移动，教育门户，校讯通，同步课堂，中小学学习报" />
+<meta name="Description" content="河南移动教育门户————河南移动各类教育产品统一管理门户网站" />
+<title>切换角色</title>
+<link rel="stylesheet" type="text/css" href="../theme/common.css?v=20141112"/>
+<link rel="stylesheet" type="text/css" href="../lib/dialog/4.1.7/skins/blue.css"/>
+<style type="text/css">
+#scrollbar1,#scrollbar2 { width: 360px; margin: 20px 0 10px; }
+.viewport { width: 340px; height: 350px; overflow: hidden; position: relative; }
+.overview { list-style: none; position: absolute; left: 0; top: 0; padding: 0; margin: 0; }
+.scrollbar{ position: relative; background-position: 0 0; float: right; width: 15px; }
+.track { background-color: #ccc; height: 100%; width:5px; position: relative;}
+.thumb { background:#09A9D3; height: 20px; width:5px; cursor: pointer; overflow: hidden; position: absolute; top: 0; left: 0; }
+.disable { display: none; }
+</style>
+</head>
+<body>
+<div class="ui-wrap">
+    <div class="ui-bg" style="display: block;">
+    	<a href="index.html" class="ui-login-logo"></a>
+    	<div class="ui-role-wrap fn-clear" id="J_role_list">
+    		<div class="ui-loading"><h1 style="color:#fff;"><!-- <img src="../theme/images/loading.gif" alt="loading"> -->正在为您加载，请稍等 ...</h1></div>
+    	</div>
+    </div>
+</div>
+<script id="T_role_list" type="text/x-handlebars-template">
+	<div class="ui-role-parets">
+		<h3>家长/学生</h3>
+		<div id="scrollbar1">
+		    <div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
+		    <div class="viewport">
+		        <div class="overview">
+					<ul class="ui-role-list">
+						{{#if parents.length}}
+							{{#each parents}}
+								<li class="fn-clear" data-userid="{{userId}}" data-usertype="1" data-imgurl="{{imgUrl}}" data-orgid="{{schoolId}}" data-sex="{{sex}}">
+									<img class="fn-left" src="{{imgUrl}}" width="60" width="60">
+									<div class="ui-role-info fn-left">
+										<div class="ui-role-name">{{userName}}</div>
+										<p>{{city}}&nbsp;{{region}}&nbsp;{{schoolName}}{{grade}}{{subName}}</p>
+									</div>
+								</li>
+							{{/each}}
+						{{else}}
+							<li class="J_noRole">该角色没有信息哟！</li>
+						{{/if}}
+					</ul>
+		        </div>
+		    </div>
+		</div>
+	</div>
+	<div class="ui-role-teach">
+		<h3>老师</h3>
+		<div id="scrollbar2">
+		    <div class="scrollbar"><div class="track"><div class="thumb"><div class="end"></div></div></div></div>
+		    <div class="viewport">
+		        <div class="overview">
+					<ul class="ui-role-list">
+						{{#if teacher.length}}
+							{{#each teacher}}
+								<li class="fn-clear" data-userid="{{userId}}" data-usertype="2" data-imgurl="{{imgUrl}}" data-orgid="{{schoolId}}" data-sex="{{sex}}">
+									<img class="fn-left" src="{{imgUrl}}" width="60" width="60">
+									<div class="ui-role-info fn-left">
+										<div class="ui-role-name">{{userName}}</div>
+										<p>{{city}}&nbsp;{{region}}&nbsp;{{schoolName}}{{grade}}{{subName}}</p>
+									</div>
+								</li>
+							{{/each}}
+						{{else}}
+							<li class="J_noRole">该角色没有信息哟！</li>
+						{{/if}}
+					</ul>
+		        </div>
+		    </div>
+		</div>
+	</div>
+	<div class="ui-guide ui-guide-role fn-hide">
+		<a href="javascript:;" class="ui-no-remind" style="left: 663px;top: 334px;"></a>
+		<a href="javascript:;" class="ui-know" style="width:0px;height:0px;"></a>
+	</div>
+	<div class="ui-mask fn-hide"></div>
+</script>
+
+<div id="J_changeHead" style="display:none;">
+	<div class="ui-change-head" style="width:230px;height:120px;">
+		<p style="font-size: 14px;">您当前的账号没有角色，请前往校讯通注册后再登录！</p>
+		<div style="width: 170px;margin: 30px auto 0;">
+			<a class="ui-btn ui-btn-orange" id="J_regedit" onclick="goToRegedit();" href="#" target="_blank">去注册</a>
+			<a class="ui-btn ui-btn-sgreen" id="J_anonylogin" onclick="anonylogin();" href="#" target="_blank" style="margin-left:20px;">先逛逛</a>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="../lib/json2/1.0.0/json2.js"></script>
+<script type="text/javascript" src="../lib/jquery/1.8.1/jquery.js"></script>
+<script type="text/javascript" src="../lib/tinyscrollbar/tinyscrollbar.js"></script>
+<script type="text/javascript" src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script type="text/javascript" src="../lib/handlebars/1.3.0/helpers.js"></script>
+<script type="text/javascript" src="../lib/dialog/4.1.7/artDialog.js"></script>
+<script type="text/javascript" src="../lib/dialog/4.1.7/iframeTools.js"></script>
+<script type="text/javascript" src="../common/config.js"></script>
+<script type="text/javascript" src="../common/common.js?v=20141112"></script>
+<script type="text/javascript">
+function goToRegedit(){
+	$('#J_regedit').attr('href',srvMap.get('noSessionGoto'));
+}
+function anonylogin(){
+    $('#J_anonylogin').attr('href',srvMap.get('anonymousLogin'));
+}
+$(function(){
+	/***
+	$.ajax({
+		url:'../hn/login/isLogin.action?uid=isLogin',
+		type:'post',
+		success:function(){},
+		error:function(){}
+	});
+****/
+	srvMap.addLogin('roleList', 'roleList.json','user-GetXXTAccountInfo.action?uid=xxtInfo');//页面初始化
+	//srvMap.add('roleList', 'roleList.json','common.action?uid=getXXTAccountInfo');//页面初始化
+	srvMap.addLogin('changeRole', 'changeRole.json','switchRole.action?uid=swRole');//切换角色
+	srvMap.addLogin('noSessionGoto', 'noSessionGoto.json','noSessionGo.action?goto=http://jxlx.xxt.cn/jxlx/ktxxt/stepOne.action');//跳转
+	srvMap.addLogin('anonymousLogin', 'anonymousLogin.json','anonymousLogin.action');//游客登录
+	
+	var cacheKey = Util.browser.getParameter('cacheKey');
+	Util.ajax.postJson(srvMap.get('roleList'),'cacheKey='+cacheKey,function(json,status){
+		if (status) {
+			if(json.isRedirect){
+				if(json.redirect){
+					if(json.redirect.indexOf('choiceRole.html')>-1){
+						window.location = 'index.html';
+					}else{
+						window.location = json.redirect;
+					}
+				}else{
+					window.location = 'index.html';
+				}
+			}else{
+				Util.ajax.loadTemp('#J_role_list',$('#T_role_list'),json);
+				$('#scrollbar1').tinyscrollbar();
+				$('#scrollbar2').tinyscrollbar();
+				var t = setInterval(function(){
+					$('#scrollbar1').tinyscrollbar_update();
+					$('#scrollbar2').tinyscrollbar_update();
+					clearInterval(t);
+				},10)
+				//当角色为空时，强制退出系统
+				if (!json.teacher.length && !json.parents.length) {
+//	 			if (!(json.teacher.length && json.parents.length)) {
+					// artDialog.alert('您当前角色为空，请前往校讯通(http://www.xxt.cn/hnIndex.html)选择角色之后再访问该系统！',function(){
+					// 	window.location.href = 'https://ha.ac.10086.cn/logout?goto=http://www.xxt.cn/hnIndex.html';
+					// });
+					art.dialog({
+						title: "提醒",
+					    content: $('#J_changeHead').html(),
+					    width: 230,
+					    height: 120,
+					    lock: true,
+					    id: 'J_headIcon',
+						padding: '10px 15px'
+					});
+				}else{
+					if (!getCookie('noRoleRemind')) {
+						$('.ui-guide-role').removeClass('fn-hide');
+						$('.ui-mask').removeClass('fn-hide');
+					};
+					//不再提示引导图片
+					$('.ui-no-remind').click(function(){
+						setCookie('noRoleRemind','1',90);
+						$('.ui-know').click();
+					})
+					//隐藏引导图片
+					$('.ui-know').click(function(){
+						$('.ui-guide-role').hide();
+						$('.ui-mask').hide();
+					})
+				}
+
+				//鼠标滑动时高亮
+				$('.ui-role-list li').hover(function(){
+					$(this).css('background-color','#f1f1f1');
+				},function(){
+					$(this).css('background-color','#fff');
+				})
+				//点击选择	
+				$('.ui-role-list li').filter(':not(li.J_noRole)').click(function(){
+					var userId = $(this).data('userid');
+					var userType = $(this).data('usertype');
+					var userName = $(this).find('.ui-role-name').text();
+					var imgUrl=$(this).data('imgurl');
+					var orgId = $(this).data('orgid');
+					var sex=$(this).data('sex');
+					var datas = 'userId='+userId+'&userType='+userType+'&userName='+userName+'&imgUrl='+imgUrl+"&orgId="+orgId+'&sex='+sex;
+					var cacheKey = Util.browser.getParameter('cacheKey');
+					var datas = datas+'&cacheKey='+cacheKey;
+					Util.ajax.postJson(srvMap.get('changeRole'),datas,function(json,status){
+						if (status) {
+							art.dialog.tips('切换成功！');
+							var timer = 1;
+							time = setInterval(function(){
+								if (timer>0) {
+									timer--;
+								}else{
+									clearInterval(time);
+									if(json.bean.redirect){
+										//alert(json.bean.redirect);
+										if(json.bean.redirect.indexOf('choiceRole.html')>-1){
+											window.location = 'index.html';
+										}else{
+											window.location = json.bean.redirect;
+										}
+										
+									}else{
+										window.location = 'index.html';
+									}
+								}
+							},500)
+						}else{
+							art.dialog.tips(json.rtnMsg||'角色切换失败！');
+						}
+					})
+				})
+			}
+		}else{
+			$('#J_role_list').html('<div style="font-size:16px;color:#fff;width:200px;margin:200px auto;">'+json.rtnMsg||'连接失败，请重试！'+'</div>');
+		}
+	})
+})
+</script>
+</body>
+</html>

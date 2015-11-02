@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>沟通</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<style>
+.mui-bar a {
+	color: #fff;
+}
+.zfooter {
+	background: #ddd;
+	height: 45px;
+}
+.zfooter ul {
+	display: table;
+	width: 100%;
+	height: 40px;
+}
+.zfooter ul li {
+	float: left;
+	list-style: none;
+	display: table-cell;
+	overflow: hidden;
+	text-align: center;
+	height: 40px;
+}
+.zfooter ul .li_1 {
+	width: 10%;
+}
+.zfooter ul .li_2 {
+	width: 10%;
+	position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+    background: url(../theme/images/J_imgAdd.png) 0 0 no-repeat;
+    height: 30px;
+    vertical-align: middle;
+    top: 10px;
+}
+.zfooter ul .li_2 input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.zfooter ul .li_3 {
+	width: 60%;
+}
+.zfooter ul .li_3 input {
+	padding: 5px;
+	position: relative;
+	top: 8px;
+	vertical-align: middle;
+	height: 30px;
+}
+.zfooter ul .li_4 {
+	width: 20%;
+}
+.zfooter ul .li_4 .mui-btn{
+	height: 30px;
+	padding: 5px 12px;
+	vertical-align: middle;
+	top: 7px;
+}
+
+
+.zfooter ul .li_3 {
+	width: 80%;
+	padding-left: 10px;
+}
+
+</style>
+</head>
+<body>
+<nav class="mui-bar mui-bar-tab zfooter">
+	<ul class="fn-clear">
+		<!--<li class="li_1">
+			<span class="mui-icon mui-icon-mic" id="J_audio" onclick="goRecode();"></span>
+		</li>
+		<li class="li_2">-->
+			<!--<input id="J_img" type="file" name="mediaFile" onchange="getFile();" accept="image/png,image/gif,image/jpg,image/jpeg" />-->
+			<!--<a id="J_img" onchange="getFile();" ></a>
+		</li>-->
+		<li class="li_3">
+			<input type="text" value="" id="J_comui_input" name="J_comui_input" class="J_comui_input" />
+		</li>
+		<li class="li_4">
+			<button class="mui-btn mui-btn-primary" type="button" id="J_sendBtn">发送</button>
+		</li>
+	</ul>
+</nav>
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script src="../common/jquery.form.js"></script>
+<script type="text/javascript">
+mui.init({swipeBack: true});
+srvMap.add('fileUpload', 'someTimeExam.json','commonOuter.action?uid=sendClassPicMsg');//发送图片
+srvMap.add('sendClassMsg', 'someTimeExam.json','commonOuter.action?uid=sendClassMsg');//发送普通文字
+var userInfo = JSON.parse(Util.lStorage.getParam('userInfo'));
+//文字传参
+var W_param = {
+	msgContent: "",
+	msgType: "",
+	destUserType: "",//对方的身份，0老师2学生
+	destId: "",
+	destUnitId: "",
+	ggName: ""
+}
+window.addEventListener("getMsgInfo", function (e) {
+    $("#J_comui_input").val("");
+	if(e.detail.newChat && e.detail.newChat == '1'){//新开的窗口
+		console.log(JSON.stringify(e.detail.comuniDtl))
+		var gradeId = userInfo.gradeId;
+		if(gradeId == e.detail.comuniDtl.destid.split(",")[0]){//发给班级
+			W_param.destId = "";
+			W_param.destUnitId = gradeId;
+			W_param.msgType = "gg";
+		}else{//发给个人
+			W_param.destUnitId = "";
+			W_param.destId = e.detail.comuniDtl.destid;
+			W_param.msgType = "cc";
+			W_param.destUserType = e.detail.comuniDtl.destUserType;
+		}
+		
+	}else{//从历史记录中过来的
+		var comuniDtl = e.detail.comuniDtl;
+		
+		console.log(JSON.stringify(comuniDtl))
+		var msgType = comuniDtl[0].msgContent.msgType;
+		W_param.destUnitId = comuniDtl[0].destUnitId || "";
+		W_param.destId = comuniDtl[0].destid;
+		W_param.msgType = comuniDtl[0].msgContent.msgtype;
+		W_param.destUserType = comuniDtl[0].msgContent.destusertype;
+	}
+});
+
+mui.plusReady(function(){
+	//发送文字消息
+	mui(".zfooter").on("tap", "#J_sendBtn", function(){
+		var sendMsg = $("#J_comui_input").val();
+		if(!sendMsg){
+			return false;
+		}
+		var tempId = "J_"+(new Date()).getTime();
+
+		W_param.msgContent = sendMsg;
+		var dataP = "msgContent="+W_param.msgContent+"&msgType="+W_param.msgType+"&destUserType="+W_param.destUserType+"&destId="+W_param.destId+"&destUnitId="+W_param.destUnitId+"&ggName="+W_param.ggName+"&tempId="+tempId;
+		console.log("============发送===================");
+		console.log(dataP)
+		var comuniDtlContent = plus.webview.getWebviewById('comuniDtlContent.html');
+		mui.fire(comuniDtlContent, "addMsg", {type: '1', data: sendMsg, dataId: tempId} );
+		Util.ajax.postJson(srvMap.get("sendClassMsg"), dataP, function(json, state){
+			console.log(state)
+			console.log(JSON.stringify(json))
+			if(state){
+				$("#J_comui_input").val("");
+				
+				mui.fire(comuniDtlContent, "removeLoading", {dataId: tempId} );
+			}
+		})
+		
+	})
+})
+
+function getFile(){
+	Util.alert("敬请期待！");
+	return false;
+	var fileName = $("#J_img").val().split("\\");
+	fileName = fileName[fileName.length-1];
+	var tempId = "J_"+(new Date()).getTime();
+	var comuniDtlContent = plus.webview.getWebviewById('comuniDtlContent.html');
+	console.log($("#J_img").val())
+	mui.fire(comuniDtlContent, "addMsg", {type: '2', data: fileName, dataId: tempId} );
+}
+
+function goRecode(){
+	Util.alert("敬请期待！");
+	return false;
+}
+</script>
+</body>
+</html>

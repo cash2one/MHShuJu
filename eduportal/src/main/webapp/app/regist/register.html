@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>登录</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<style>
+/**
+ * 忘记密码
+ * **/
+.ui-bg {
+	background-position:  center center;
+}
+.forgetPwd-wrap {
+	padding: 0 20px;
+	margin-top: 70px;
+}
+.forgetPwd-wrap .step {
+	position: relative;
+}
+.forgetPwd-wrap input {
+	margin-bottom: 0px;
+	border-radius: 5px;
+	height: 50px;
+}
+.forgetPwd-wrap .mui-btn {
+	margin-top: 30px;
+	padding: 10px 0;
+	border: 1px solid #fff;
+	color: #fff;
+}
+.forgetPwd-wrap .mui-btn:active {
+	background: #DC4C27;
+}
+.forgetPwd-wrap .step .last-time {
+	position: absolute;
+	right: 7px;
+	top: 7px;
+	display: inline-block;
+	background: #D3DDE3;
+	padding: 8px 15px;
+	border-radius: 5px;
+	color: #fff;
+}
+.forgetPwd-wrap .step .tips {
+	margin-top: -60px;
+}
+.forgetPwd-wrap .step .tips p {
+	color: #fff;
+}
+#J_F_newPwd {
+	border-bottom: 0;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+#J_F_newPwdSec {
+	border-top: 0;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+.forgetPwd-wrap .mui-icon-undo {
+	position: fixed;
+	top: 60px;
+	font-size: 40px;
+	color: #fff;
+	-webkit-transition: all linear .2s;
+}
+.forgetPwd-wrap .mui-icon-undo:active {
+	color: #FF0000;
+}
+</style>
+</head>
+<body>
+<div class="mui-content">
+	<div class="ui-wrap">
+	    <div class="ui-bg ui-login-bg" style="display: block;">
+			<div class="forgetPwd-wrap">
+				<div class="step step-1">
+					<input type="text" value="" name="" id="J_F_phone" placeholder="请输入11位河南移动手机号码" maxlength="11" />
+					<button class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined" id="J_nextStep">下一步</button>
+				</div>
+			</div>
+	    </div>
+	</div>
+</div>
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../lib/handlebars/1.3.0/helpers.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script type="text/javascript">
+
+mui.init({swipeBack: true});
+var old_back = mui.back;
+mui.back = function(){
+  var cwebview = plus.webview.getWebviewById('registerS-sub');
+  if(cwebview){
+    var self = plus.webview.currentWebview();
+    self.remove(cwebview);
+    cwebview.close();
+  }
+  old_back();
+}
+mui.plusReady(function(){
+	srvMap.addHn('checkNum', 'signIn.json','common.action?uid=x0001');//验证手机号是否为河南手机号
+	mui(".forgetPwd-wrap").on("tap", "#J_nextStep", function(){
+		gotoNext();
+	})
+	setTimeout(function () {
+		getTemplate('registerS', '../temp/template.html');
+	},300);
+	
+	$("#J_F_phone").bind("keyup", function(e){
+		if(e.which==13){
+		    gotoNext();
+		    return false;
+		}
+	}).blur(function(){
+		if(!ValidateCallNumber($(this).val())){
+			Util.alert("手机号码格式不正确");
+		}
+	});
+})
+
+//手机号码验证
+function ValidateCallNumber(strCallNumber){
+	var objRegExp  = new RegExp('(13[4-9]{1}[0-9]{8})|(150[0-9]{8})|(182[0-9]{8})|(151[0-9]{8})|(152[0-9]{8})|(155[0-9]{8})|(157[0-9]{8})|(158[0-9]{8})|(159[0-9]{8})|(188[0-9]{8})|(187[0-9]{8})|(147[0-9]{8})|(183[0-9]{8})|(156[0-9]{8})','g');
+	return(objRegExp.test(strCallNumber));
+}
+
+function gotoNext(){
+	var phone = $("#J_F_phone").val();
+	if(phone.length != '11'){
+		Util.alert("请输入11位河南移动号码");
+		return false;
+	}
+	if(!ValidateCallNumber(phone)){
+		Util.alert("手机号码格式不正确");
+		return false;
+	}
+	var w=plus.nativeUI.showWaiting("正在校验... ");
+	Util.ajax.postJson(srvMap.get("checkNum"), "SvcNum="+phone, function(json, state){
+		if(state){
+			if(json){
+				Util.lStorage.setParam("registerPhone", phone);
+	
+				var title = '获取短信密码';
+				var template = getTemplate('registerS');
+				var headerWebview = template.header;
+				var contentWebview = template.content;
+				mui.fire(headerWebview,'updateHeader',{title:title,pageId:'registerS'});
+				
+				//缓存页面
+				var reload = true;
+				if (!template.loaded) {
+					if (contentWebview.getURL().indexOf('registerS.html') == '-1') {
+						contentWebview.loadURL('registerS.html');
+					} else {
+						reload = false;
+					}
+				} else {
+					reload = false;
+				}
+				(!reload) && contentWebview.show();
+				headerWebview.show('slide-in-right', 150);
+			}else{
+				Util.alert(json.rtnMsg);
+				return false;
+			}
+		}else{
+			Util.alert("系统错误，请稍后再试！");
+			return false;
+		}
+		w.close();
+	})
+}
+
+</script>
+</body>
+</html>

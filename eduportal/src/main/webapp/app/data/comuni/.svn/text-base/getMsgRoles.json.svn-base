@@ -1,0 +1,335 @@
+{
+    "rtnMsg": "调用成功",
+    "rtnInfo": [
+        {
+            "userXxtId": "53178481",
+            "userId": "53178481",
+            "userSex": "1",
+            "userName": "和一琳",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "53178459",
+            "userId": "53178459",
+            "userSex": "1",
+            "userName": "范喜龙",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "53178510",
+            "userId": "53178510",
+            "userSex": "1",
+            "userName": "段浩婷",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "53178471",
+            "userId": "53178471",
+            "userSex": "1",
+            "userName": "苏钰丹",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "73832378",
+            "userId": "73832378",
+            "userSex": "1",
+            "userName": "王柯",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "65329903",
+            "userId": "65329903",
+            "userSex": "1",
+            "userName": "刘德升",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "73832390",
+            "userId": "73832390",
+            "userSex": "1",
+            "userName": "郭智龙",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "42439128",
+            "userId": "42439128",
+            "userSex": "1",
+            "userName": "刘宇婷",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "65329886",
+            "userId": "65329886",
+            "userSex": "1",
+            "userName": "沈桂鑫",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "66165858",
+            "userId": "66165858",
+            "userSex": "",
+            "userName": "李哲",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "65329885",
+            "userId": "65329885",
+            "userSex": "1",
+            "userName": "付好弋",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "58041508",
+            "userId": "58041508",
+            "userSex": "",
+            "userName": "栗真真",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "47635093",
+            "userId": "47635093",
+            "userSex": "1",
+            "userName": "王华楠",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "53178483",
+            "userId": "53178483",
+            "userSex": "1",
+            "userName": "张豪怡",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "42439085",
+            "userId": "42439085",
+            "userSex": "1",
+            "userName": "刘笑怡",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "65329919",
+            "userId": "65329919",
+            "userSex": "1",
+            "userName": "李延杭",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "65329935",
+            "userId": "65329935",
+            "userSex": "1",
+            "userName": "张莹月",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "42439111",
+            "userId": "42439111",
+            "userSex": "1",
+            "userName": "郭瑞浩",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "42439102",
+            "userId": "42439102",
+            "userSex": "1",
+            "userName": "李金婵",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "42439114",
+            "userId": "42439114",
+            "userSex": "1",
+            "userName": "孟龙飞",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "42439106",
+            "userId": "42439106",
+            "userSex": "1",
+            "userName": "范一鸣",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "42439135",
+            "userId": "42439135",
+            "userSex": "1",
+            "userName": "冯亚丹",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "73832379",
+            "userId": "73832379",
+            "userSex": "1",
+            "userName": "郝灵炫",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "42439082",
+            "userId": "42439082",
+            "userSex": "1",
+            "userName": "马可豪",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "53178492",
+            "userId": "53178492",
+            "userSex": "1",
+            "userName": "姚志航",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "65329884",
+            "userId": "65329884",
+            "userSex": "1",
+            "userName": "孙怡迪",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "42439178",
+            "userId": "42439178",
+            "userSex": "1",
+            "userName": "杨若希",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "47950310",
+            "userId": "47950310",
+            "userSex": "1",
+            "userName": "范心妍",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "42439101",
+            "userId": "42439101",
+            "userSex": "1",
+            "userName": "孟琳琳",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "65329948",
+            "userId": "65329948",
+            "userSex": "1",
+            "userName": "孟浩阳",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "42439103",
+            "userId": "42439103",
+            "userSex": "1",
+            "userName": "张韩博",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "42439161",
+            "userId": "42439161",
+            "userSex": "1",
+            "userName": "孔一航",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "74685093",
+            "userId": "74685093",
+            "userSex": "",
+            "userName": "王晓月",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "65329933",
+            "userId": "65329933",
+            "userSex": "1",
+            "userName": "刘梦弟",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "53178521",
+            "userId": "53178521",
+            "userSex": "1",
+            "userName": "王煜璐",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "53178446",
+            "userId": "53178446",
+            "userSex": "1",
+            "userName": "李晓博",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "75691723",
+            "userId": "75691723",
+            "userSex": "",
+            "userName": "范雅微",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "29262397",
+            "userId": "29262397",
+            "userSex": "1",
+            "userName": "郭灿阳",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "65329951",
+            "userId": "65329951",
+            "userSex": "1",
+            "userName": "冯金歌",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "53178503",
+            "userId": "53178503",
+            "userSex": "1",
+            "userName": "王静",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "53178484",
+            "userId": "53178484",
+            "userSex": "1",
+            "userName": "郭依然",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "73832388",
+            "userId": "73832388",
+            "userSex": "1",
+            "userName": "甄玉阳",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "3914586",
+            "userId": "3914586",
+            "userSex": "1",
+            "userName": "崔苗芳",
+            "userType": "1"
+        },
+        {
+            "userXxtId": "42439078",
+            "userId": "42439078",
+            "userSex": "1",
+            "userName": "孟朝阳",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "65329956",
+            "userId": "65329956",
+            "userSex": "1",
+            "userName": "刘争豪",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "42439121",
+            "userId": "42439121",
+            "userSex": "1",
+            "userName": "段怡洋",
+            "userType": "2"
+        },
+        {
+            "userXxtId": "65329889",
+            "userId": "65329889",
+            "userSex": "1",
+            "userName": "张富强",
+            "userType": "2"
+        }
+    ],
+    "rtnCode": "1"
+}

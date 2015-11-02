@@ -1,0 +1,206 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="renderer" content="webkit" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+<meta name="keywords" content="河南移动，教育门户，校讯通，同步课堂，中小学学习报" />
+<meta name="Description" content="河南移动教育门户————河南移动各类教育产品统一管理门户网站" />
+<title>我的订单</title>
+<link rel="stylesheet" type="text/css" href="../theme/common.css?v=20141112"/>
+<link rel="stylesheet" type="text/css" href="../lib/dialog/4.1.7/skins/blue.css"/>
+<style type="text/css">
+.ui-circle-body h2{font-size: 15px;font-weight: 700;border-left: 5px #F39148 solid;padding-left: 10px;}
+.ui-circle-body h2 span{font-size: 14px;font-weight: 500;color: #F39148;}
+</style>
+</head>
+<body>
+<div class="ui-wrapper">
+	<div class="ui-head">
+		<div style="width:1024px;margin:0 auto;">
+			<div class="ui-hello fn-left">您好，请用河南移动手机号码<a class="ui-nav-login" href="login.html">登录</a>！</div>
+			<ul class="ui-nav-list">
+			    <li class="ui-nav-hej"><a href="javascript:;">和教育</a></li>
+				<li class="ui-nav-index"><a href="index.html">首页</a></li>
+				<li class="ui-nav-app"><a href="javascript:;">我的订单</a></li>
+				<li class="ui-nav-collect"><a href="javascript:;">我的收藏</a></li>
+				<!-- <li class="ui-nav-info"><a href="#nogo">个人资料</a></li> -->
+				<li class="ui-nav-choiceRole"><a href="javascript:;">切换角色</a></li>
+				<li class="ui-nav-loginout"><a href="javascript:;">退出</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="ui-cont fn-clear">
+		<div class="ui-search">
+			<a class="ui-logo" href="index.html"></a>
+			<div class="ui-search-cont">
+				<input class="ui-search-ipt" id="J_search_ipt" type="text" value="请输入关键字搜索" onblur="if(this.value=='') {this.value='请输入关键字搜索';this.style.color='#999';}" onfocus="if(this.value=='请输入关键字搜索') {this.value='';this.style.color='#333';}" />
+				<ul class="ui-hot-kwd fn-clear" id="J_hot_kwd"></ul>
+			</div>
+			<a class="ui-btn ui-btn-red ui-myCart" href="javascript:;">我的购物车(<span>0</span>)</a>
+		</div>
+		<div class="ui-pers-cent">
+			<ul class="ui-pers-list">
+				<li class="ui-pers-cart"><a href="sCart.html"><b></b>查看购物车</a></li>
+				<li class="ui-pers-order ui-pers-list-cur"><a href="myOrder.html"><b></b>我的订单</a></li>
+				<li class="ui-pers-clt"><a href="myCollect.html"><b></b>我的收藏</a></li>
+				<li class="ui-pers-accBind"><a href="accountBinding.html"><b></b>账号绑定</a></li>
+				<li class="ui-pers-choiceRole"><a href="javascript:;"><b></b>切换角色</a></li>
+				<li class="ui-pers-changePassword"><a href="changePassword.html"><b></b>修改密码</a></li>
+			</ul>
+		</div>
+		<div class="ui-right-cont">
+			<div class="ui-tab-list">
+				<ul class="fn-clear">
+					<li class="cur"><a href="javascript:;">所有订单</a></li>
+					<!-- <li><a href="javascript:;">已退订</a></li> -->
+				</ul>
+			</div>
+			<div class="ui-tab-wrap" id="J_orderList">
+				<div class="ui-loading"><h1><img src="../theme/images/loading.gif" alt="loading">正在为您加载，请稍等 ...</h1></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script id="T_orderList" type="text/x-handlebars-template">
+<div>
+	<div class="ui-circle-tl">
+		<div class="ui-circle-tr"><span></span></div>
+		<div class="ui-circle-body"  style="padding:10px 30px;">
+			<h2>营销活动：<span>（营销活动期间所包含的单产品免费使用）</span></h2>
+			{{#if multiOrder.length}}
+			<ul class="ui-plist fn-clear">
+				{{#each multiOrder}}
+					<li class="fn-clear">
+						<a href="prodDtl.html?appID={{appId}}&nodeUid={{nodeUid}}&month={{month}}" target="_blank" class="fn-left">
+							<img src="../{{appPic}}" width="100" height="56">
+						</a>
+						<div class="ui-plist-info">
+							<a href="prodDtl.html?appID={{appId}}&nodeUid={{nodeUid}}&month={{month}}" class="ui-plist-name" target="_blank">{{appName}}</a>
+							{{#if_eq isExpire compare='1'}}
+								<span style="color:#F39148;">&nbsp;&nbsp;已失效</span>
+							{{/if_eq}}
+							<div class="ui-plist-dtl">
+								<span>包月：{{month}}个月</span>
+								<span>开通日期：{{startDate}}</span>
+								<span>失效日期：{{expireDate}}</span>
+							</div>
+						</div>
+						<div class="ui-plist-price">
+							金额：<span style="color:#FE631F;">{{appPrice}}元</span>
+						</div>
+					</li>
+				{{/each}}
+			</ul>
+			{{else}}
+				<ul><li class="ui-list-null">您还没有订购的产品，快去订购吧~</li></ul>
+			{{/if}}
+		</div>
+		<div class="ui-circle-body"  style="padding:10px 30px;">
+			<h2>单产品：</h2>
+			{{#if singleOrder.length}}
+			<ul class="ui-plist fn-clear">
+				{{#each singleOrder}}
+					<li class="fn-clear">
+						<a href="{{#forwardUrl sysType nodeUid}}{{/forwardUrl}}" target="_blank" class="fn-left">
+							<img src="../{{appPic}}" width="100" height="56">
+						</a>
+						<div class="ui-plist-info">
+							<a href="{{#forwardUrl sysType nodeUid}}{{/forwardUrl}}" class="ui-plist-name" target="_blank">{{appName}}</a>
+							{{#if_eq isExpire compare='1'}}
+								<span style="color:#F39148;">&nbsp;&nbsp;已失效</span>
+							{{/if_eq}}
+							<div class="ui-plist-dtl">
+								<span>开通日期：{{startDate}}</span>
+								<span>失效日期：{{expireDate}}</span>
+							</div>
+						</div>
+						<div class="ui-plist-price">
+							金额：<span style="color:#FE631F;">{{appPrice}}元</span>
+						</div>
+					</li>
+				{{/each}}
+			</ul>
+			{{else}}
+				<ul><li class="ui-list-null">您还没有订购的产品，快去订购吧~</li></ul>
+			{{/if}}
+		</div>
+		<div class="ui-circle-bl"><em><span></span></em></div>
+	</div>
+</div>
+<div class="fn-hide">
+	<div class="ui-circle-tl">
+		<div class="ui-circle-tr"><span></span></div>
+		<div class="ui-circle-body"  style="padding:10px 30px;">
+			<ul class="ui-plist fn-clear">
+				{{#if unordered.length}}
+					{{#each unordered}}
+						<li class="fn-clear">
+							<a href="prodDtl.html?appID={{appId}}&nodeUid={{nodeUid}}&month={{month}}" target="_blank" class="fn-left">
+								<img src="../{{appPic}}" width="100" height="56">
+							</a>
+							<div class="ui-plist-info">
+								<a href="prodDtl.html?appID={{appId}}&nodeUid={{nodeUid}}&month={{month}}" class="ui-plist-name" target="_blank">{{appName}}</a>
+								<div class="ui-plist-dtl">
+									{{#if_eq isMutiApp compare="1"}}
+										<span>包月：{{month}}个月</span>
+									{{/if_eq}}
+									<span>生效日期：{{startDate}}</span>
+									<span>失效日期：{{expireDate}}</span>
+								</div>
+							</div>
+							<div class="ui-plist-price">
+								金额：<span style="color:#FE631F;">{{appPrice}}元</span>
+							</div>
+						</li>
+					{{/each}}
+				{{else}}
+					<li class="ui-list-null">您还没有订购的产品，快去订购吧~</li>
+				{{/if}}
+			</ul>
+		</div>
+		<div class="ui-circle-bl"><em><span></span></em></div>
+	</div>
+</div>
+</script>
+
+<script type="text/javascript" src="../lib/json2/1.0.0/json2.js"></script>
+<script type="text/javascript" src="../lib/jquery/1.8.1/jquery.js"></script>
+<script type="text/javascript" src="../lib/jqueryui/1.11.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../lib/cookie/1.2.0/jquery.cookie.js"></script>
+<script type="text/javascript" src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script type="text/javascript" src="../lib/handlebars/1.3.0/helpers.js"></script>
+<script type="text/javascript" src="../lib/cryptojs/3.1.2/core-min.js"></script>
+<script type="text/javascript" src="../lib/cryptojs/3.1.2/enc-base64-min.js"></script>
+<script type="text/javascript" src="../lib/dialog/4.1.7/artDialog.js"></script>
+<script type="text/javascript" src="../lib/dialog/4.1.7/iframeTools.js"></script>
+<script type="text/javascript" src="../common/config.js"></script>
+<script type="text/javascript" src="../common/common.js?v=20141112"></script>
+<script type="text/javascript">
+$(function(){
+	srvMap.add('myOrder', 'myOrder.json','commonCMS-GetAllAllOrder.action?uid=allOrders');//订单列表
+
+	Util.ajax.postJson(srvMap.get('myOrder'),'',function(json,status){
+		if (status) {
+			Util.ajax.loadTemp('#J_orderList',$('#T_orderList'),json);
+		}else{
+			$('#J_orderList').html('<div class="ui-load-error"></div>')
+		}
+	})
+
+	$('.ui-tab-list li').click(function(){
+		$(this).addClass('cur').siblings().removeClass('cur');
+		var index = $(this).index();
+		$('.ui-tab-wrap>div').eq(index).show().siblings().hide();
+	})
+	
+	//生成登录后已经订购的产品跳转url
+    //Handlebars.registerHelper('forwardUrl', function(sysType, nodeUid){
+    //    return srvMap.getBaseUrl() + "edu_forward.jsp?nodeUid="+nodeUid+"&sysType="+sysType;
+    //});
+
+})
+</script>
+</body>
+</html>

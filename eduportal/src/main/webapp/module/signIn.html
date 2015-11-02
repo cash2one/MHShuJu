@@ -1,0 +1,362 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="renderer" content="webkit" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+<meta name="keywords" content="河南移动，教育门户，校讯通，同步课堂，中小学学习报" />
+<meta name="Description" content="河南移动教育门户————河南移动各类教育产品统一管理门户网站" />
+<title>河南移动教育门户-注册</title>
+<link rel="stylesheet" type="text/css" href="../theme/common.css?v=20141112"/>
+<link rel="stylesheet" type="text/css" href="../lib/dialog/4.1.7/skins/blue.css"/>
+</head>
+<body>
+<div class="ui-wrapper">
+	<div class="ui-head">
+		<div style="width:1024px;margin:0 auto;">
+			<div class="ui-hello fn-left">您好，请用河南移动手机号码<a class="ui-nav-login" href="login.html">登录</a>！</div>
+			<ul class="ui-nav-list">
+			    <li class="ui-nav-hej"><a href="javascript:;">和教育</a></li>
+				<li class="ui-nav-app"><a href="javascript:;">我的订单</a></li>
+				<li class="ui-nav-collect"><a href="javascript:;">我的收藏</a></li>
+				<!-- <li class="ui-nav-info"><a href="#nogo">个人资料</a></li> -->
+				<li class="ui-nav-choiceRole"><a href="javascript:;">切换角色</a></li>
+				<li class="ui-nav-loginout"><a href="javascript:;">退出</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="ui-cont">
+		<div class="ui-search">
+			<a class="ui-logo" href="index.html"></a>
+			<div class="ui-search-cont">
+				<input class="ui-search-ipt" id="J_search_ipt" type="text" value="请输入关键字搜索" onblur="if(this.value=='') {this.value='请输入关键字搜索';this.style.color='#999';}" onfocus="if(this.value=='请输入关键字搜索') {this.value='';this.style.color='#333';}" />
+				<ul class="ui-hot-kwd fn-clear" id="J_hot_kwd"></ul>
+			</div>
+			<a class="ui-btn ui-btn-red ui-myCart" href="javascript:;">我的购物车(<span>0</span>)</a>
+		</div>
+		<!-- 面包屑 -->
+		<div class="ui-crumbs-wrap">
+			<ul class="ui-crumbs fn-clear">
+				<li class="ui-step ui-step-cur">
+					<div class="ui-step-num">STEP.01</div>
+					<div class="ui-step-text">填写个人资料</div>
+				</li>
+				<li class="ui-arrows"></li>
+				<li class="ui-step">
+					<div class="ui-step-num">STEP.02</div>
+					<div class="ui-step-text">完善角色信息</div>
+				</li>
+				<li class="ui-arrows"></li>
+				<li class="ui-step ui-step3">
+					<div class="ui-step-num">STEP.03</div>
+					<div class="ui-step-text">注册结果</div>
+				</li>
+			</ul>
+			<div class="ui-split-solid"></div>
+		</div>
+		<div id="J_steps">
+			<div id="J_step_0">
+				<ul class="ui-signin-form">
+					<li class="fn-clear">
+			            <label class="ui-signin-label" for="phoneNum" style="margin-left:32px;">手机号</label>
+			            <input class="ui-signin-ipt" id="phoneNum" type="text" name="phoneNum" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="11">
+		            	<span class="ui-sms-remind fn-hide"></span>
+					</li>
+					<li class="fn-clear">
+			            <label class="ui-signin-label" for="smsValidate">短信验证码</label>
+		                <input class="ui-signin-ipt smsValidate" id="smsValidate" type="text" name="smsValidate" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="6">
+		                <button class="ui-getSMS" id="J_getSMS" href="javascript:;">获取短信验证码</button>
+		            	<span class="ui-sms-remind fn-hide"></span>
+					</li>
+					<li>
+						<a class="ui-btn ui-btn-red w-270" id="J_goSecond" href="javascript:;" style="margin-left: 99px;">下一步</a>
+					</li>
+				</ul>
+			</div>
+			<div id="J_step_1" class="fn-hide">
+				<div id="J_roleInfo"></div>
+			</div>
+			<div id="J_step_2" class="fn-hide">
+		        <div class="ui-success">
+	            	<div class="ui-success-cont">
+	            		<div class="ui-scs-congra"></div>
+	            		<div class="ui-scs-remind"></div>
+	            	</div>
+	            </div>
+				<div class="ui-btn-wrap" style="margin-top:10px;">
+					<a class="ui-btn ui-btn-gray w-270" href="javascript:Crumbs.goStep('prev');">上一步</a>
+					<a class="ui-btn ui-btn-blue w-270" id="J_binding" href="../hn/action/forwordTo.action?redirect=accountBinding.html&forword=accountBinding" style="margin-left:30px;">账号绑定</a>
+            	</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script id="T_roleInfo" type="text/x-handlebars-template">
+	<div class="ui-role-title">我是家长/学生</div>
+	<table class="ui-role-tbl">
+		<thead>
+			<tr>
+				<th width="15%">孩子姓名</th>
+				<th width="15%">所在市</th>
+				<th width="15%">所在区</th>
+				<th width="25%">学校名称</th>
+				<th width="15%">年级</th>
+				<th width="15%">班级</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#if parents.length}}
+				{{#each parents}}
+					<tr>
+						<td>{{userName}}</td>
+						<td>{{city}}</td>
+						<td>{{region}}</td>
+						<td>{{schoolName}}</td>
+						<td>{{grade}}</td>
+						<td>{{subName}}</td>
+					</tr>
+				{{/each}}
+			{{else}}
+				<tr><td colspan="6">没有查询到角色信息！</td></tr>
+			{{/if}}
+		</tbody>
+	</table>
+	<div class="ui-role-title" style="margin-top:20px;">我是老师</div>
+	<table class="ui-role-tbl">
+		<thead>
+			<tr>
+				<th width="15%">教师姓名</th>
+				<th width="15%">所在市</th>
+				<th width="15%">所在区</th>
+				<th width="25%">学校名称</th>
+				<th width="15%">年级</th>
+				<th width="15%">任教科目</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#if teacher.length}}
+				{{#each teacher}}
+					<tr>
+						<td>{{userName}}</td>
+						<td>{{city}}</td>
+						<td>{{region}}</td>
+						<td>{{schoolName}}</td>
+						<td>{{grade}}</td>
+						<td>{{subName}}</td>
+					</tr>
+				{{/each}}
+			{{else}}
+				<tr><td colspan="6">没有查询到角色信息！</td></tr>
+			{{/if}}
+		</tbody>
+	</table>
+	<div class="ui-btn-wrap">
+		<a class="ui-btn ui-btn-gray w-270" href="javascript:Crumbs.goStep('prev');">上一步</a>
+		<a class="ui-btn ui-btn-red w-270" id="J_conf_signin" href="javascript:Crumbs.goStep('next');" style="margin-left: 20px;">确认注册</a>
+	</div>
+</script>
+
+<script type="text/javascript" src="../lib/json2/1.0.0/json2.js"></script>
+<script type="text/javascript" src="../lib/jquery/1.8.1/jquery.js"></script>
+<script type="text/javascript" src="../lib/cookie/1.2.0/jquery.cookie.js"></script>
+<script type="text/javascript" src="../lib/jqueryui/1.11.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script type="text/javascript" src="../lib/handlebars/1.3.0/helpers.js"></script>
+<script type="text/javascript" src="../lib/cryptojs/3.1.2/core-min.js"></script>
+<script type="text/javascript" src="../lib/cryptojs/3.1.2/enc-base64-min.js"></script>
+<script type="text/javascript" src="../lib/dialog/4.1.7/artDialog.js"></script>
+<script type="text/javascript" src="../lib/dialog/4.1.7/iframeTools.js"></script>
+<script type="text/javascript" src="../common/config.js"></script>
+<script type="text/javascript" src="../common/common.js?v=20141112"></script>
+<script type="text/javascript">
+	$(function(){
+		srvMap.addLogin('getValidateCode', 'getValidateCode.json','sendRandNum.action?uid=sdRn');//验证码
+		srvMap.addLogin('validRtn', 'validRtn.json','checkRandNum.action?uid=ckRn');//验证码验证
+		srvMap.addLogin('getRoleInfo', 'getRoleInfo.json','user-GetDefaultInfo.action?uid=xxtDfInfo');//角色信息
+		srvMap.add('signIn', 'signIn.json','common.action?uid=saveUserInfo');//确认注册
+		srvMap.add('checkNum', 'signIn.json','common.action?uid=x0001');//验证手机号是否为河南手机号
+
+		$('#phoneNum').blur(function(){
+			var _this = $(this);
+			var sMobile = $(this).val();
+			if (!ValidateCallNumber(sMobile)) {
+				_this.siblings('.ui-sms-remind').addClass('ui-remind-error').removeClass('ui-remind-scs').text('请输入正确手机号码！').show();
+				_this.focus();
+				return;
+			}else{
+				_this.siblings('.ui-sms-remind').removeClass('ui-remind-scs').removeClass('ui-remind-error').html('<img src="../theme/images/ajax-loader.gif">').show();
+				Util.ajax.postJson(srvMap.get('checkNum'),'SvcNum='+sMobile,function(json,status){
+					if (status) {
+						_this.siblings('.ui-sms-remind').addClass('ui-remind-scs').removeClass('ui-remind-error').text('输入正确！');
+					}else{
+						_this.siblings('.ui-sms-remind').addClass('ui-remind-error').removeClass('ui-remind-scs').text('该号码不是河南省手机号码！');
+					}
+				})
+			}
+			/*if (!(/^1[3|4|7|5|8][0-9]\d{4,8}$/.test(sMobile))) {}*/
+		})
+
+		/*$('#J_getSMS').sendSmsCode({
+			obj : '#J_getSMS',
+		})*/
+
+		//获取验证码
+		$('#J_getSMS').click(getSMSCode);
+		//跳转到第二步
+		$('#J_goSecond').click(function(){
+			var phoneNum = $('#phoneNum').val();
+			var smsValidate = $('#smsValidate').val();
+			if (!phoneNum) {
+				$('.ui-sms-remind').eq(0).addClass('ui-remind-error').removeClass('ui-remind-scs').text('请输入手机号码！').show();
+				return;
+			};
+			if (!smsValidate) {
+				$('.ui-sms-remind').eq(1).addClass('ui-remind-error').removeClass('ui-remind-scs').text('请输入短信验证码！').show();
+				return;
+			};
+			//验证短信随机码
+			var datas = 'phoneNum='+phoneNum+'&smsValidate='+smsValidate;
+			Util.ajax.postJson(srvMap.get('validRtn'),datas,function(json,status){
+				if (status) {
+					$('#J_roleInfo').html('<div class="ui-loading"><h1><img src="../theme/images/loading.gif" alt="loading">正在为您加载，请稍等 ...</h1></div>');
+					Util.ajax.postJson(srvMap.get('getRoleInfo'),datas,function(json,status){
+						if (status) {
+							Util.ajax.loadTemp('#J_roleInfo',$('#T_roleInfo'),json);
+
+							//确认注册
+							$('#J_conf_signin').click(function(){
+								var pareInfo = [];
+								var teaInfo = [];
+								for (var i = 0; i < json.parents.length; i++) {
+									var temp = {
+										"gradeId" : json.parents[i]['gradeId'],
+										"studentName" : json.parents[i]['studentName']	
+									}
+									pareInfo.push(temp);
+								}
+								for (var i = 0; i < json.teacher.length; i++) {
+									var temp = {
+										"gradeId" : json.teacher[i]['gradeId'],
+										"subjectsId" : json.teacher[i]['subjectsId']	
+									}
+									teaInfo.push(temp);
+								}
+								var data = 'phoneNum='+phoneNum+'&userInfo='+Util.transCoding(pareInfo)+'&teacherInfo='+Util.transCoding(teaInfo);
+								Util.ajax.postJson(srvMap.get('signIn'),data,function(data,status){
+									if (status) {
+										if (data.rtnCode == '1') {
+											$('.ui-success').removeClass('ui-fail');
+											$('.ui-scs-congra').text('恭喜，您的注册已完成！');
+											$('.ui-scs-remind').text(data.rtnMsg);
+											$('#J_binding').attr('href','../hn/action/forwordTo.action?redirect=accountBinding.html&forword=accountBinding').css('margin-left','-50px').prev().hide();
+										}else{
+											$('.ui-success').addClass('ui-fail');
+											$('.ui-scs-congra').text('对不起，注册失败！');
+											$('.ui-scs-remind').text(data.rtnMsg);
+											$('#J_binding').hide().prev().css('margin-left','-50px');
+										}
+									}else{
+										art.dialog.tips(data.rtnMsg||"加载失败，请重试！");
+									}
+								})
+							})
+						}else{
+							art.dialog.tips(json.rtnMsg||"加载失败，请重试！")
+						}
+					})
+					Crumbs.goStep('next');
+				}else{
+					$('.ui-sms-remind').eq(1).addClass('ui-remind-error').removeClass('ui-remind-scs').text(json.rtnMsg||'验证码错误！').show();
+					return;
+				}
+			})
+		})
+
+		$('#smsValidate').keyup(function(event){
+			if (event.keyCode == 13) {
+				$('#J_goSecond').click();
+			};
+		})
+
+		//步骤选择及面包屑的控制
+		Crumbs = {
+			goStep:function(type){
+			    if(type=="next"){
+			    	var len = $('.ui-crumbs .ui-step').length;
+				    for (var i = 0; i < len; i++) {
+				    	if ($('.ui-crumbs .ui-step').eq(i).hasClass('ui-step-cur')&&((i+1)!=len)) {
+				    		$('.ui-crumbs .ui-step').eq(i).removeClass('ui-step-cur').addClass('ui-step-done').end().eq(i+1).addClass('ui-step-cur').end().eq(i).next('.ui-arrows').addClass('ui-arrows-done');
+				    		i += 1;
+				    		$('#J_step_'+i).show().siblings().hide();
+				    		break;
+				    	}
+				    }
+			    }else if(type=="prev"){
+				    for (var i = 0; i < $('.ui-crumbs .ui-step').length; i++) {
+				    	if ($('.ui-crumbs .ui-step').eq(i).hasClass('ui-step-cur')&&(i>0)) {
+				    		$('.ui-crumbs .ui-step').eq(i).removeClass('ui-step-cur').end().eq(i-1).addClass('ui-step-cur').removeClass('ui-step-done').end().eq(i).prev('.ui-arrows').removeClass('ui-arrows-done');
+				    		i -= 1;
+				    		$('#J_step_'+i).show().siblings().hide();
+				    		break;
+				    	}
+				    }
+			    }
+			}
+		}
+	})
+
+	function getSMSCode(){
+		var _this = $(this);
+		var phoneNum = $('#phoneNum').val();
+		if (!ValidateCallNumber(phoneNum)) {
+			$('.ui-sms-remind').eq(0).addClass('ui-remind-error').removeClass('ui-remind-scs').text('请输入正确手机号码！').show();
+			return;
+		}
+		_this.text('正在发送..').unbind("click");
+		//短信验证码
+		Util.ajax.postJson(srvMap.get('getValidateCode'),'phoneNum='+phoneNum,function(json,status){
+			if (status) {
+				var opts = {
+		            obj : '#J_getSMS',
+		            maxtime : 30,
+		            timer : null,
+		            succ : '获取验证码',
+		            fail : '重新获取验证码',
+		            wait : '发送中...',
+		            succf : '{0}秒后可再次获取'
+		        }
+	            current = opts.maxtime;
+	            current = current - 1;
+	            opts.timer = setInterval(function() {
+	                if (current > 0) {
+	                    var msg = Util.sms.formatStr(opts.succf, current);
+	                    $(opts.obj).html(msg);
+	                    if (!_this.hasClass('ui-getSMS-dis')) {
+							_this.siblings('.ui-sms-remind').addClass('ui-remind-scs').removeClass('ui-remind-error').text(json.rtnMsg||'发送成功，请查收！').show();
+		                    $(opts.obj).addClass('ui-getSMS-dis');	
+	                    };
+	                    current = (current) - 1;
+	                } else {
+	                    clearInterval(opts.timer);
+	                    $(opts.obj).html(opts.succ);
+	                    $(opts.obj).removeClass('ui-getSMS-dis');
+	            		_this.bind("click",getSMSCode);
+	                }
+	            }, 1000);
+			}else{
+				_this.text('获取短信验证码');
+				_this.siblings('.ui-sms-remind').addClass('ui-remind-error').removeClass('ui-remind-scs').text(json.rtnMsg||'发送失败，请重试！').show();
+	            _this.bind("click",getSMSCode);
+			}
+		})
+	}
+
+	//手机号码验证
+	function ValidateCallNumber(strCallNumber){
+		var objRegExp  = new RegExp('(13[4-9]{1}[0-9]{8})|(150[0-9]{8})|(182[0-9]{8})|(151[0-9]{8})|(152[0-9]{8})|(155[0-9]{8})|(157[0-9]{8})|(158[0-9]{8})|(159[0-9]{8})|(188[0-9]{8})|(187[0-9]{8})|(147[0-9]{8})|(183[0-9]{8})|(156[0-9]{8})','g');
+		return(objRegExp.test(strCallNumber));
+	}
+</script>
+</body>
+</html>

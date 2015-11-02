@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>沟通</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<style>
+.mui-table-view-cell.mui-collapse .mui-table-view .mui-table-view-cell{padding-left: 55px;}
+.zui-comui-tab {
+	padding: 11px 15px 11px 0px;
+	background: #fff;
+	border-bottom: 1px solid #ddd;
+	position: relative;
+	box-shadow: 1px 1px #ddd;
+}
+.zui-comui-icon:after {
+	position: absolute;
+	top: 50%;
+	display: inline-block;
+	font-family: Muiicons;
+	font-size: inherit;
+	line-height: 1;
+	color: #bbb;
+	text-decoration: none;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+	-webkit-font-smoothing: antialiased;
+	right: 15px;
+	content: '\e583';
+	font-style: normal;
+}
+.zui-comui-tab.open .zui-comui-icon:after{
+	content: '\e581';
+}
+.zui-comui-tab .zui-comui-tit:after {
+	content: "";
+	background: #fff;
+	opacity: 0;
+}
+.zui-comui-tab-sub {
+	display: none;
+}
+.zui-comui-content .search-wrap {
+	padding: 12px 10px 0 10px;
+	background-color: #094462;
+	position: relative;
+	top: 0;
+	left: 0;
+}
+.zui-comui-content input[type="search"].mui-input-clear{
+	color: #fff;
+	background-color: #5F8599;
+}
+.zui-comui-content .mui-table-view-divider {
+	padding-left: 24px;
+}
+.zui-comui-content .men_list .mui-table-view .zui-comui-tab-sub {
+	/*padding-left: 88px;*/
+}
+.zui-comui-content .men_list .mui-table-view .zui-comui-tab-sub input[type="checkbox"] {
+	/*left: 50px;*/
+}
+
+</style>
+</head>
+<body>
+<div class="mui-content zui-comui-content">
+	<!--<div class="search-wrap">
+		<div class="mui-input-row mui-search">
+			<input type="search" class="mui-input-clear" placeholder="请输入关键字" id="J_men_sear">
+		</div>
+	</div>-->
+	<div class="men_list" id="men_list">
+		<!--<ul class="mui-table-view">
+			<li class="mui-table-view-divider">学生</li>
+			<li class="zui-comui-tab">
+				<span class="mui-table-view-cell mui-checkbox mui-left zui-comui-tit">
+					<input name="checkbox" type="checkbox" class="zui-comui-chec" value="6" data-name="1Item 6">Item 6
+				</span>
+				<i class="zui-comui-icon"></i>
+			</li>
+			<li class="mui-table-view-cell mui-checkbox mui-left zui-comui-tab-sub">
+				<input name="checkbox" type="checkbox" value="7" data-name="2Item 7">Item 7
+			</li>
+			<li class="mui-table-view-cell mui-checkbox mui-left zui-comui-tab-sub">
+				<input name="checkbox" type="checkbox" value="8" data-name="3Item 8">Item 8
+			</li>
+		</ul>
+		<ul class="mui-table-view">
+			<li class="zui-comui-tab">
+				<span class="mui-table-view-cell mui-checkbox mui-left zui-comui-tit">
+					<input name="checkbox" type="checkbox" class="zui-comui-chec" value="62" data-name="4Item 6-2">Item 6-2
+				</span>
+				<i class="zui-comui-icon"></i>
+			</li>
+			<li class="mui-table-view-cell mui-checkbox mui-left zui-comui-tab-sub">
+				<input name="checkbox" type="checkbox" value="72" data-name="5Item 7-2">Item 7-2
+			</li>
+			<li class="mui-table-view-cell mui-checkbox mui-left zui-comui-tab-sub">
+				<input name="checkbox" type="checkbox" value="82" data-name="6Item 8-2">Item 8-2
+			</li>
+		</ul>-->
+	</div>
+</div>
+<div class="ui-loader ui-corner-all fn-hide" id="J_loading">
+    <span class="ui-icon-loading"></span>
+    <div class="ui-loader-verbose">正在加载数据...</div>
+</div>
+<script id="T_choiceConRoles" type="text/x-handlebars-template">
+	<ul class="mui-table-view">
+		<li class="zui-comui-tab">
+			<span class="mui-table-view-cell mui-checkbox mui-left zui-comui-tit">
+				<input name="checkbox" type="checkbox" class="zui-comui-chec" value="{{gradeId}}" data-name="{{gradeName}}" destUserTyp="0">{{gradeName}}
+			</span>
+			<i class="zui-comui-icon"></i>
+		</li>
+		{{#each rtnInfo}}
+		<li class="mui-table-view-cell mui-checkbox mui-left zui-comui-tab-sub">
+			<input name="checkbox" type="checkbox" value="{{userXxtId}}" data-name="{{userName}}" destUserTyp="{{userType}}">{{userName}}
+		</li>
+		{{/each}}
+	</ul>
+</script>
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script src="../common/jquery.form.js"></script>
+<script type="text/javascript">
+mui.init({swipeBack: true});
+
+var userInfo = Util.lStorage.getParam('userInfo');
+var gradeId = JSON.parse(userInfo).gradeId;
+var gradeName = JSON.parse(userInfo).gradeName;
+mui.plusReady(function(){
+	
+//	srvMap.add('getMsgRoles', 'comuni/getMsgRoles.json','common.action?uid=getGradeStudents');//聊天联系人
+	srvMap.add('getMsgRoles', 'comuni/getMsgRoles.json','common.action?uid=getGradeTeaPt');//聊天联系人
+	Util.ajax.postJson(srvMap.get("getMsgRoles"), "gradeId="+gradeId, function(json, state){
+		if(state){
+			if($(".nocontent").length){
+				$(".nocontent").remove();
+			}
+			json.gradeName = gradeName;
+			json.gradeId = gradeId;
+			Util.ajax.loadTemp('#men_list',$("#T_choiceConRoles"), json);
+			
+			mui('.mui-table-view').on('tap', ".zui-comui-tab",function(e){
+				if(e.target.className.indexOf("zui-comui-tit") != '-1' || e.target.className.indexOf("zui-comui-chec") != '-1'){
+					return false;
+				}
+				$(this).toggleClass("open").siblings(".zui-comui-tab-sub").toggle();
+			})
+			
+			var footWebview = plus.webview.getWebviewById('comuniRoleFoot.html');
+			
+			//选择联系人
+			mui("#men_list").on("tap", ".mui-checkbox", function(e){
+				var _self = $(this).find("input[type='checkbox']");
+				var value = _self.val();
+				var tit = _self.data("name");
+				var destUserTyp = _self.attr("destUserTyp");
+				if(_self.is(":checked")){
+					mui.fire(footWebview, "pickMen", {type: '1', value: value} );//删除
+				}else{
+					mui.fire(footWebview, "pickMen", {type: '2', tit: tit, value: value, destUserTyp: destUserTyp} );//添加
+				}
+			})
+		}else{
+			Util.alert(json.rtnMsg || "获取联系人列表失败！");
+			$("body").append("<div class='nocontent'></div>");
+		}
+	})
+})
+
+window.addEventListener("removeMen", function (e) {
+    var value = e.detail.value;
+	$("#men_list input[type='checkbox']").each(function(){
+		var cId = $(this).val();
+		if(value == cId){
+			$(this).trigger("click");
+		}
+	})
+});
+</script>
+</body>
+</html>

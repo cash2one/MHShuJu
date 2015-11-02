@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" >
+    <head>
+        <meta charset="utf-8" />
+        <title>edu-apk upload</title>
+        <script type="text/javascript" src="../lib/jquery/1.8.1/jquery.js"></script>
+        <script type="text/javascript" src="../lib/json2/1.0.0/json2.js"></script>
+        <link rel="stylesheet" type="text/css" href="../theme/common.css?v=20141112"/>
+      <style>
+        .container {
+            overflow:hidden;
+            width:960px;
+            margin:20px auto;
+        }
+        .contr {
+            background-color: #212121;
+            color: #FFFFFF;
+            padding: 10px 0;
+            text-align: center;
+         
+            border-radius:10px 10px 0 0;
+            -moz-border-radius:10px 10px 0 0;
+            -webkit-border-radius:10px 10px 0 0;
+        }
+        .upload_form_cont {
+            background: -moz-linear-gradient(#ffffff, #f2f2f2);
+            background: -ms-linear-gradient(#ffffff, #f2f2f2);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #f2f2f2));
+            background: -webkit-linear-gradient(#ffffff, #f2f2f2);
+            background: -o-linear-gradient(#ffffff, #f2f2f2);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f2f2f2');
+            -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f2f2f2')";
+            background: linear-gradient(#ffffff, #f2f2f2);
+         
+            color: #000;
+            overflow: hidden;
+        }
+        .info {
+            background-color: #EEEEEE;
+            border: 1px solid #DDDDDD;
+            float: left;
+            font-weight: bold;
+            height: 330px;
+            margin: 50px;
+            margin-left:20px;
+            position: relative;
+            width: 460px;
+        }
+        .info > div {
+            font-size: 14px;
+            font-weight: bold;
+            padding: 10px 15px 5px;
+        }
+        .info > h2 {
+            padding: 0 15px;
+        }
+        .info > canvas {
+            margin-left: 15px;
+            margin-bottom: 10px;
+        }
+        .info #url {
+            width: 400px;
+        }
+        #dropArea {
+            background-color: #DDDDDD;
+            border: 3px dashed #000000;
+            float: left;
+            font-size: 48px;
+            font-weight: bold;
+            height: 330px;
+            line-height: 330px;
+            margin: 50px;
+            position: relative;
+            text-align: center;
+            width: 300px;
+        }
+        #dropArea.hover {
+            background-color: #CCCCCC;
+        }
+        #dropArea.uploading {
+            background: #EEEEEE url(../theme/images/loading.gif) center 30% no-repeat;
+        }
+        #result .s, #result .f {
+            font-size: 12px;
+            margin-bottom: 10px;
+            padding: 10px;
+         
+            border-radius:10px;
+            -moz-border-radius:10px;
+            -webkit-border-radius:10px;
+        }
+        #result .s {
+            background-color: #77fc9f;
+        }
+        #result .f {
+            background-color: #fcc577;
+        }
+ 
+      </style>
+  </head>
+    <body>
+    <div class="container">
+      <div class=""><a href="index.html" class="ui-login-logo"></a></div>
+        <div class="upload_form_cont">
+            <div id="dropArea">文件拖到这里</div>
+            <div class="info">
+                <div id="fileName"></div>
+                <div id="fileSize"></div>
+                <div id="fileType"></div>
+                <h2>结果:</h2>
+                <div id="result"></div>
+                <canvas width="430" height="20"></canvas>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    var dropArea = document.getElementById('dropArea');
+    var canvas = document.querySelector('canvas');
+    var context = canvas.getContext('2d');
+    //var count = document.getElementById('count');
+    var destinationUrl = '../app/action/uploadApk.action?uid=uploadApk8888';
+    var result = document.getElementById('result');
+    var list = [];
+    var totalSize = 0;
+    var totalProgress = 0;
+    
+    // main initialization
+    (function(){
+     
+        // init handlers
+        function initHandlers() {
+            dropArea.addEventListener('drop', handleDrop, false);
+            dropArea.addEventListener('dragover', handleDragOver, false);
+            
+        }
+     
+        // draw progress
+        function drawProgress(progress) {
+            context.clearRect(0, 0, canvas.width, canvas.height); // clear context
+     
+            context.beginPath();
+            context.strokeStyle = '#4B9500';
+            context.fillStyle = '#4B9500';
+            context.fillRect(0, 0, progress * 500, 20);
+            context.closePath();
+     
+            // draw progress (as text)
+            context.font = '16px Verdana';
+            context.fillStyle = '#000';
+            context.fillText('上传进度: ' + Math.floor(progress*100) + '%', 50, 15);
+        }
+     
+        // drag over
+        function handleDragOver(event) {
+            event.stopPropagation();
+            event.preventDefault();
+     
+            dropArea.className = 'hover';
+            
+            //console.log(event.dataTransfer.files.length)
+        }
+        
+        // drag drop
+        function handleDrop(event) {
+            event.stopPropagation();
+            event.preventDefault();
+     
+            if(fileSelected(event.dataTransfer.files)){
+            	processFiles(event.dataTransfer.files);
+            }
+        }
+        
+        function fileSelected(filelist){
+        	if (!filelist || !filelist.length || list.length) false;
+        	
+        	if(filelist.length > 1){
+        		dropArea.className = '';
+                dropArea.innerHTML = '上传失败';
+                result.innerHTML += '<div class="f">一次只能上传一个文件。</div>';
+                return false;
+        	}
+        	var file = filelist[0];
+        	
+        	if (file) {
+        		var lastSplit = file.name.lastIndexOf('.');
+        		
+        		var fileType = file.name.substring(lastSplit);
+        		if('.zip' != fileType){
+        			dropArea.className = '';
+                    dropArea.innerHTML = '上传失败';
+                    result.innerHTML += '<div class="f">'+fileType+'类型文件不允许上传。</div>';
+        			return false;
+        		}
+        		
+        		var fileSize = 0;
+        		if (file.size > 1024 * 1024){
+        			fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
+        		}else{
+        			fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
+        		}
+        		document.getElementById('fileName').innerHTML = '文件  名:' + file.name;
+                document.getElementById('fileSize').innerHTML = '文件大小:' + fileSize;
+                document.getElementById('fileType').innerHTML = '文件类型:' + fileType;
+        	}
+        	return true;
+        }
+        
+        // process bunch of files
+        function processFiles(filelist) {
+            if (!filelist || !filelist.length || list.length) return;
+     
+            totalSize = 0;
+            totalProgress = 0;
+            result.textContent = '';
+            
+            dropArea.className = '';
+            dropArea.innerHTML = '上传失败';
+            if(filelist.length > 1){
+            	result.innerHTML += '<div class="f">一次只能上传一个文件。</div>';
+            	return;
+            }
+            
+            for (var i = 0; i < filelist.length && i < 5; i++) {
+                list.push(filelist[i]);
+                totalSize += filelist[i].size;
+            }
+            uploadNext();
+        }
+     
+        // on complete - start next file
+        function handleComplete(size) {
+            totalProgress += size;
+            drawProgress(totalProgress / totalSize);
+            
+            uploadNext();
+        }
+     
+        // update progress
+        function handleProgress(event) {
+            var progress = totalProgress + event.loaded;
+            drawProgress(progress / totalSize);
+        }
+     
+        // upload file
+        function uploadFile(file, status) {
+     
+            // prepare XMLHttpRequest
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', destinationUrl);
+            xhr.onload = function() {
+                if(this.responseText.indexOf('html') > -1 &&
+                   this.responseText.indexOf('body') > -1){//文件类型不能上传错误
+                	
+                	var lastSplit = file.name.lastIndexOf('.');
+                    var fileType  = file.name.substring(lastSplit);
+                    
+                    dropArea.className = '';
+                    dropArea.innerHTML = '上传失败';
+                    result.innerHTML += '<div class="f">'+fileType+'类型文件不允许上传。</div>';
+                    handleComplete(0);
+                }else{
+                	var rsp = JSON.parse(this.responseText);
+                	if(rsp.rtnCode == 1){
+                		dropArea.className = '';
+                        dropArea.innerHTML = '上传成功';
+                        handleComplete(file.size);
+                	}else{
+                		handleComplete(0);
+                		
+                		dropArea.className = '';
+                        dropArea.innerHTML = '上传失败';
+                        result.innerHTML += '<div class="f">'+rsp.rtnMsg+'</div>';
+                	}
+                }
+                
+            };
+            xhr.onerror = function() {
+                result.textContent = this.responseText;
+                //handleComplete(0);
+                dropArea.className = '';
+                dropArea.innerHTML = '上传失败';
+                
+                result.innerHTML += '<div class="f">'+(this.responseText|"服务器错误")+'</div>';
+            };
+            xhr.upload.onprogress = function(event) {
+                handleProgress(event);
+            }
+            xhr.upload.onloadstart = function(event) {
+            }
+     
+            // prepare FormData
+            var formData = new FormData();
+            formData.append('myfile', file);
+            xhr.send(formData);
+        }
+     
+        // upload next file
+        function uploadNext() {
+            if (list.length) {
+                dropArea.className = 'uploading';
+                dropArea.innerHTML = '上传中...';
+                
+                var nextFile = list.shift();
+                if (nextFile.size >= 2621440000) { // 256kb
+                    result.innerHTML += '<div class="f">文件过大 (max filesize exceeded)</div>';
+                } else {
+                    uploadFile(nextFile, status);
+                }
+            } else {
+                dropArea.className = '';
+            }
+        }
+     
+        initHandlers();
+    })();
+    
+    
+    </script>
+    </body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="renderer" content="webkit" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+<meta name="keywords" content="河南移动，教育门户，校讯通，同步课堂，中小学学习报" />
+<meta name="Description" content="河南移动教育门户————河南移动各类教育产品统一管理门户网站" />
+<title>账号绑定</title>
+<link rel="stylesheet" type="text/css" href="../theme/common.css?v=20141112"/>
+<link rel="stylesheet" type="text/css" href="../lib/dialog/4.1.7/skins/blue.css"/>
+</head>
+<body class="ui-body">
+<div class="ui-wrapper">
+	<div class="ui-head">
+		<div style="width:1024px;margin:0 auto;">
+			<div class="ui-hello fn-left">您好，请用河南移动手机号码<a class="ui-nav-login" href="login.html">登录</a>！</div>
+			<ul class="ui-nav-list">
+			    <li class="ui-nav-hej"><a href="javascript:;">和教育</a></li>
+				<li class="ui-nav-index"><a href="index.html">首页</a></li>
+				<li class="ui-nav-app"><a href="javascript:;">我的订单</a></li>
+				<li class="ui-nav-collect"><a href="javascript:;">我的收藏</a></li>
+				<!-- <li class="ui-nav-info"><a href="#nogo">个人资料</a></li> -->
+				<li class="ui-nav-choiceRole"><a href="javascript:;">切换角色</a></li>
+				<li class="ui-nav-loginout"><a href="javascript:;">退出</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="ui-cont fn-clear">
+		<div class="ui-search">
+			<a class="ui-logo" href="index.html"></a>
+			<div class="ui-search-cont">
+				<input class="ui-search-ipt" id="J_search_ipt" type="text" value="请输入关键字搜索" onblur="if(this.value=='') {this.value='请输入关键字搜索';this.style.color='#999';}" onfocus="if(this.value=='请输入关键字搜索') {this.value='';this.style.color='#333';}" />
+				<ul class="ui-hot-kwd fn-clear" id="J_hot_kwd"></ul>
+			</div>
+			<a class="ui-btn ui-btn-red ui-myCart" href="javascript:;">我的购物车(<span>0</span>)</a>
+		</div>
+		<div class="ui-pers-cent">
+			<ul class="ui-pers-list">
+				<li class="ui-pers-cart"><a href="sCart.html"><b></b>查看购物车</a></li>
+				<li class="ui-pers-order"><a href="myOrder.html"><b></b>我的订单</a></li>
+				<li class="ui-pers-clt"><a href="myCollect.html"><b></b>我的收藏</a></li>
+				<li class="ui-pers-accBind ui-pers-list-cur"><a href="accountBinding.html"><b></b>账号绑定</a></li>
+				<li class="ui-pers-choiceRole"><a href="javascript:;"><b></b>切换角色</a></li>
+				<li class="ui-pers-changePassword"><a href="changePassword.html"><b></b>修改密码</a></li>
+			</ul>
+		</div>
+		<div id="J_bindingInfo" class="ui-right-cont">
+			<div class="ui-loading"><h1><img src="../theme/images/loading.gif" alt="loading">正在为您加载，请稍等 ...</h1></div>
+		</div>
+	</div>
+</div>
+
+<script id="T_bindingInfo" type="text/x-handlebars-template">
+	<div class="ui-binding-title">家长/学生 账号绑定</div>
+	<table class="ui-binding-tbl" data-role="1">
+		<thead>
+			<tr>
+				<th width="40%">家长/学生账号</th>
+				<th width="10%">校讯通</th>
+				<th width="25%">同步课堂</th>
+				<th width="25%">中小学学习报</th>
+			</tr>
+		</thead>
+		<tbody>
+		{{#if parents.length}}
+			{{#each parents}}
+				<tr>
+					<td>{{userName}}：{{city}}&nbsp;{{region}}&nbsp;{{schoolName}}&nbsp;{{grade}}&nbsp;{{subName}}</td>
+					<td>已绑定</td>
+					{{isBinding userId tbktId tbktName xxbId xxbName}}
+				</tr>
+			{{/each}}
+		{{else}}
+			<tr><td colspan="6">没有查询到信息！</td></tr>
+		{{/if}}
+		</tbody>
+	</table>
+	<div class="ui-binding-title" style="margin-top:50px;">老师 账号绑定</div>
+	<table class="ui-binding-tbl teac-tbl" data-role="2">
+		<thead>
+			<tr>
+				<th width="40%">老师账号</th>
+				<th width="10%">校讯通</th>
+				<th width="25%">同步课堂</th>
+				<th width="25%">中小学学习报</th>
+			</tr>
+		</thead>
+		<tbody>
+		{{#if teacher.length}}
+			{{#each teacher}}
+				<tr>
+					<td>{{userName}}：{{city}}&nbsp;{{region}}&nbsp;{{schoolName}}&nbsp;{{grade}}&nbsp;{{subName}}</td>
+					<td>已绑定</td>
+					{{isBinding userId tbktId tbktName xxbId xxbName}}
+				</tr>
+			{{/each}}
+		{{else}}
+			<tr><td colspan="6">没有查询到信息！</td></tr>
+		{{/if}}
+		</tbody>
+	</table>
+</script>
+
+<script id="T_tbkt_popups" type="text/x-handlebars-template">
+	<div style="font-size: 14px;width:480px;">
+		<div style="margin:10px 0;">根据您的手机号查询到您在同步课堂已有的账号，请选择：</div>
+		<div class="ui-acc-radio fn-clear">
+			{{#if this.length}}
+				{{#each this}}
+					<label>
+						<input type="radio" name="account" value="{{USERID}}" data-othername="{{USERNAME}}">{{USERNAME}}
+					</label>
+				{{/each}}
+			{{else}}
+				<div style="text-align:center;">没有查询到账号信息！</div>
+			{{/if}}
+		</div>
+		<div class="ui-right-btn">
+			<a class="ui-btn ui-btn-red" id="J_confirm_bind" href="javascript:;">绑 定</a>
+			<a class="ui-btn ui-btn-green" id="J_close" href="javascript:;" style="margin-left:20px;">取 消</a>
+		</div>
+	</div>
+</script>
+<script id="T_xxb_popups" type="text/x-handlebars-template">
+	<div style="font-size: 14px;width:480px;">
+		<div style="margin:10px 0;">根据您的手机号查询到您在中小学生学习报已有的账号，请选择：</div>
+		<div class="ui-acc-radio fn-clear">
+			{{#if this.length}}
+				{{#each this}}
+					<label>
+						<input type="radio" name="account" value="{{userId}}" data-othername="{{userName}}">{{userName}}
+					</label>
+				{{/each}}
+			{{else}}
+				<div style="text-align:center;">没有查询到账号信息！</div>
+			{{/if}}
+		</div>
+		<div class="ui-right-btn">
+			<a class="ui-btn ui-btn-red" id="J_confirm_bind" href="javascript:;">绑 定</a>
+			<a class="ui-btn ui-btn-green" id="J_close" href="javascript:;" style="margin-left:20px;">取 消</a>
+		</div>
+	</div>
+</script>
+
+<script type="text/javascript" src="../lib/json2/1.0.0/json2.js"></script>
+<script type="text/javascript" src="../lib/jquery/1.8.1/jquery.js"></script>
+<script type="text/javascript" src="../lib/cookie/1.2.0/jquery.cookie.js"></script>
+<script type="text/javascript" src="../lib/jqueryui/1.11.1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script type="text/javascript" src="../lib/handlebars/1.3.0/helpers.js"></script>
+<script type="text/javascript" src="../lib/cryptojs/3.1.2/core-min.js"></script>
+<script type="text/javascript" src="../lib/cryptojs/3.1.2/enc-base64-min.js"></script>
+<script type="text/javascript" src="../lib/dialog/4.1.7/artDialog.js"></script>
+<script type="text/javascript" src="../lib/dialog/4.1.7/iframeTools.js"></script>
+<script type="text/javascript" src="../common/config.js"></script>
+<script type="text/javascript" src="../common/common.js?v=20141112"></script>
+<script type="text/javascript">
+	var bindFlag  = true;//帮顶按钮开关
+	$(function(){
+		srvMap.addLogin('bindingInfo', 'bindingInfo.json','user-GetAllUserInfo.action?uid=allInfo');//页面初始化
+		//srvMap.add('bindingInfo', 'bindingInfo.json','common.action?uid=getUserAllInfo');//页面初始化
+		//srvMap.add('popupsAct', 'bindAct.json','common.action?uid=getSysAccountInfo');//弹窗--获取对应业务的账号信息
+		srvMap.addLogin('popupsAct', 'bindAct.json','user-GetSysAccoutInfo.action?uid=sysBindInfo');//弹窗--获取对应业务的账号信息
+		srvMap.add('bindAct', 'unBindAct.json','common.action?uid=bindAccount');//确认绑定
+		srvMap.add('unBindAct', 'unBindAct.json','common.action?uid=unbindAccount');//取消绑定
+		pageInit();
+	})
+
+	function pageInit(){
+		var phoneNum = Util.browser.getParameter('phoneNum');
+		Util.ajax.postJson(srvMap.get('bindingInfo'),'phoneNum='+phoneNum,function(json,status){
+			if (status) {
+				Util.ajax.loadTemp('#J_bindingInfo',$('#T_bindingInfo'),json);
+			}else{
+				$('#J_bindingInfo').html('<div class="ui-bindInfo-error">'+json.rtnMsg||'连接失败，请重试！'+'</div>')
+			}
+		})
+	}
+	//绑定
+	function bindAct(userId,sysId,obj){
+		var roleType = $(obj).parents('table').data('role');//角色类型
+		var busiType = $(obj).data('busitype');//系统类型
+		var userId = $(obj).data('userid');//用户id
+		Util.ajax.postJson(srvMap.get('popupsAct'),'roleType='+roleType+'&busiType='+sysId,function(json,status){
+			if (status) {
+				//弹窗展示
+				art.dialog({
+					title: "",
+				    content: '<div id="J_choiceAcc"><div style="color:#fff;margin:10px 0 30px;font-size:14px;">正在加载...</div></div>',
+				    width: 520,
+				    lock: true,
+				    id: 'J_AccList',
+					padding: '10px 15px'
+				});
+				if (busiType == '2') {//同步课堂
+					//跨域请求
+					$.getJSON(json.tbk_url+"?callback=?",''+json.tbk_seq,function(data){
+						if (data.errorInfo.retCode == '1') {
+							if (roleType =='1') {
+								Util.ajax.loadTemp('#J_choiceAcc',$('#T_tbkt_popups'),data.retConInfo);
+							}else{
+								Util.ajax.loadTemp('#J_choiceAcc',$('#T_tbkt_popups'),data.retTeaInfo);
+							}
+							//已绑定过的账号不能再次绑定
+							if (json.bindInfo.length) {
+								for (var i = 0; i < json.bindInfo.length; i++) {
+									$('input[type=radio]').each(function(){
+										var USERID = $(this).val();
+										if (json.bindInfo[i].OTHERUSERID == USERID&&json.bindInfo[i].USERID==userId) {
+											$(this).attr('disabled','disabled');
+										};
+									})
+								};
+							};
+							//确认绑定
+							$('#J_confirm_bind').click(function(){
+								if (bindFlag) {
+									bindFlag = false;
+									var otherId = $('input[type=radio]:checked').val();
+									var otherName = $('input[type=radio]:checked').data('othername');
+									if (!otherId) {
+										art.dialog.tips('请选择需要绑定的账号！');
+										bindFlag = true;
+										return;
+									};
+									var datas = 'roleType='+roleType+'&userId='+userId+'&otherId='+otherId+'&busiType='+busiType+'&otherName='+otherName;
+									Util.ajax.postJson(srvMap.get('bindAct'),datas,function(json,status){
+										if (status) {
+											art.dialog.tips("绑定成功！");
+											$('#J_close').click();
+											pageInit();
+										}else{
+											art.dialog.tips(rtnMsg||"取消失败，请重试！")
+										}
+										bindFlag = true;
+									})
+								}
+							})
+							//关闭对话框
+							$('#J_close').click(function(){
+								art.dialog.list['J_AccList'].close();
+							})
+						};
+					});
+				}else if (busiType == '3') {//中小学学习报
+					//跨域请求
+					//$.getJSON(json.xxb_url+"?callback=?",'paraData='+json.xxb_seq,function(data){
+					$.getJSON(json.xxb_url+"?callback=?",{'paraData':json.xxb_seq},function(data){
+						if (data.errorInfo.retCode == '1') {
+							if (roleType =='1') {
+								Util.ajax.loadTemp('#J_choiceAcc',$('#T_xxb_popups'),data.retConInfo);
+							}else{
+								Util.ajax.loadTemp('#J_choiceAcc',$('#T_xxb_popups'),data.retTeaInfo);
+							}
+							//已绑定过的账号不能再次绑定
+							if (json.bindInfo.length) {
+								for (var i = 0; i < json.bindInfo.length; i++) {
+									$('input[type=radio]').each(function(){
+										var USERID = $(this).val();
+										if (json.bindInfo[i].OTHERUSERID == USERID&&json.bindInfo[i].USERID==userId) {
+											$(this).attr('disabled','disabled');
+										};
+									})
+								};
+							};
+							//确认绑定
+							$('#J_confirm_bind').click(function(){
+								if (bindFlag) {
+									bindFlag = false;
+									var otherId = $('input[type=radio]:checked').val();
+									var otherName = $('input[type=radio]:checked').data('othername');
+									if (!otherId) {
+										art.dialog.tips('请选择需要绑定的账号！');
+										bindFlag = true;
+										return;
+									};
+									var datas = 'roleType='+roleType+'&userId='+userId+'&otherId='+otherId+'&busiType='+busiType+'&otherName='+otherName;
+									Util.ajax.postJson(srvMap.get('bindAct'),datas,function(json,status){
+										if (status) {
+											art.dialog.tips("绑定成功！");
+											$('#J_close').click();
+											pageInit();
+										}else{
+											art.dialog.tips(rtnMsg||"取消失败，请重试！")
+										}
+										bindFlag = true;
+									})
+								}
+							})
+							//关闭对话框
+							$('#J_close').click(function(){
+								art.dialog.list['J_AccList'].close();
+							})
+						};
+					});
+				}
+			}else{
+				art.dialog.tips(json.rtnMsg||'获取账号信息失败，请重试！')
+			}
+		})
+	}
+	//取消绑定
+	function unbindAct(userId,otherId,obj){
+		var roleType = $(obj).parents('table').data('role');//角色类型
+		var busiType = $(obj).data('busitype');//系统类型
+		artDialog.confirm('你确定需要取消绑定吗？',function(){
+			var datas = "userId="+userId+"&otherId="+otherId+"&roleType="+roleType+'&busiType='+busiType;
+			Util.ajax.postJson(srvMap.get('unBindAct'),datas,function(json,status){
+				if (status) {
+					art.dialog.tips("取消绑定成功！");
+					pageInit();
+				}else{
+					art.dialog.tips(rtnMsg||"取消失败，请重试！")
+				}
+			})
+		})
+	}
+
+    Handlebars.registerHelper("isBinding", function(userId,tbktId,tbktName,zxxxxbId,zxxxxbName,fn){
+        var buffer = "";
+        if(!tbktId){
+           buffer += '<td><a href="javascript:;" data-busitype="2" data-userid="'+userId+'" onclick="bindAct('+userId+',2,this)">绑定</a></td>';
+        }else{
+            buffer += '<td><span>已绑定'+tbktName+'</span>&nbsp;<a href="javascript:;" data-busitype="2" onclick="unbindAct('+userId+','+tbktId+',this)">取消绑定</a></td>';
+        }
+        if(!zxxxxbId){
+           buffer += '<td><a href="javascript:;" data-busitype="3" data-userid="'+userId+'" onclick="bindAct('+userId+',3,this)">绑定</a></td>';
+        }else{
+            buffer += '<td><span>已绑定'+zxxxxbName+'</span>&nbsp;<a href="javascript:;" data-busitype="3" onclick="unbindAct('+userId+','+zxxxxbId+',this)">取消绑定</a></td>';
+        }
+        return new Handlebars.SafeString(buffer);
+    });
+</script>
+</body>
+</html>

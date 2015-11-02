@@ -1,0 +1,15 @@
+{
+    "appid":"HEA",
+    "iOS":{
+    	"version":"1.0.0",
+    	"title":"Hello MUI版本更新",
+    	"note":"",
+    	"url":"itms-services://?action=download-manifest&amp;url=https://d.dcloud.net.cn/hellomui/HelloMUI.plist"
+    },
+    "Android":{
+    	"version":"1.0.2",
+    	"title":"Hello MUI版本更新",
+        "note":"1. 版本更新修复  \n2. 河南移动非校讯通用户注册修复  \n3. 沟通页面修复",
+    	"url":"http://www.ha.10086.cn/edu/upload/zip/HEA.apk"
+    }
+}

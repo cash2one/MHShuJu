@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>登录</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<style>
+/**
+ * 忘记密码
+ * **/
+.ui-bg {
+	background-position:  center center;
+}
+.forgetPwd-wrap {
+	padding: 0 20px;
+	margin-top: 70px;
+}
+.forgetPwd-wrap .step {
+	position: relative;
+}
+.forgetPwd-wrap input {
+	margin-bottom: 0px;
+	border-radius: 5px;
+	height: 50px;
+}
+.forgetPwd-wrap .mui-btn {
+	margin-top: 30px;
+	padding: 10px 0;
+	border: 1px solid #fff;
+	color: #fff;
+}
+.forgetPwd-wrap .mui-btn:active {
+	background: #DC4C27;
+}
+.forgetPwd-wrap .step .res_icon {
+	display: block;
+	margin: 0 auto;
+}
+.forgetPwd-wrap .step .tips {
+	color: #fff;
+	font-size: 18px;
+	height: 30px;
+	line-height: 30px;
+	margin-top: 20px;
+	text-align: center;
+}
+</style>
+</head>
+<body>
+<div class="mui-content">
+	<div class="ui-wrap">
+	    <div class="ui-bg ui-login-bg" style="display: block;">
+			<div class="forgetPwd-wrap">
+				<div class="step step-4">
+					<div class="succ fn-hide">
+						<img src="../theme/images/success.png" alt="成功" width="75" height="75" class="res_icon" />
+						<p class="tips">注册成功，请登录！</p>
+					</div>
+					<div class="fail fn-hide">
+						<img src="../theme/images/fail.png" alt="成功" width="75" height="75" class="res_icon" />
+						<p class="tips">注册失败，请重新注册！</p>
+					</div>
+					<button class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined" id="J_F_retLogin">返回登录页</button>
+				</div>
+			</div>
+	    </div>
+	</div>
+</div>
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../lib/handlebars/1.3.0/helpers.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script type="text/javascript">
+var result = null;
+mui.init({swipeBack: true});
+mui.plusReady(function(){
+	if(result && result=='1'){
+		$(".step .succ").removeClass("fn-hide");
+	}else{
+		$(".step .fail").removeClass("fn-hide");
+	}
+	
+	mui(".step").on("tap", "#J_F_retLogin", function(){
+		var pWebView=plus.webview.getLaunchWebview();//跳至登陆页
+		pWebView.show();
+	})
+})
+
+window.addEventListener("showRes", function(e){
+	result = e.detail.result;
+})
+
+</script>
+</body>
+</html>

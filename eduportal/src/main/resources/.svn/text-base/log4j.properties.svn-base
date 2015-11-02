@@ -1,0 +1,52 @@
+log4j.rootLogger=error,stdout
+log4j.debug=true
+
+# set standard out appender.
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout 
+log4j.appender.stdout.layout.ConversionPattern=%d{MM-dd HH:mm:ss.SSS} [%t] %c %l %-5p - %m%n
+
+# Configuration for Web Logger
+log4j.logger.ACTION=info,weblog,stdout
+log4j.additivity.ACTION=false
+log4j.appender.weblog=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.weblog.File=../logs/ai_web.log
+log4j.appender.weblog.DatePattern='.'yyyyMMdd
+log4j.appender.weblog.layout=org.apache.log4j.PatternLayout
+log4j.appender.weblog.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c %-5p - %m%n
+
+# Configuration for Util Logger
+log4j.logger.UTIL=error,utillog,stdout
+log4j.additivity.UTIL=false
+log4j.appender.utillog=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.utillog.File=../logs/ai_util.log
+log4j.appender.utillog.DatePattern='.'yyyyMMdd
+log4j.appender.utillog.layout=org.apache.log4j.PatternLayout
+log4j.appender.utillog.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c %-5p - %m%n
+
+# Configuration for Application Logger
+log4j.logger.APPLICATION=error,applog,stdout
+log4j.additivity.APPLICATION=false
+log4j.appender.applog=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.applog.File=../logs/ai_application.log
+log4j.appender.applog.DatePattern='.'yyyyMMdd
+log4j.appender.applog.layout=org.apache.log4j.PatternLayout
+log4j.appender.applog.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c %-5p - %m%n
+
+# Configuration for DAO Logger
+log4j.logger.OUTERCALLER=info,outCallerlog,stdout
+log4j.additivity.OUTERCALLER=false
+log4j.appender.outCallerlog=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.outCallerlog.File=../logs/ai_outCaller.log
+log4j.appender.outCallerlog.DatePattern='.'yyyyMMdd
+log4j.appender.outCallerlog.layout=org.apache.log4j.PatternLayout
+log4j.appender.outCallerlog.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c %-5p - %m%n
+
+# Configuration for Web Logger
+log4j.logger.heEdulog=info,edulog,stdout
+log4j.additivity.heEdulog=false
+log4j.appender.edulog=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.edulog.File=../logs/ai_heedu.log
+log4j.appender.edulog.DatePattern='.'yyyyMMdd
+log4j.appender.edulog.layout=org.apache.log4j.PatternLayout
+log4j.appender.edulog.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c %-5p - %m%n

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<title></title>
+<link rel="stylesheet" href="theme/common.css">
+<link href="lib/mui/css/mui.css" rel="stylesheet"/>
+<style>
+.stu_body {
+	background: #094462;
+}
+.stu_mui-bar-nav {
+	box-shadow: none!important;
+}
+.mui-tab-item.mui-active {
+	color: #0BAAB8!important;
+}
+</style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+	<!--<a class="mui-icon mui-icon-bars mui-pull-left" style="display: none;"></a>-->
+	<button class="mui-btn mui-btn-link mui-btn-nav mui-pull-right" id="J_choiceRole">
+		<span class="mui-icon mui-icon-contact"><span style="font-size: 15px;font-family: '微软雅黑';">切换角色</span></span>
+	</button>
+	<a id="J_filter" class="mui-icon mui-pull-right" style="display: none;">
+		<span style="font-size: 15px;font-family: '微软雅黑';">筛选</span>
+	</a>
+  	<h1 class="mui-title" id="title"></h1>
+	<a id="J_sendMsg" class="mui-icon mui-pull-right" style="display: none;">
+		<span style="font-size: 15px;font-family: '微软雅黑';">发信息</span>
+	</a>
+</header>
+<nav class="mui-bar mui-bar-tab">
+	<a class="mui-tab-item" href="care/careIndex.html">
+		<span class="mui-icon mui-icon-home"></span>
+		<span class="mui-tab-label">关爱</span>
+	</a>
+	<a class="mui-tab-item" href="study/studyIndex.html">
+		<span class="mui-icon mui-icon-email">
+			<!--<span class="mui-badge"></span>-->
+		</span>
+		<span class="mui-tab-label">学习</span>
+	</a>
+	<a class="mui-tab-item" href="comuni/comuniIndex.html">
+		<span class="mui-icon mui-icon-contact"></span>
+		<span class="mui-tab-label">沟通</span>
+	</a>
+	<a class="mui-tab-item" href="my/myIndex.html">
+		<span class="mui-icon mui-icon-gear"></span>
+		<span class="mui-tab-label">我的</span>
+	</a>
+</nav>
+
+
+<script src="lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="lib/mui/mui.min.js"></script>
+<script src="lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="common/config.js"></script>
+<script src="common/common.js"></script>
+<script type="text/javascript" charset="utf-8">
+mui.init({});
+
+var subpages = ['care/careIndex.html','study/studyIndex.html','comuni/comuniIndex.html','my/myIndex.html'];
+var subpage_style = {top: '46px',bottom: '50px'};
+var studyMenu = null,
+	main = null,
+	flag_0 = true,
+	flag_1 = true,
+	flag_2 = true,
+	flag_3 = true;
+var showMenu = false;
+var tempIndex = 1;
+var userInfoHasRole = Util.lStorage.getParam('userInfoHasRole');
+mui.plusReady(function() {
+	var self = plus.webview.currentWebview();
+	var activeTab = null;
+	//判断是否从redirect.html 跳转到当前页面
+//	if(Util.lStorage.getParam('fromRedirect')){
+		if(userInfoHasRole && userInfoHasRole == '1'){//无角色
+			document.getElementById('title').innerHTML = '学习';
+			$("body").addClass("stu_body");
+			$(".mui-bar-nav").addClass("stu_mui-bar-nav");
+			$('.mui-tab-item').eq(1).addClass('mui-active').siblings().removeClass('mui-active');
+			document.getElementById('J_filter').style.display = 'block';
+			document.getElementById('J_choiceRole').style.display = 'none';
+			var sub = plus.webview.create(subpages[1],subpages[1],subpage_style);
+			self.append(sub);
+			activeTab = subpages[1];//当前激活选项
+			flag_1 = false;
+		}else{
+			$("body").removeClass("stu_body");
+			$(".mui-bar-nav").removeClass("stu_mui-bar-nav");
+			document.getElementById('title').innerHTML = '关爱';
+			$('.mui-tab-item').eq(0).addClass('mui-active').siblings().removeClass('mui-active');
+			var sub = plus.webview.create(subpages[0],subpages[0],subpage_style);
+			self.append(sub);
+			activeTab = subpages[0];//当前激活选项
+			flag_0 = false;
+		}
+//	}
+	//login.html中触发showTab监听器
+	window.addEventListener('showTab',function (e) {
+		var title = e.detail.title,
+			hasRole = e.detail.hasRole;
+		if(hasRole){
+			$("body").removeClass("stu_body");
+			$(".mui-bar-nav").removeClass("stu_mui-bar-nav");
+			$('.mui-tab-item').eq(0).addClass('mui-active').siblings().removeClass('mui-active');
+			
+			var careIndex = plus.webview.getWebviewById('care/careIndex.html');
+			if(careIndex){
+				removeSubF();
+			}
+			
+			var sub = plus.webview.create(subpages[0],subpages[0],subpage_style);
+			self.append(sub);
+			activeTab = subpages[0];//当前激活选项
+			flag_0 = false;
+		}else{
+			$("body").addClass("stu_body");
+			$(".mui-bar-nav").addClass("stu_mui-bar-nav");
+			$('.mui-tab-item').eq(1).addClass('mui-active').siblings().removeClass('mui-active');
+			document.getElementById('J_filter').style.display = 'block';
+			document.getElementById('J_choiceRole').style.display = 'none';
+			document.getElementById('title').innerHTML = title;
+			var sub = plus.webview.create(subpages[1],subpages[1],subpage_style);
+			self.append(sub);
+			activeTab = subpages[1];//当前激活选项
+			flag_1 = false;
+		}
+	})
+	
+	
+	var title = document.getElementById("title");
+	//选项卡点击事件
+	mui('.mui-bar-tab').on('tap', 'a', function(e) {
+		var index = $(this).index();
+		if(userInfoHasRole && userInfoHasRole == '1'){
+			if(index == 0 || index == 2){
+				Util.alert("暂无角色，无法查看！");
+				setTimeout(function(){
+					$('.mui-tab-item').eq(tempIndex).addClass('mui-active').siblings().removeClass('mui-active');
+				}, 300)
+				return false;
+			}
+		}
+		tempIndex = index;
+		var targetTab = this.getAttribute('href');
+		if(targetTab == activeTab){
+			return;
+		}
+		if(index == 0){
+			document.getElementById('J_choiceRole').style.display = 'block';
+			if(flag_0){
+				var sub0 = plus.webview.create(subpages[0],subpages[0],subpage_style);
+				self.append(sub0);
+				flag_0 = false;
+			}
+		}else{
+			document.getElementById('J_choiceRole').style.display = 'none';
+		}
+		if(index == 1){
+			$("body").addClass("stu_body");
+			$(".mui-bar-nav").addClass("stu_mui-bar-nav");
+			document.getElementById('J_filter').style.display = 'block';
+			if(flag_1){
+				var sub1 = plus.webview.create(subpages[1],subpages[1],subpage_style);
+				self.append(sub1);
+				flag_1 = false;
+			}
+		}else{
+			$("body").removeClass("stu_body");
+			$(".mui-bar-nav").removeClass("stu_mui-bar-nav");
+			document.getElementById('J_filter').style.display = 'none';
+		}
+		if(index == 2){
+			
+			var typeId = JSON.parse(Util.lStorage.getParam('userInfo')).typeId;
+			if(typeId == '2'){
+				document.getElementById('J_sendMsg').style.display = 'block';
+			}else{
+				document.getElementById('J_sendMsg').style.display = 'none';
+			}
+			
+			if(flag_2){
+				var sub2 = plus.webview.create(subpages[2],subpages[2],subpage_style);
+				self.append(sub2);
+				flag_2 = false;
+			}
+		}else{
+			document.getElementById('J_sendMsg').style.display = 'none';
+		}
+		if(index == 3){
+			if(flag_3){
+				var sub3 = plus.webview.create(subpages[3],subpages[3],subpage_style);
+				self.append(sub3);
+				flag_3 = false;
+			}
+		}
+		if (targetTab != activeTab) {
+			title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;//更换标题
+		}
+		setTimeout(function(){
+			plus.webview.show(targetTab);
+		}, 100)//显示目标选项卡
+		plus.webview.hide(activeTab);//隐藏当前;
+		activeTab = targetTab;//更改当前活跃的选项卡
+	});
+	
+	//预加载choiceRole.html
+	var choiceRole = mui.preload({
+		id:'care/choiceRole.html',
+		url:'care/choiceRole.html',
+		styles: {
+			top:'0px',
+			bottom:'0px'
+		}
+	});
+	
+	document.getElementById('J_choiceRole').addEventListener('tap', function() {
+		 //获得详情页面
+		 if(!choiceRole){
+		    choiceRole = plus.webview.getWebviewById('care/choiceRole.html');
+		 }
+		 //触发详情页面的stdyDtl事件,并传参
+		 mui.fire(choiceRole,'choiceRole',{title:'切换角色',pageId:'index'});
+		 choiceRole.show('slide-in-right', 150);
+	})
+	
+	//初始化模板
+	setTimeout(function () {
+		getTemplate('studyFilter', 'temp/template.html');
+	},400);
+	document.getElementById('J_filter').addEventListener('tap', function() {
+		var template = getTemplate('studyFilter');
+		var headerWebview = template.header;
+		var contentWebview = template.content;
+		mui.fire(headerWebview,'updateHeader',{title:'筛选',showMenu:''});
+		var reload = true;
+		if (!template.loaded) {
+			if (contentWebview.getURL().indexOf('study/studyFilter.html') == -1) {
+				contentWebview.loadURL('study/studyFilter.html');
+			} else {
+				reload = false;
+			}
+		} else {
+			reload = false;
+		}
+		(!reload) && contentWebview.show();
+		headerWebview.show('slide-in-right', 150);
+	});
+	
+	
+	//初始化模板
+	setTimeout(function () {
+		getTemplate('sendMsg', 'temp/template.html');
+	},1000);
+	document.getElementById('J_sendMsg').addEventListener('tap', function() {
+		
+		var template = getTemplate('sendMsg');
+		var headerWebview = template.header;
+		var contentWebview = template.content;
+		mui.fire(headerWebview,'updateHeader',{title:'选择联系人',showMenu:''});
+		contentWebview.loadURL('comuni/choiceContacts.html');
+		contentWebview.show();
+		headerWebview.show('slide-in-right', 150);
+	});
+		
+	if (mui.os.android) {
+		plus.screen.lockOrientation("portrait-primary");
+	}
+	main = plus.webview.currentWebview();
+//	main.addEventListener('maskClick', closeMenu);
+	//处理侧滑导航，为了避免和子页面初始化等竞争资源，延迟加载侧滑页面；
+	/*setTimeout(function() {
+		studyMenu = mui.preload({
+			id: 'study/studyMenu.html',
+			url: 'study/studyMenu.html',
+			styles: {
+				left: 0,
+				width: '70%',
+				zindex: -1
+			},
+			show: {
+				aniShow: 'none'
+			}
+		});
+	}, 200);*/
+})
+
+
+/**
+ * 显示侧滑菜单
+ */
+/*function openMenu() {
+	if (!showMenu) {
+		//侧滑菜单处于隐藏状态，则立即显示出来；
+		studyMenu.show('none', 0, function() {
+			//主窗体开始侧滑并显示遮罩
+			main.setStyle({
+				mask: 'rgba(0,0,0,0.4)',
+				left: '70%',
+				transition: {
+					duration: 150
+				}
+			});
+			showMenu = true;
+		});
+	}
+}*/
+/**
+ * 关闭菜单
+ */
+/*function closeMenu() {
+	if (showMenu) {
+		//关闭遮罩；
+		//主窗体开始侧滑；
+		main.setStyle({
+			mask: 'none',
+			left: '0',
+			transition: {
+				duration: 200
+			}
+		});
+		showMenu = false;
+		//等动画结束后，隐藏菜单webview，节省资源；
+		setTimeout(function() {
+			studyMenu.hide();
+		}, 300);
+	}
+}*/
+//点击左上角侧滑图标，打开侧滑菜单；
+/*document.querySelector('.mui-icon-bars').addEventListener('tap', function() {
+	if (showMenu) {
+		closeMenu();
+	} else {
+		openMenu();
+	}
+});*/
+ //主界面向右滑动，若菜单未显示，则显示菜单；否则不做任何操作
+/*window.addEventListener("swiperight", openMenu);
+ //主界面向左滑动，若菜单已显示，则关闭菜单；否则，不做任何操作；
+window.addEventListener("swipeleft", closeMenu);
+ //侧滑菜单触发关闭菜单命令
+window.addEventListener("menu:close", closeMenu);
+window.addEventListener("menu:open", openMenu);*/
+
+//重写mui.menu方法，Android版本menu按键按下可自动打开、关闭侧滑菜单；
+/*mui.menu = function() {
+	if (showMenu) {
+		closeMenu();
+	} else {
+		openMenu();
+	}
+}*/
+
+//首页返回键处理
+//处理逻辑：1秒内，连续两次按返回键，则退出应用；
+var first = null;
+mui.back = function() {
+	if (showMenu) {
+//		closeMenu();
+	} else {
+		//首次按键，提示‘再按一次退出应用’
+		if (!first) {
+			first = new Date().getTime();
+			mui.toast('再按一次退出应用');
+			setTimeout(function() {
+				first = null;
+			}, 1000);
+		} else {
+			if (new Date().getTime() - first < 1000) {
+				plus.runtime.quit();
+			}
+		}
+	}
+};
+
+window.addEventListener('removeSub', function(){
+	removeSubF(true);
+})
+
+function removeSubF(flag){
+	var self = plus.webview.getWebviewById('index.html');
+	var careIndex = plus.webview.getWebviewById('care/careIndex.html');
+	var studyIndex = plus.webview.getWebviewById('study/studyIndex.html');
+	var comuniIndex = plus.webview.getWebviewById('comuni/comuniIndex.html');
+	var myIndex = plus.webview.getWebviewById('my/myIndex.html');
+	
+	if(careIndex){
+		self.remove(careIndex);
+		careIndex.close();
+		flag_0 = true;
+	}
+	if(studyIndex){
+		self.remove(studyIndex);
+		studyIndex.close();
+		flag_1 = true;
+	}
+	if(comuniIndex){
+		self.remove(comuniIndex);
+		comuniIndex.close();
+		flag_2 = true;
+	}
+	if(myIndex){
+		self.remove(myIndex);
+		myIndex.close();
+		flag_3 = true;
+	}
+	if(flag){
+		Util.lStorage.clearParam();//清除所有
+		Util.alert("退出")
+		mui.openWindow({
+			url: 'login.html', 
+			id:'login'
+		});
+	}
+}
+</script>
+</body>
+</html>

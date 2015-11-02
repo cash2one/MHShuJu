@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>完成时长</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<style>
+.mui-navigate-right:after, .mui-push-right:after{
+	content: "\e472";
+	font-size: 30px;
+	color: #094462;
+}
+</style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav">
+	<a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 id="title" class="mui-title">完成时长</h1>
+	</header>
+<div class="mui-content" id="J_hmwk_dtl">
+	<ul class="mui-table-view">
+	  <li class="mui-table-view-cell" val="0">
+	    <a class="mui-navigate-right">
+	      	未完成
+	    </a>
+	  </li>
+	  <li class="mui-table-view-cell" val="10">
+	    <a>
+	      10分钟
+	    </a>
+	  </li>
+	  <li class="mui-table-view-cell" val="20">
+	    <a>
+	      20分钟
+	    </a>
+	  </li>
+	  <li class="mui-table-view-cell" val="30">
+	    <a>
+	      30分钟
+	    </a>
+	  </li>
+	  <li class="mui-table-view-cell" val="40">
+	    <a>
+	      40分钟
+	    </a>
+	  </li>
+	  <li class="mui-table-view-cell" val="50">
+	    <a>
+	      50分钟
+	    </a>
+	  </li>
+	  <li class="mui-table-view-cell" val="60">
+	    <a>
+	      60分钟
+	    </a>
+	  </li>
+	  <li class="mui-table-view-cell" val="70">
+	    <a>
+	      1小时以上
+	    </a>
+	  </li>
+	</ul>
+</div>
+
+<script id="T_careIndex" type="text/x-handlebars-template">
+</script>
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script type="text/javascript">
+mui.init({
+	swipeBack: true
+});
+
+mui.plusReady(function(){
+	
+	mui('.mui-table-view').on('tap', 'li', function(){
+		var _this = $(this);
+		var val = _this.attr('val'), txt = _this.find('a').text();
+		txt = encodeURI(txt);
+		var opener = plus.webview.currentWebview().opener();
+		mui.fire(opener,'changeTime',{val:val,txt:txt});
+		_this.find('a').addClass('mui-navigate-right').parent().siblings('li').find('a').removeClass('mui-navigate-right');
+		setTimeout(function(){
+			plus.webview.currentWebview().hide();
+		}, 300)
+	})
+	
+})
+
+</script>
+</body>
+</html>

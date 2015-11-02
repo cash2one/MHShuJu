@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>搜索</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<style type="text/css">
+	.mui-search .mui-placeholder .mui-icon{
+		color: #fff;
+	}
+	input[type="search"].mui-input-clear{
+		color: #fff;
+		background-color: #5F8599;
+	}
+	header.mui-bar-nav{
+		-webkit-box-shadow: none;
+		box-shadow: none;
+	}
+	.ui-exam-rank {
+		top: 22px;
+	}
+	.examSearch .mui-table-view li .mui-ellipsis.date {
+		max-width: 90px;
+	}
+	
+	.mui-table-view-cell {
+		width: 100%;
+	}
+	.mui-table-view-cell div {
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+		display: inline-block;
+	}
+	.mui-table-view-cell .courseIcon {
+		width: 30%;
+		float: none;
+		margin: 0!important;
+	}
+	.mui-table-view-cell .mui-media-body {
+		width: 60%;
+		float: none;
+		margin: 0!important;
+		vertical-align: -11px;
+		padding: 0 10px;
+	}
+	.mui-table-view-cell .date {
+		width: 22%;
+		float: none;
+		margin: 0!important;
+	}
+</style>
+</head>
+<body>
+	<div class="mui-content examSearch">
+		<!--<div class="search-wrap">
+			<div class="mui-input-row mui-search">
+				<input type="search" class="mui-input-clear" placeholder="请输入关键字" id="J_examSearch_val">
+			</div>
+			<button class="mui-btn mui-btn-primary" id="J_examSearch">搜索</button>
+		</div>-->
+		<ul class="mui-table-view" id="J_careExamSearch">
+		</ul>
+	</div>
+	
+<div class="ui-loader ui-corner-all fn-hide" id="J_loading">
+    <span class="ui-icon-loading"></span>
+    <div class="ui-loader-verbose">正在加载数据...</div>
+</div>
+
+<script id="T_careExamSearchStudent" type="text/x-handlebars-template">
+{{#each retInfo}}
+	<li class="mui-table-view-cell" examId = "{{examId}}" examNm = "{{examNm}}">
+		<div class="mui-media-object mui-pull-left">
+			<span class="mui-icon mui-icon-person"></span>
+		</div>
+		<div class="mui-media-body">
+			<p class='mui-ellipsis singleLine'>{{examNm}}</p>
+		</div>
+		<div class="ui-exam-rank mui-ellipsis date">{{retNewDate examDate}}</div>
+	</li>
+{{/each}}
+</script>
+
+<script id="T_careExamSearchTeacher" type="text/x-handlebars-template">
+{{#each retInfo}}
+	<li class="mui-table-view-cell" examId = "{{examId}}" examNm = "{{examNm}}" courseId = "{{courseId}}" gradeId = "{{gradeId}}" >
+		{{retNewScoreName courseId ""}}
+		<div class="mui-media-body">
+			<p class='mui-ellipsis'>{{examNm}}</p>
+			<p class='mui-ellipsis'>{{gradeName}}</p>
+		</div>
+		<div class="ui-exam-rank mui-ellipsis date">{{retNewDate examDate}}</div>
+	</li>
+{{/each}}
+</script>
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../lib/handlebars/1.3.0/helpers.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script type="text/javascript">
+var userId, typeId, param, posturl, tplId,
+userInfo = Util.lStorage.getParam('userInfo');//当前登录用户信息
+userInfo = JSON.parse(userInfo);
+var param;
+var posturl;
+mui.init({
+	swipeBack: true
+});
+
+var old_back = mui.back;
+mui.back = function(){
+  var cwebview = plus.webview.getWebviewById('examScore-sub');
+  if(cwebview){
+    var self = plus.webview.currentWebview();
+    self.remove(cwebview);
+    cwebview.close();
+  }
+  old_back();
+}
+
+mui.plusReady(function(){
+	srvMap.add('examSearchStudent', 'examSearchStudent.json','commonOuter.action?uid=getStudentScoreList');
+	srvMap.add('examSearchTea', 'examSearchTea.json','commonOuter.action?uid=getTeaExamList');//老师
+	userId = userInfo.userId;
+	typeId = userInfo.typeId;
+//	typeId = 1;
+	param  = 'start=0&limit=100';//stu
+	posturl= srvMap.get('examSearchStudent');
+	tplId  = '#T_careExamSearchStudent';
+	if(typeId == 2){//老师角色
+		posturl= srvMap.get('examSearchTea');
+		tplId  = '#T_careExamSearchTeacher';
+		param  = 'start=0&limit=100';
+	}
+	loadHmwk(param);
+
+//	var $J_examSearch = document.getElementById("J_examSearch");
+//	$J_examSearch.addEventListener('tap', function() {
+//		var $J_examSearch_val = document.getElementById("J_examSearch_val").value;
+//		if($J_examSearch_val){
+//			param  = 'type='+typeId+'&start=0&limit=5'+'&J_examSearch_val='+$J_examSearch_val;
+//			loadHmwk(param);
+//		}
+//	});
+})
+	
+function loadHmwk(param){
+	Util.ajax.postJson(posturl,param,function(json,status){
+		if (status) {
+			if(json && json.retInfo.length){
+				if($(".nocontent").length){
+					$(".nocontent").remove();
+				}
+				Util.ajax.loadTemp('#J_careExamSearch',$(tplId),json);
+			
+				mui('#J_careExamSearch').on('tap', 'li', function(){
+					var _index = $(this).index();
+					var $next = $("#J_careExamSearch li").eq(_index+1);
+					var lastExamId = '-1';
+					if($next.length){
+						lastExamId = $next.attr('examId');
+					}
+					var examDatas = {};
+					if(typeId == '2'){
+						examDatasSearch = {//老师入参
+							'examId' : this.getAttribute('examId'),
+							'examNm' : this.getAttribute('examNm'),
+							'courseId' : this.getAttribute('courseId'),
+							'gradeId' : this.getAttribute('gradeId')
+						}
+					}else{
+						examDatasSearch = {
+							'examId' : this.getAttribute('examId'),
+							'examNm' : this.getAttribute('examNm'),
+							'lastExamId': lastExamId
+						}
+					}
+					examDatasSearch = JSON.stringify(examDatasSearch);
+					Util.lStorage.setParam('examDatasSearch',examDatasSearch);
+					var template = getTemplate('examScore');
+					var headerWebview = template.header;
+					var contentWebview = template.content;
+					mui.fire(headerWebview,'updateHeader',{title:"成绩单",pageId:'examScore',showMenu:false});
+					contentWebview.loadURL('examScore.html');
+					contentWebview.show();
+					headerWebview.show('slide-in-right', 150);
+				})
+			}else{
+				$("body").append("<div class='nocontent'></div>");
+			}
+		}else{
+			Util.alert(json.rtnMsg || "系统错误！");
+			$("body").append("<div class='nocontent'></div>");
+		}
+	})
+	setTimeout(function () {
+		getTemplate('examScore', '../temp/template.html');
+	},300);
+}
+Handlebars.registerHelper('retNewDate', function(content, fn){
+	if(content && content.length > 10){
+		content = content.substring(0, 10);
+	}
+	return content;
+})
+</script>
+</body>
+</html>

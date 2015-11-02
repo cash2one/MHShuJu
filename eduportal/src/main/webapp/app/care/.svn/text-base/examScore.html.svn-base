@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>成绩</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<style>
+.mui-table-view-cell > a > .mui-badge{
+	right: 5px;background-color: #fff; color: #999;
+}
+.stu .mui-media-body {
+	float: left;
+	height: 60px;
+	line-height: 64px;
+	width: 30%;
+}
+.stu .courseIcon {
+	margin-top: 10px;
+}
+.stu .ui-exam-rank {
+	float: right;
+	position: relative;
+	top: 0;
+	font-size: 14px;
+	right: 0;
+}
+.stu .ui-exam-rank p {
+	font-size: 15px;
+	text-align: right;
+}
+.stu .ui-exam-rank p.last {
+	margin-top: 10px;
+}
+.stu .ui-exam-rank p .ui-rank-num {
+	display: inline-block;
+	margin: 0 5px;
+	font-size: 14px;
+}
+.stu .ui-rank-num.down {
+	background-color: #5DBABE;
+}
+.stu .ui-exam-rank p .ui-rank-icon {
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 5px;
+	width: 24px;
+	height: 24px;
+}
+.stu .ui-rank-icon.down {
+	background-position: -23px 0;
+}
+.stu .ui-face-icon {
+	display: inline-block;
+	vertical-align: -6px;
+	margin-left: 5px;
+	width: 24px;
+	height: 24px;
+	background: url(../theme/images/gd_icon.png) 0 0 no-repeat;
+	background-size: 100%;;
+}
+.stu .ui-face-icon.fail {
+	background-position: 0 -25px;
+}
+</style>
+</head>
+<body>
+<div class="mui-content examScore" id="J_examScoreList">
+	
+</div>
+	
+<div class="ui-loader ui-corner-all fn-hide" id="J_loading">
+    <span class="ui-icon-loading"></span>
+    <div class="ui-loader-verbose">正在加载数据...</div>
+</div>
+
+<script id="T_examStudent" type="text/x-handlebars-template">
+<h5 class="examName">{{examName}}</h5>
+<ul class="mui-table-view stu" id="J_pare_score">
+	{{#each retInfo}}
+	<li class="mui-table-view-cell mui-media">
+ 		<a href="javascript:;" examId="" title="{{course}}" score="{{score}}" rank="{{rank}}" examName="{{../examName}}" courseId="{{courseId}}" avgscore="{{avgscore}}">
+			{{retNewScoreName courseId ""}}
+			<div class="mui-media-body">{{score}}分</div>
+			<div class="ui-exam-rank">
+				{{retNewRank rank lastRank}}
+				{{retNewFace score avgscore}}
+			</div>
+		</a>
+	</li>
+	{{/each}}
+</ul>
+</script>
+<script id="T_examTeacher" type="text/x-handlebars-template">
+<ul class="mui-table-view head">
+	<li class="mui-table-view-cell mui-media">
+		{{retNewScoreName examDatasSearch.courseId ""}}
+		<div class="mui-media-body mui-pull-left" style="max-width: 66%;">
+			<p class='mui-ellipsis'>{{examDatasSearch.examNm}}</p>
+			<p class='mui-ellipsis'>{{examDatasSearch.gradeNm}}</p>
+			<p class='mui-ellipsis'>平均：{{examDatasSearch.avgscore}}分</p>
+		</div>
+		<a class="pie-btn" id="J_pie_btn">
+			<span class="mui-icon mui-icon-settings"></span>
+		</a>
+	</li>
+</ul>
+<ul class="mui-table-view" id="J_tea_score">
+	<li class="mui-table-view-divider">
+		<span class="ui-table-name">姓名</span>
+		<span class="ui-table-score">分数</span>
+		<span class="ui-table-rank">排名</span>
+	</li>
+	{{#each retInfo}}
+	<li class="mui-table-view-cell">
+		<span class="ui-table-name">{{userNm}}</span>
+		<span class="ui-table-score">{{score}}分</span>
+		<span class="ui-table-rank">{{rank}}</span>
+	</li>
+	{{/each}}
+</ul>
+</script>
+
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../lib/handlebars/1.3.0/helpers.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script type="text/javascript">
+mui.init({
+	swipeBack: true
+});
+var old_back = mui.back;
+mui.back = function(){
+	var cwebview = plus.webview.getWebviewById('examDtl-sub');
+	var cwebview2 = plus.webview.getWebviewById('examTeaAna-sub');
+	if(cwebview){
+		var self = plus.webview.currentWebview();
+		self.remove(cwebview);
+		cwebview.close();
+	}
+	if(cwebview2){
+		var self = plus.webview.currentWebview();
+		self.remove(cwebview2);
+		cwebview2.close();
+	}
+	old_back();
+}
+
+mui.plusReady(function(){
+	srvMap.add('pareRoleExamList', 'examSearchStu.json','commonOuter.action?uid=getStuScoreOfOneExam');//家长
+	srvMap.add('teaRoleExamList', 'examSearchTeaDtl.json','commonOuter.action?uid=getTeaOneExamInfo');//老师 
+	
+	var userInfo = Util.lStorage.getParam('userInfo');//当前登录用户信息
+	userInfo = JSON.parse(userInfo);
+	var userId = userInfo.userId, typeId = userInfo.typeId;
+	
+//	typeId = 1;
+//	获取上一页数据
+	var examDatasSearch = JSON.parse(Util.lStorage.getParam('examDatasSearch'));
+	
+	var param  = '&examId='+examDatasSearch.examId;//家长
+	posturl= srvMap.get('pareRoleExamList');
+	tplId  = '#T_examStudent';
+	if(typeId == '2'){//老师角色
+		posturl= srvMap.get('teaRoleExamList');
+		tplId  = '#T_examTeacher';
+		param  = 'courseId='+examDatasSearch.courseId+'&examId='+examDatasSearch.examId+'&gradeId='+examDatasSearch.gradeId;//老师
+		
+		Util.ajax.postJson(posturl,param,function(json,status){
+			if (status) {
+				if(json && json.rtnCode == '1'){
+					if($(".nocontent").length){
+						$(".nocontent").remove();
+					}
+					var newJson = {};
+					newJson.retInfo = json.retInfo;
+					if(newJson.retInfo.length){
+						examDatasSearch.avgscore = newJson.retInfo[0].avgscore;
+						examDatasSearch.gradeNm = newJson.retInfo[0].gradeNm;
+					}
+					newJson.examDatasSearch = examDatasSearch;
+					Util.ajax.loadTemp('#J_examScoreList',$(tplId),newJson);
+					
+					mui('#J_pie_btn').on('tap', "span",function(){//老师点击分析按钮
+						var title = "成绩分析";
+						
+						var template = getTemplate('examTeaAna');
+						var headerWebview = template.header;
+						var contentWebview = template.content;
+						mui.fire(headerWebview,'updateHeader_3',{title:title,pageId:'examTeaAna'});
+						contentWebview.loadURL('examAna.html');
+						contentWebview.show();
+						headerWebview.show('slide-in-right', 150);
+					})
+				}else{
+					Util.alert("暂无数据！");
+					$("body").append("<div class='nocontent'></div>");
+				}
+			}else{
+//				Util.alert("系统错误，请稍后再试");
+				$("body").append("<div class='nocontent'></div>");
+			}
+		})
+	}else{
+		var lastExamId = examDatasSearch.lastExamId,
+			lastRank;
+		
+		Util.ajax.postJson(posturl,param,function(json,status){
+			if (status) {
+				if(json && json.rtnCode == '1'){
+					json.examName = examDatasSearch.examNm;
+					for(var k=0, length=json.retInfo.length; k<length; k++){
+						json.retInfo[k].lastRank = "";
+					}
+					//获取上一次考试的排名
+					if(lastExamId == '-1'){//无上一次考试
+						Util.ajax.loadTemp('#J_examScoreList',$(tplId),json);
+						showHistory();
+					}else{
+						Util.ajax.postJson(posturl,'&examId='+lastExamId,function(jsonLast,status){
+							if(status){
+//								var jsonLast = {"rtnMsg": "调用成功", "retInfo": [{"examDate": "2015-02-11 11:15", "courseId": "111", "score": "100", "avgscore": "60", "rank": "10", "lastRank": "", "course": "语文"}, {"examDate": "2015-02-11 11:15", "courseId": "333", "score": "60", "avgscore": "60", "rank": "", "lastRank": "", "course": "英语"}, {"examDate": "2015-02-11 11:15", "courseId": "222", "score": "50", "avgscore": "70", "rank": "2", "lastRank": "", "course": "数学"} ], "examName": "期中考试2", "rtnCode": "1"};
+								if(jsonLast && jsonLast.rtnCode == '1'){
+									for(var key in json.retInfo){
+										var courseId = json.retInfo[key].courseId;
+										for(var i=0, length=jsonLast.retInfo.length; i<length; i++){
+											if(courseId == jsonLast.retInfo[i].courseId){
+												json.retInfo[key].lastRank = jsonLast.retInfo[i].rank|| "";
+												break;
+											}else{
+												json.retInfo[key].lastRank = "";
+											}
+										}
+									}
+									
+									Util.ajax.loadTemp('#J_examScoreList',$(tplId),json);
+									showHistory();
+								}
+							}
+						})
+					}
+					
+				}else{
+					Util.alert("暂无数据！");
+				}
+			}else{
+				Util.alert("系统错误，请稍后再试");
+				$('#J_examScoreList').html('<div class="ui-load-error"></div>')
+			}
+		})
+	}
+	
+	setTimeout(function () {
+		getTemplate('examDtl', '../temp/template_2.html');
+		getTemplate('examTeaAna', '../temp/temp_3.html');
+	},300);
+})
+
+Handlebars.registerHelper("retNewRank", function(rank,lastRank,fn) {
+	var rank = parseInt(rank, 10);
+	var lastRank = parseInt(lastRank, 10);
+	var buffer = "";
+	if(lastRank && typeof(lastRank) == 'number'){
+		if(rank <= lastRank){
+			buffer = '<p>排名<span class="ui-rank-num">'+rank+'</span><span class="ui-rank-icon"></span></p>';
+		}else{
+			buffer = '<p>排名<span class="ui-rank-num down">'+rank+'</span><span class="ui-rank-icon down"></span></p>';
+		}
+	}
+	return new Handlebars.SafeString(buffer);
+});
+
+Handlebars.registerHelper("retNewFace", function(score,avgscore,fn) {
+	var score = parseInt(score, 10);
+	var avgscore = parseInt(avgscore, 10);
+	var buffer = "";
+	if(avgscore){
+		if(score >= avgscore){
+			buffer = '<p class="last">平均&nbsp;'+avgscore+'&nbsp;分<span class="ui-face-icon"></span></p>';
+		}else{
+			buffer = '<p class="last">平均&nbsp;'+avgscore+'&nbsp;分<span class="ui-face-icon fail"></span></p>';
+		}
+	}
+	return new Handlebars.SafeString(buffer);
+});
+
+function showHistory(){
+	mui('#J_pare_score').on('tap', 'a', function(){//学生点击某门功课进入查询该科历史成绩
+		var title = this.getAttribute('title');
+
+		var examDatas = {
+			'examId' : this.getAttribute('examId'),
+			'title' : title,
+			'score' : this.getAttribute('score'),
+			'rank' : this.getAttribute('rank'),
+			'courseId': this.getAttribute("courseId"),
+			'examName' : this.getAttribute('examName'),
+			'avgscore': this.getAttribute('avgscore')
+		}
+		examDatas = JSON.stringify(examDatas);
+		Util.lStorage.setParam('examDatas',examDatas);
+		var template = getTemplate('examDtl');
+		var headerWebview = template.header;
+		var contentWebview = template.content;
+		mui.fire(headerWebview,'updateHeader_2',{title:title,pageId:'examDtl'});
+		contentWebview.loadURL('examDtl.html');
+		contentWebview.show();
+		headerWebview.show('slide-in-right', 150);
+	})
+}
+</script>
+</body>
+</html>

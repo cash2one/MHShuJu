@@ -1,0 +1,68 @@
+{
+    "rtnMsg": "call success.",
+    "parents": [
+        {
+            "region": "金水区",
+            "subName": null,
+            "xxbName": "同步课堂_1",
+            "schoolName": "郑州二中",
+            "tbktId": "3",
+            "city": "郑州市",
+            "typeName": "学生",
+            "phoneNum": "13585718072",
+            "tbktName": "中小学_2",
+            "userId": "2",
+            "grade": "二年级",
+            "userName": "李四_2",
+            "xxbId": "2"
+        },
+        {
+            "region": "金水区",
+            "subName": null,
+            "xxbName": null,
+            "schoolName": "郑州三中",
+            "tbktId": null,
+            "city": "郑州市",
+            "typeName": "学生",
+            "phoneNum": "13585718072",
+            "tbktName": null,
+            "userId": "3",
+            "grade": "三年级",
+            "userName": "李四_3",
+            "xxbId": null
+        },
+        {
+            "region": "金水区",
+            "subName": null,
+            "xxbName": "同步课堂_2",
+            "schoolName": "郑州一中",
+            "tbktId": "1",
+            "city": "郑州市",
+            "typeName": "学生",
+            "phoneNum": "13585718072",
+            "tbktName": "中小学_1",
+            "userId": "1",
+            "grade": "一年级",
+            "userName": "李四_1",
+            "xxbId": "4"
+        }
+    ],
+    "rtnCode": "1",
+    "teacher": [
+        {
+            "region": "金水区",
+            "subName": null,
+            "xxbName": "李家长_1",
+            "schoolName": "郑州一中",
+            "tbktId": "1",
+            "city": "郑州市",
+            "typeName": "老师",
+            "phoneNum": "13585718072",
+            "tbktName": "李家长_1",
+            "userId": "1",
+            "grade": null,
+            "userName": "家长_1",
+            "xxbId": "2"
+        }
+    ]
+}

@@ -1,0 +1,687 @@
+body,ul,li {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+body {
+    overflow: hidden; /* this is important to prevent the whole page to bounce */
+}
+.fn-hide {
+    display: none;
+}
+/* 清理浮动 */
+.fn-clear:after {
+    visibility:hidden;
+    display:block;
+    font-size:0;
+    content:" ";
+    clear:both;
+    height:0;
+}
+.fn-clear {
+    zoom:1; /* for IE6 IE7 */
+}
+#pullrefresh {
+	background: #fff;
+	padding-bottom: 50px;
+}
+/**
+ * 聊天窗口
+ * **/
+
+.comui-wrap-ul {
+    background: #fff;
+    padding: 0 10px; 
+	margin-top: 10px;
+}
+.comui-wrap-ul li {
+    position: relative;
+    clear: both;
+    display: inline-block;
+    padding: 0;
+    margin: 0 0 20px 0;
+    border-radius: 10px;
+    font-size: 16px;
+}
+.comui-wrap-ul li .content-wrap {
+    max-width: 70%;
+    word-wrap:break-word;
+	word-break: break-all;
+}
+.comui-wrap-ul li.left {
+    float: left;
+	color: #fff;
+}
+.comui-wrap-ul li.left .user_icon, .comui-wrap-ul li.left  .content-wrap {
+	float: left;
+}
+.comui-wrap-ul li.left .user_icon:after {
+	width: 50px;
+	height: 50px;
+	border-radius: 50px;
+	display: inline-block;
+	font-family: Muiicons;
+	font-size: 54px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 1;
+	text-decoration: none;
+	-webkit-font-smoothing: antialiased;
+	content: '\e100';
+	color: #184055;
+}
+.comui-wrap-ul li.left .content-wrap .user_name {
+	margin: 4px 0 3px 15px;
+	min-width: 160px;
+}
+.comui-wrap-ul li.left .content-wrap .conten {
+	margin: 0 0 0 15px;
+	position: relative;
+	background-color: #184055;
+	color: #fff;
+	padding: 8px 12px;
+	border-radius: 5px;
+}
+.comui-wrap-ul li.left .content-wrap .conten a {
+	color: #fff;
+}
+.comui-wrap-ul li .content-wrap .conten a {
+	text-decoration: underline;
+}
+.comui-wrap-ul li.left .content-wrap .conten:before {
+	position: absolute;
+    top: 12px;
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 10px solid #184055;
+    border-left: 10px solid transparent;
+    left: -10px;
+}
+
+.comui-wrap-ul li.right {
+	float: right;
+	color: #000;
+}
+.comui-wrap-ul li.right .user_icon, .comui-wrap-ul li.right  .content-wrap {
+	float: right;
+}
+.comui-wrap-ul li.right .user_icon:after {
+	width: 50px;
+	height: 50px;
+	border-radius: 50px;
+	display: inline-block;
+	font-family: Muiicons;
+	font-size: 54px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 1;
+	text-decoration: none;
+	-webkit-font-smoothing: antialiased;
+	content: '\e100';
+	color: #BABABA;
+}
+.comui-wrap-ul li.right  .content-wrap {
+	margin-right: 10px;
+}
+.comui-wrap-ul li.right .content-wrap .user_name {
+	margin: 4px 5px 3px 0;
+	text-align: right;
+	min-width: 160px;
+}
+.comui-wrap-ul li.right .content-wrap .conten {
+	margin: 0 0 0 15px;
+	position: relative;
+	color: #000;
+	padding: 8px 12px;
+	border-radius: 5px;
+	background: #EAEAE9;
+}
+.comui-wrap-ul li.right  .content-wrap .conten:before {
+	position: absolute;
+    top: 12px;
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 10px solid rgba(234, 234, 234, 1);
+    border-right: 10px solid transparent;
+    right: -10px;
+}
+.comui-wrap-ul li.left .content-wrap .conten .loading {
+	position: absolute;
+    right: -30px;
+	top: 0;
+    color: #000;
+    font-size: 18px;
+    -webkit-animation: myloading .5s infinite;
+}
+
+.comui-wrap-ul li.right .content-wrap .conten .loading {
+	position: absolute;
+    left: -30px;
+	top: 0;
+    color: #000;
+    font-size: 18px;
+    -webkit-animation: myloading .5s infinite;
+}
+
+/*.comui-wrap-ul {
+    background: #fff;
+    padding: 0 20px; 
+	margin-top: 10px;
+}
+.comui-wrap-ul li {
+    position: relative;
+    clear: both;
+    display: inline-block;
+    padding: 10px 40px 10px 20px;
+    margin: 0 0 20px 0;
+    border-radius: 10px;
+    background-color: #184055;
+    font-size: 16px;
+    max-width: 70%;
+}
+.comui-wrap-ul li.left {
+    float: left;
+    margin-left: 60px;
+    color: #fff;
+    padding-right: 20px;
+}
+.comui-wrap-ul li.right {
+    float: right;
+    margin-right: 60px;
+    color: #0AD5C1;
+    background: #EAEAE9;
+    color: #000;
+    padding-right: 20px;
+}
+.comui-wrap-ul li.left:before {
+    position: absolute;
+	top: -8px;
+	width: 50px;
+	height: 50px;
+	border-radius: 50px;
+	display: inline-block;
+	font-family: Muiicons;
+	font-size: 54px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 1;
+	text-decoration: none;
+	-webkit-font-smoothing: antialiased;
+	content: '\e100';
+	left: -74px;
+	color: #184055;
+}
+.comui-wrap-ul li.left:after {
+    position: absolute;
+    top: 12px;
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 15px solid #184055;
+    border-left: 15px solid transparent;
+    left: -15px;
+}
+.comui-wrap-ul li.right:before {
+    position: absolute;
+    top: -6px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    display: inline-block;
+    font-family: Muiicons;
+    font-size: 54px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    text-decoration: none;
+    -webkit-font-smoothing: antialiased;
+    content: '\e100';
+    right: -72px;
+    color: #BABABA;
+}
+.comui-wrap-ul li.right:after {
+    position: absolute;
+    top: 12px;
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 15px solid rgba(234, 234, 234, 1);
+    border-right: 15px solid transparent;
+    right: -15px;
+}
+.comui-wrap-ul li.left .loading {
+    position: absolute;
+    right: -30px;
+    color: #000;
+    font-size: 18px;
+    -webkit-animation: myloading .5s infinite;
+}
+.comui-wrap-ul li.right .loading {
+    position: absolute;
+    left: -30px;
+    color: #000;
+    font-size: 18px;
+    -webkit-animation: myloading .5s infinite;
+}*/
+ @-webkit-keyframes myloading {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    12% {
+        -webkit-transform: rotate(40deg);
+    }
+    25% {
+        -webkit-transform: rotate(90deg);
+    }
+    37% {
+        -webkit-transform: rotate(130deg);
+    }
+    50% {
+        -webkit-transform: rotate(180deg);
+    }
+    62% {
+        -webkit-transform: rotate(230deg);
+    }
+    75% {
+        -webkit-transform: rotate(270deg);
+    }
+    87% {
+        -webkit-transform: rotate(320deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+ }
+
+#wrapper {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    bottom: 48px;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    overflow: hidden;
+}
+#scroller {
+    position: absolute;
+    z-index: 1;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    width: 100%;
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    -o-text-size-adjust: none;
+    text-size-adjust: none;
+}
+/**
+ *
+ * 下拉样式 Pull down styles
+ *
+ */
+#pullDown, #pullUp {
+	background:#fff;
+	height:50px;
+	line-height:40px;
+	padding:5px 10px;
+	border-bottom:1px solid #ccc;
+	font-weight:bold;
+	font-size:14px;
+	color:#888;
+}
+#pullDown .pullDownIcon, #pullUp .pullUpIcon  {
+	display:block; float:left;
+	width:40px; height:40px;
+	background:url(pull-icon@2x.png) 0 0 no-repeat;
+	-webkit-background-size:40px 80px; background-size:40px 80px;
+	-webkit-transition-property:-webkit-transform;
+	-webkit-transition-duration:250ms;	
+}
+#pullDown .pullDownIcon {
+	-webkit-transform:rotate(0deg) translateZ(0);
+}
+#pullUp .pullUpIcon  {
+	-webkit-transform:rotate(-180deg) translateZ(0);
+}
+
+#pullDown.flip .pullDownIcon {
+	-webkit-transform:rotate(-180deg) translateZ(0);
+}
+
+#pullUp.flip .pullUpIcon {
+	-webkit-transform:rotate(0deg) translateZ(0);
+}
+
+#pullDown.loading .pullDownIcon, #pullUp.loading .pullUpIcon {
+	background-position:0 100%;
+	-webkit-transform:rotate(0deg) translateZ(0);
+	-webkit-transition-duration:0ms;
+
+	-webkit-animation-name:loading;
+	-webkit-animation-duration:2s;
+	-webkit-animation-iteration-count:infinite;
+	-webkit-animation-timing-function:linear;
+}
+
+@-webkit-keyframes loading {
+	from { -webkit-transform:rotate(0deg) translateZ(0); }
+	to { -webkit-transform:rotate(360deg) translateZ(0); }
+}
+
+
+#scroller ul {
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+    width: 100%;
+    text-align: left;
+}
+.footer {
+    position: absolute;
+    z-index: 2;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 48px;
+    background: #E6E6E4;
+    padding: 0;
+    border-top: 1px solid #C5C5C5;
+}
+.footer input.J_comui_input[type="text"] {
+    width: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+    height: 37px;
+}
+.footer .mui-icon {
+    font-size: 30px;
+    vertical-align: middle;
+    padding: 7px 10px;
+}
+.footer .mui-icon:first-child {
+    padding-right: 0;
+}
+.footer .mui-btn {
+    vertical-align: middle;
+    padding: 7px 12px;
+}
+.file {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+    background: url(../theme/images/J_imgAdd.png) 0 0 no-repeat;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    top: 4px;
+}
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+form {
+    display: inline-block;
+    padding: 7px 10px;
+}
+
+/**录音**/
+.rp {
+    width: 100%;
+    height: 100%;
+    display: none;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 9999;
+    overflow: hidden;
+}
+.aname {
+    font-size: 16px;
+}
+.ainf {
+    font-size: 12px;
+}
+.rtime {
+    font-size: 22px;
+    color: #FF0000;
+}
+.ptime {
+    margin-top: 40%;
+    font-size: 22px;
+    color: #FFFFFF;
+}
+.rprogress {
+    background: url(../theme/images/arecord.png) no-repeat center center;
+    background-size: 32px 32px;
+}
+.rschedule {
+    background-color: rgba(0,0,0,0);
+    border: 5px solid rgba(0,183,229,0.9);
+    opacity: .9;
+    border-left: 5px solid rgba(0,0,0,0);
+    border-right: 5px solid rgba(0,0,0,0);
+    border-radius: 50px;
+    box-shadow: 0 0 15px #2187e7;
+    width: 36px;
+    height: 36px;
+    margin: 0 auto;
+    -webkit-animation: spin 1s infinite linear;
+    animation: spin 1s infinite linear;
+}
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.progress {
+  width: 90%;
+  background-color: #666;
+  margin: 0 5%;
+  border: 1px solid #222;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+.schedule {
+  width: 8px;
+  height: 8px;
+  margin: 1px 0;
+  background-color: #FFCC33;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-transition: all 1s linear;
+  transition: all 1s linear;
+}
+.stop {
+    width: 72px;
+    height: 72px;
+    background: url(../theme/images/astop.png) center center;
+    background-size: 72px 72px;
+    margin: auto;
+    -webkit-border-radius: 72px;
+    border-radius: 72px;
+}
+.stop:active{
+    -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5) inset;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5) inset;
+}
+.iplay {
+    display: block;
+    background: no-repeat right center url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABYCAYAAAADWlKCAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAKwwAACsMBNCkkqwAAABZ0RVh0Q3JlYXRpb24gVGltZQAwOS8xMi8xM5w+I3MAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzVxteM2AAAD9UlEQVR4nO2b3XETMRRGDwzvoYOkg5hRAVkqiKmAdIA7wHSQVECoALsC1gXciV0BTge4gvCwgnHk9d/+WF8m97ztxrlXs8fS1Urym6enJxwd3uZugPMcFyKGCxHDhYjhQsRwIWK4EDFciBguRAwXIoYLEcOFiOFCxHAhYrgQMVyIGC5EDBcihgsRw4WI4ULEcCFiuBAx3uVuwDGY2XtgCBTAALjc8tEFMAdKYBJC+HOK9nXBm5dwUM7MCmAEXDcMMQVuQwhlV23qC2khZjYAboGrjkLOgFEIYd5RvM6RrSFmdgs80J0MYqyHGFsSuR4S60TJ9vrwCEziZ+YhhGXy/xdU9aWgqjfnW+IsgEKtvkgJiUPUPfUyZsD42DoQ68+Y+p62AG6UhjAZITt6xopq3L9vGf+Gqh6dJX+S6ilKNaRkU8YCGLSVARBjDGLMdS5jbgkkhMQiWyejSGtEG2KsghopKoU++5AV68ZDcrvXYWTH8Pghdz1R6CHpN3MFDPsc02PsYcy1qy0nJ6uQOANKZz+jfcOUmd3H6W1jYo5RcvsqtikbuXtI+kBmBxbwz8DczMZtksdcsz1tOinZhMRxPF2bGh8R4gz4amZLMxu2aEqa8zq2LQs5e0j6EB8bLv6dAz/NrGwyjMWcj3vadjJyCimS60nLeFfAbzO7bfANT3MXLdvSmJxCBsl12VHcL8AyvpkfSpo7bdvJyCkkfQfocv5/Bnw3s/mBs6Y097aFzd7JPcv6T5dv5GtcAr/2TZN7yt0IGSE908k0+RS8FiEvhhd1yKEFUw5YAVBApoe0XQrZwgL4GEIY7pLRU+5G5OwhC57PZgbAsqPYK6rdxUMXC9Npbro8fzJy9pB0qll0FPcOuDhCRl3ubEvwOYWUyXXb5YoZ1X7GqMHSfZq7bNmWxuQUki5XnDdc+n4EPoUQiiabSzFnejKl7TJOY7IJid/iaXJ7fESIFfCNas+9zQNMc05zHnjIPctKx/mrA9egflCJGLd5eDFXukGWdddQYU+95PlDWVE97GXPeS+oivf6saBZCKHoM+8+cvcQ2NyhOwMmfW4SxdgTNs9oZd0tBAEhsRDfJbcvgbIPKTtOnNzlPnECAkPWP8xsTv3ZrJ1v2UfmuKDqGRt5QgjZ9kDWyd5D1iioP1U4P3KzqZYYY5v0om38rpDpIeCHrUFMCPjPEeSE/COetf3SU/i7EEL2GVUdSjXkGfGBfWDzIFsb/q93dRizU2R7yDr+o09R/GfRzsmRrSGvFRcihgsRw4WI4ULEcCFiuBAxXIgYLkQMFyKGCxHDhYjhQsRwIWK4EDFciBguRAwXIoYLEcOFiOFCxHAhYrgQMf4CVuqCm+17t3sAAAAASUVORK5CYII=);
+    background-size: 50px 44px;
+    -ms-touch-action: auto;
+}
+/*------------- S 以下css主要是仿IOS滚动条样式(可选样式)  -------------*/		
+/**
+ * Horizontal Scrollbar
+ */
+.myScrollbarH {
+	position:absolute;
+	z-index:100;
+	height:7px;
+	bottom:1px;
+	left:2px;
+	right:7px
+}
+
+.myScrollbarH > div {
+	height:100%;
+}
+
+/**
+ * Vertical Scrollbar
+ */
+.myScrollbarV {
+	position:absolute;
+	z-index:100;
+	width:7px;bottom:7px;top:2px;right:1px
+}
+
+.myScrollbarV > div {
+	width:100%;
+}
+
+/**
+ * Both Scrollbars
+ */
+.myScrollbarH > div,
+.myScrollbarV > div {
+	position:absolute;
+	z-index:100;
+
+	/* The following is probably what you want to customize */
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+	
+	border-width:3px;
+	-webkit-border-image:url(scrollbar.png) 6 6 6 6;
+	-moz-border-image:url(scrollbar.png) 6 6 6 6;
+	-o-border-image:url(scrollbar.png) 6 6 6 6;
+	border-image:url(scrollbar.png) 6 6 6 6;
+}
+/*------------- E 以上css主要是仿IOS滚动条样式  -------------*/
+#wrapper {
+	padding-top: 0;
+}
+#pullDown {
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+}
+.zfooter {
+	position: absolute;
+    z-index: 2;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #E6E6E4;
+    padding: 0;
+    border-top: 1px solid #C5C5C5;
+}
+.zfooter ul {
+	display: table;
+	width: 100%;
+	height: 40px;
+}
+.zfooter ul li {
+	float: left;
+	list-style: none;
+	display: table-cell;
+	overflow: hidden;
+	text-align: center;
+	height: 40px;
+}
+.zfooter ul .li_1 {
+	width: 10%;
+}
+.zfooter ul .li_2 {
+	width: 10%;
+	position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 20px;
+    background: url(../theme/images/J_imgAdd.png) 0 0 no-repeat;
+    height: 30px;
+    vertical-align: middle;
+    top: 10px;
+}
+.zfooter ul .li_2 input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.zfooter ul .li_3 {
+	width: 60%;
+}
+.zfooter ul .li_3 input {
+	padding: 5px;
+	position: relative;
+	top: 8px;
+	vertical-align: middle;
+	height: 30px;
+}
+.zfooter ul .li_4 {
+	width: 20%;
+}
+.zfooter ul .li_4 .mui-btn{
+	height: 30px;
+	padding: 5px 12px;
+	vertical-align: middle;
+	top: 7px;
+}
+
+#J_history .his {
+	display: block;
+	width: 60%;
+	border-bottom: 1px solid #C2C2C2;
+	position: relative;
+	padding: 0;
+	border-radius: 0;
+	background: #fff;
+	text-align: center;
+	margin: 0 auto;
+	margin-bottom: 30px;
+	padding-bottom: 10px;
+}
+#J_history .his .hr_line {
+	display: block;
+	width: 70%;
+	position: absolute;
+	background: #fff;
+	left: 15%;
+	color: #C2C2C2;
+}

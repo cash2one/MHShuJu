@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>沟通</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+
+</head>
+<body>
+
+
+<div class="ui-loader ui-corner-all fn-hide" id="J_loading">
+    <span class="ui-icon-loading"></span>
+    <div class="ui-loader-verbose">正在加载数据...</div>
+</div>
+
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script type="text/javascript">
+mui.init({
+	swipeBack: true,
+    subpages:[{
+		url: 'comuniRoleBody.html',//子页面HTML地址，支持本地地址和网络地址
+		id: 'comuniRoleBody.html',//子页面标志
+		styles:{
+			top:'0',//默认为0px，可不定义；
+			bottom: '50px'
+		},
+		extras:{}//额外扩展参数
+    },{
+		url: 'comuniRoleFoot.html',//子页面HTML地址，支持本地地址和网络地址
+		id: 'comuniRoleFoot.html',//子页面标志
+		styles:{
+			bottom:'0',//默认为0px，可不定义；
+			height: '50px'
+		},
+		extras:{}//额外扩展参数
+    }]
+});
+
+</script>
+</body>
+</html>

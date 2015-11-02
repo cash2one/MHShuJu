@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<style>
+
+.ui-ntc-content {
+	display: block;
+	color: #000;
+	margin: 0;
+	padding: 10px;
+	border-radius: 5px;
+	background-color: #fff;
+}
+
+</style>
+
+</head>
+<body>
+	
+<div class="mui-content">
+	<div class="ui-ntc-wrap ui-ntc-content" id="J_notice_dtl">
+		 
+	</div>
+</div>
+
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../lib/handlebars/1.3.0/helpers.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script type="text/javascript">
+$(function(){
+	var content = Util.lStorage.getParam('noticeDtl');
+	
+	setTimeout(function(){
+		$("#J_notice_dtl").html(content);
+	}, 300)
+})
+mui.init({
+	swipeBack: true
+});
+
+</script>
+</body>
+</html>

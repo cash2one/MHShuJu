@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>学习</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../theme/common.css">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+</head>
+<body>
+<div class="mui-content">
+	<div class="ui-stdy-menu" id="scroller">
+		<ul id="J_menu"></ul>
+	</div>
+	<div class="ui-loader ui-corner-all" id="J_loading">
+	    <span class="ui-icon-loading"></span>
+	    <div class="ui-loader-verbose">正在加载数据...</div>
+	</div>
+</div>
+
+<script id="T_stdy_menu" type="text/x-handlebars-template">
+	{{#each rows}}
+	<li menuId="{{menuID}}">
+		{{menuName}}
+	</li>
+	{{/each}}
+</script>
+
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../lib/iscroll/5.0/iscroll.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script type="text/javascript">
+$(function(){
+	srvMap.add('getStdMenuList', 'studyMenuList.json','commonCMS.action?uid=getStdMenuList');
+	srvMap.add('queryAppList',   'queryAppList.json','commonCMS.action?uid=queryAppList');
+	Util.ajax.postJson(srvMap.get('getStdMenuList'),'',function(json,status){
+		if (status) {
+			Util.ajax.loadTemp('#J_menu',$('#T_stdy_menu'),json);
+			//菜单绑定点击事件
+			$('#J_menu').on('tap','li',function(){
+				var _this = $(this);
+				_this.addClass('cur').siblings('li').removeClass('cur');
+				var menuId = _this.attr('menuId');
+				plus.webview.getWebviewById('study/studyIndex.html').evalJS("loadMenuApps('"+menuId+"','')");
+				plus.webview.currentWebview().opener().evalJS('closeMenu()');
+			});
+		}else{
+			$('#scroller').html('<div class="ui-load-error"></div>')
+		}
+	});
+})
+</script>
+</body>
+</html>

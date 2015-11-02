@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE control SYSTEM "common-sub-1.9.dtd">
+<control>
+    <action path="/hn/cmsouterAction" service="cmsService" method="cmsMethod">
+        <input uid="getHomeAdvertising" scope="request">
+        </input>
+        <output uid="getHomeAdvertising" convertor="com.ai.eduportal.convertor.CmsResultConvert" method="listmapConvert">
+        	<parameter key="adverName"   toKey="adverName" />
+        	<parameter key="appID"       toKey="appID" />
+        	<parameter key="adverPic"    toKey="adverPic" />
+        	<parameter key="adverDesc"   toKey="adverDesc" />
+        </output>
+        
+        <input uid="getHomeSecMenu" scope="request">
+        </input>
+        <output uid="getHomeSecMenu" convertor="com.ai.eduportal.convertor.CmsResultConvert" method="listmapConvert">
+        	<parameter key="menuID"     toKey="menuID" />
+        	<parameter key="menuDomain" toKey="menuDomain" />
+        	<parameter key="menuName"   toKey="menuName" />
+        	<parameter key="isActive"   toKey="isActive" />
+        	<parameter key="order"      toKey="order" />
+        </output>
+        
+        <input uid="getHomeExpress" scope="request">
+        </input>
+        <output uid="getHomeExpress" convertor="com.ai.eduportal.convertor.CmsResultConvert" method="listmapConvert">
+        	<parameter key="expressID"     toKey="expID" />
+        	<parameter key="expressName"   toKey="expName" />
+        	<parameter key="expressHref"   toKey="expHref" />
+        </output>
+        <input uid="getSingleApp" scope="request">
+        </input>
+        <output uid="getSingleApp" convertor="com.ai.eduportal.convertor.CmsResultConvert" method="listmapConvert">
+        	<parameter key="appID"     toKey="appID" />
+        	<parameter key="nodeName"  toKey="appName" />
+        	<parameter key="packagePrice"  toKey="packagePrice" />
+        	<parameter key="domain"        toKey="domain" />
+        	<parameter key="apphref"       toKey="apphref" />
+        	<parameter key="isnew"         toKey="isnew" />
+        	<parameter key="ishot"         toKey="ishot" />
+        	<parameter key="secMenu"       toKey="secMenu" />
+        	<parameter key="recmdpckg"     toKey="recmdpckg" />
+        	<parameter key="appDesc"       toKey="appDesc" />
+        	<parameter key="appPic"        toKey="appPic" />
+        	<parameter key="appMxPic"      toKey="appMxPic" />
+        	<parameter key="appDescPic"    toKey="appDescPic" />
+        	<parameter key="contact"       toKey="contact" />
+        	<parameter key="iDENTIFIER"    toKey="nodeUid" />
+        	<parameter key="isMutiApp"     toKey="isMutiApp" />
+        	<parameter key="isKeywords"    toKey="isKeywords" />
+        	<parameter key="appLabel"      toKey="label" />
+        	<parameter key="appLabelVal"   toKey="value" />
+        	<parameter key="sysType"       toKey="sysType" />
+        	<parameter key="isActive"   toKey="isActive" />
+        	<parameter key="threeOfferCode"  toKey="threeOfferCode" />
+        	<parameter key="order"      toKey="order" />
+        	<parameter key="priceTable"   	 toKey="priceTable" />
+        	
+        	<parameter key="freehref"   	 toKey="freehref" />
+        	<parameter key="videourl"   	 toKey="videourl" />
+        	<parameter key="appdown"   	     toKey="appdown" />
+        	<parameter key="CommonUse"       toKey="commonUse" />
+        </output>
+        
+        <input uid="getMutiApp" scope="request">
+        </input>
+        <output uid="getMutiApp" convertor="com.ai.eduportal.convertor.CmsResultConvert" method="listmapConvert">
+        	<parameter key="appID"           toKey="appID" />
+        	<parameter key="nodeName"        toKey="appName" />
+        	<parameter key="packagePrice"    toKey="packagePrice" />
+        	<parameter key="domain"          toKey="domain" />
+        	<parameter key="cpackage"        toKey="cpackage" />
+        	<parameter key="isnew"           toKey="isnew" />
+        	<parameter key="ishot"           toKey="ishot" />
+        	<parameter key="secMenu"         toKey="secMenu" />
+        	<parameter key="packageID"       toKey="packageID" />
+        	<parameter key="appDesc"         toKey="appDesc" />
+        	<parameter key="appPic"          toKey="appPic" />
+        	<parameter key="appMxPic"        toKey="appMxPic" />
+        	<parameter key="appDescPic"      toKey="appDescPic" />
+        	<parameter key="contact"         toKey="contact" />
+        	<parameter key="threenormprice"  toKey="threenormprice" />
+        	<parameter key="threepromprice"  toKey="threepromprice" />
+        	<parameter key="sixnormprice"    toKey="sixnormprice" />
+        	<parameter key="sixpromprice"    toKey="sixpromprice" />
+        	<parameter key="twelvenormprice" toKey="twelvenormprice" />
+        	<parameter key="twelvepromprice" toKey="twelvepromprice" />
+        	<parameter key="iDENTIFIER"      toKey="nodeUid" />
+        	<parameter key="isMutiApp"       toKey="isMutiApp" />
+        	<parameter key="isKeywords"      toKey="isKeywords" />
+        	<parameter key="appLabel"        toKey="label" />
+        	<parameter key="appLabelVal"     toKey="value" />
+        	<parameter key="sysType"         toKey="sysType" />
+        	<parameter key="isActive"        toKey="isActive" />
+        	
+        	<parameter key="offerId"         toKey="offerId" />
+        	<parameter key="threeOfferCode"  toKey="threeOfferCode" />
+        	<parameter key="sixOfferCode"    toKey="sixOfferCode" />
+        	<parameter key="twelveOfferCode" toKey="twelveOfferCode" />
+        	<parameter key="threeSmsCode"    toKey="threeSmsCode" />
+        	<parameter key="sixSmsCode"      toKey="sixSmsCode" />
+        	<parameter key="twelveSmsCode"   toKey="twelveSmsCode" />
+        	<parameter key="order"      toKey="order" />
+			<parameter key="priceTable"   	 toKey="priceTable" />
+			<parameter key="CommonUse"       toKey="commonUse" />
+        </output>
+        <input uid="getAppDetail" scope="request">
+        </input>
+        <output uid="getAppDetail" convertor="com.ai.eduportal.convertor.CmsResultConvert" method="listmapConvert">
+        	<parameter key="appID"           toKey="appID" />
+        	<parameter key="nodeName"        toKey="appName" />
+        	<parameter key="packagePrice"    toKey="packagePrice" />
+        	<parameter key="domain"          toKey="domain" />
+        	<parameter key="apphref"         toKey="apphref" />
+        	<parameter key="isnew"           toKey="isnew" />
+        	<parameter key="ishot"           toKey="ishot" />
+        	<parameter key="secMenu"         toKey="secMenu" />
+        	<parameter key="recmdpckg"       toKey="recmdpckg" />
+        	<parameter key="appDesc"         toKey="appDesc" />
+        	<parameter key="appPic"          toKey="appPic" />
+        	<parameter key="appMxPic"        toKey="appMxPic" />
+        	<parameter key="appDescPic"      toKey="appDescPic" />
+        	<parameter key="contact"         toKey="contact" />
+        	<parameter key="isMutiApp"       toKey="isMutiApp" />
+        	<parameter key="threenormprice"  toKey="threenormprice" />
+        	<parameter key="threepromprice"  toKey="threepromprice" />
+        	<parameter key="sixnormprice"    toKey="sixnormprice" />
+        	<parameter key="sixpromprice"    toKey="sixpromprice" />
+        	<parameter key="twelvenormprice" toKey="twelvenormprice" />
+        	<parameter key="twelvepromprice" toKey="twelvepromprice" />
+        	<parameter key="iDENTIFIER"      toKey="nodeUid" />
+        	<parameter key="sysType"         toKey="sysType" />
+        	<parameter key="isActive"        toKey="isActive" />
+        	
+        	<parameter key="offerId"         toKey="offerId" />
+        	<parameter key="threeOfferCode"  toKey="threeOfferCode" />
+        	<parameter key="sixOfferCode"    toKey="sixOfferCode" />
+        	<parameter key="twelveOfferCode" toKey="twelveOfferCode" />
+        	<parameter key="threeSmsCode"    toKey="threeSmsCode" />
+        	<parameter key="sixSmsCode"      toKey="sixSmsCode" />
+        	<parameter key="twelveSmsCode"   toKey="twelveSmsCode" />
+        	<parameter key="priceTable"   	 toKey="priceTable" />
+        	<parameter key="freehref"   	 toKey="freehref" />
+        	<parameter key="videourl"   	 toKey="videourl" />
+        	
+        	<parameter key="androidapp"   	 toKey="androidapp" />
+        	<parameter key="appleapp"   	 toKey="appleapp" />
+        	<parameter key="appdown"   	     toKey="appdown" />
+        	<parameter key="learningStages"  toKey="learningStages" />
+        </output>
+        <input uid="userOrders" scope="request">
+        </input>
+        <output uid="userOrders" convertor="com.ai.eduportal.convertor.CmsResultConvert" method="listmapConvert">
+        	<parameter key="appId"     toKey="appID" />
+        	<parameter key="isMutiApp" toKey="isMutiApp" />
+        </output>
+        <input uid="contact" scope="request">
+        </input>
+        <output uid="contact" convertor="com.ai.eduportal.convertor.CmsResultConvert" method="listmapConvert">
+        	<parameter key="customer" toKey="customer" />
+        	<parameter key="phone"    toKey="phone" />
+        	<parameter key="hotline"  toKey="hotline" />
+        	<parameter key="PhoneRemarks" toKey="PhoneRemarks" />
+        	<parameter key="smscustomer"  toKey="smscustomer" />
+        	<parameter key="smsRemarks"   toKey="smsRemarks" />
+        	<parameter key="phoneNum"     toKey="phoneNum" />
+        	<parameter key="qq"           toKey="qq" />
+        	<parameter key="onlineservice" toKey="onlineservice" />
+        </output>
+        <input uid="recmdpckg" scope="request">
+        </input>
+        <output uid="recmdpckg" convertor="com.ai.eduportal.convertor.CmsResultConvert" method="listmapConvert">
+        	<!-- 
+        	<parameter key="cpackage"   toKey="cpackage" />
+        	 -->
+        	<parameter key="appID"      toKey="appID" />
+        	<parameter key="nodeName"   toKey="appName" />
+        	<parameter key="iDENTIFIER" toKey="nodeUid" />
+        	<parameter key="appPic"     toKey="appPic" />
+        	<parameter key="appPicContentTypes"     toKey="appPicContentTypes" />
+        	<!--
+        	<parameter key="threenormprice"      toKey="threenormprice" />
+        	<parameter key="threepromprice"      toKey="threepromprice" />
+        	-->
+        </output>
+        <input uid="appPicJson" scope="request">
+        </input>
+        <output uid="appPicJson" convertor="com.ai.eduportal.convertor.CmsResultConvert" method="listmapConvert">
+        	<parameter key="appPic"     toKey="appPic" />
+        	<parameter key="appMxPic"   toKey="appMxPic" />
+        	<parameter key="appID"      toKey="appID" />
+        	<parameter key="nodeName"   toKey="appName" />
+        	<parameter key="iDENTIFIER" toKey="nodeUid" />
+        	<parameter key="appPicContentTypes"     toKey="appPicContentTypes" />
+        	<parameter key="appMxPicContentTypes"   toKey="appMxPicContentTypes" />
+        </output>
+    </action>
+</control>

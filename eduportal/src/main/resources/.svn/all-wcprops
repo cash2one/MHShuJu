@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/Eduportal/!svn/ver/1685/code/eduportal/src/main/resources
+END
+struts.properties
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/Eduportal/!svn/ver/2458/code/eduportal/src/main/resources/struts.properties
+END
+webdefault.xml
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/Eduportal/!svn/ver/8/code/eduportal/src/main/resources/webdefault.xml
+END
+struts.xml
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/Eduportal/!svn/ver/2458/code/eduportal/src/main/resources/struts.xml
+END
+log4j.properties
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/Eduportal/!svn/ver/3007/code/eduportal/src/main/resources/log4j.properties
+END

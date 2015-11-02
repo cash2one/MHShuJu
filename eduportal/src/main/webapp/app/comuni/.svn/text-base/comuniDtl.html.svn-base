@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>沟通</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 , user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="stylesheet" href="../lib/mui/css/mui.css">
+<link rel="stylesheet" href="comuni.css" />
+<script src="../lib/iscroll/5.0/iscroll.js"></script>
+<script src="../common/webSQL.js"></script>
+<script type="text/javascript">
+
+var myScroll;
+function loaded () {
+    myScroll = new IScroll('#wrapper', {
+        scrollbars: true,
+        fadeScrollbars: true
+    });
+    refreshScroll();
+}
+document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+</script>
+
+</head>
+<body>
+<div class="mui-content" id="wrapper">
+	<div class="comui-wrap" id="scroller">
+		<!--<div id="pullDown">
+			<span class="pullDownIcon"></span><span class="pullDownLabel">下拉刷新...</span>
+		</div>-->
+
+		<ul class="comui-wrap-ul fn-clear">
+			
+		</ul>
+	</div>
+</div>
+<div class="footer">
+	<span class="mui-icon mui-icon-mic" id="J_audio"></span>
+	<form id="J_img_form">
+		<a href="javascript:;" class="file">
+		    <input id="J_img" type="file" name="mediaFile" onchange="getFile();" accept="image/png,image/gif,image/jpg,image/jpeg" />
+		    <input id="J_fileType" type="hidden" name="fileType" value="" />
+		    <input id="J_fileName" type="hidden" name="fileName" value="" />
+		    <input id="J_userId" type="hidden" name="userId" value="" />
+		    <input id="J_userType" type="hidden" name="userType" value="" />
+		    <input id="J_schoolId" type="hidden" name="schoolId" value="" />
+		    <input id="J_msgContent" type="hidden" name="msgContent" value="cnm" />
+		    <input id="J_msgType" type="hidden" name="msgType" value="" />
+		    <input id="J_destUserType" type="hidden" name="destUserType" value="" />
+		    <input id="J_destId" type="hidden" name="destId" value="" />
+		    <input id="J_destUnitId" type="hidden" name="destUnitId" value="" />
+		    <input id="J_ggName" type="hidden" name="ggName" value="" />
+		    <input id="J_name" type="hidden" name="name" value="" />
+		    <input id="J_fileTimeLong" type="hidden" name="fileTimeLong" value="" />
+		    <input id="J_tempId" type="hidden" name="tempId" value="" />
+		</a>
+	</form>
+	<input type="text" value="" id="J_comui_input" name="J_comui_input" class="J_comui_input" />
+	<button class="mui-btn mui-btn-primary" type="button" id="J_sendBtn">发送</button>
+</div>
+<div class="ui-loader ui-corner-all fn-hide" id="J_loading">
+    <a><span class="ui-icon-loading"></span></a>
+    <div class="ui-loader-verbose">正在加载数据...</div>
+</div>
+
+
+<div id="play" class="rp">
+	<div id="ptime" class="ptime">00:00:00/00:00:00</div><br/>
+	<div id="progress" class="progress"><div id="schedule" class="schedule"></div></div>
+	<br/>
+	<div class="stop" onclick="stopPlay();"></div>
+</div>
+<div id="record" class="rp">
+	<div style="width:100%;height:20%;"></div>
+	<div class="rprogress"><div class="rschedule"></div></div>
+	<br/>
+	<div id="rtime" class="rtime">00:00:00</div><br/>
+	<div class="stop" onclick="stopRecord();"></div>
+</div>
+
+<script id="T_msg" type="text/x-handlebars-template">
+{{#each this}}
+	{{#if_eq msgtype compare='cc'}}
+	<li class="{{retLR msgsendtype}}"><span class="conten">{{content}}</span></li>
+	{{/if_eq}}
+	{{#if_eq msgtype compare='gg'}}
+	<li class="{{retLR msgsendtype}}">{{content}}</li>
+	{{/if_eq}}
+{{/each}}
+</script>
+<script src="../lib/jquery/2.1.3/jquery.min.js"></script>
+<script src="../lib/mui/mui.min.js"></script>
+<script src="../lib/handlebars/1.3.0/handlebars.js"></script>
+<script src="../common/config.js"></script>
+<script src="../common/common.js"></script>
+<script src="../common/jquery.form.js"></script>
+<script type="text/javascript">
+mui.init({
+	swipeBack:true //启用右滑关闭功能
+});
+
+var webSql = new webStorage.webSql();//创建本地数据库
+var startTime = 0;//定义第一条信息发送或者接收的时间
+var lastTime = 0;//定义最后一条信息发送或者接收的时间
+var searchLocalRes = null;//存储本地数据库查询结果
+var intervalAjax = null;//定义ajax定时器，接收数据
+var msgIndex = 0;//定义该条对话所在索引
+var msgDestid = 0;//定义该条对话的id
+var historyTime = 0;//定义该对话最早的一条数据的时间
+
+//文字传参
+var W_param = {
+	userId: "5864263",
+	userType: "0",
+	schoolId: "65789079014073",
+	msgContent: "",
+	msgType: "cc",
+	destUserType: "2",//对方的身份，2老师0学生
+	destId: "81538092",
+	destUnitId: "",
+	ggName: "",
+	name: "教师 "
+}
+
+//图片、语音传参
+var P_param = {
+	userId: "5864263",
+	userType: "0",
+	schoolId: "65789079014073",
+	msgContent: "suibianxie",
+	msgType: "cc",
+	destUserType: "2",//对方的身份，2老师0学生
+	destId: "81538092,",
+	destUnitId: "",
+	ggName: "",
+	name: "教师 ",
+	fileTimeLong: "0",
+	fileType: "2",
+	fileName: "",
+	tempId: ""
+}
+
+mui.plusReady(function(){
+	srvMap.add('getMsg', 'comuni/getMsg.json','commonOuter.action?uid=getMsglist');//聊天接收数据
+	srvMap.add('fileUpload', 'someTimeExam.json','commonOuter.action?uid=sendClassPicMsg');//发送图片
+	srvMap.add('sendClassMsg', 'someTimeExam.json','commonOuter.action?uid=sendClassMsg');//发送普通文字
+	var comuniDtlZ = Util.lStorage.getParam('comuniDtl');//获取聊天详情，包括所有对话窗口的数据
+	comuniDtlZ = JSON.parse(comuniDtlZ);
+	msgIndex = comuniDtlZ.index;
+	var comuniDtl = comuniDtlZ.data;
+	console.log(msgIndex)
+	if(msgIndex == '-1'){
+		console.log("新开页面");
+		//新开页面，直接定时请求消息
+		Util.ajax.postJson(srvMap.get("getMsg"), "userId=5864263&userType=0&schoolId=65789079014073&executeDate=2015-03-09 10:12:08", function(json, state){
+	    	if(state){
+	    		if(json && json.rtnCode == '1'){
+	    			if(msgIndex == '-1'){
+	    				console.log("===========新开页面，新消息在第一条，重新赋值msgIndex================")
+	    				msgDestid = json.retInfo[0].destid;//获取对话框id
+	    				msgIndex = 0;
+	    			}
+	    			addToBorderAjax(json, '1');
+	    			
+					sendInterAjax();
+	    		}else{
+	    			Util.alert(json.rtnMsg);
+	    		}
+	    	}
+	    })
+	}else{
+		console.log("----------------大json---------------");
+		console.log(JSON.stringify(JSON.parse(comuniDtl)))
+		
+		historyTime = JSON.parse(comuniDtl)[msgIndex].msg[0].createdate;
+		//第一次，接收缓存信息
+	    getFirstMsg(comuniDtl);
+	}
+	
+	
+	//监听语音
+	document.getElementById('J_audio').addEventListener('tap', function() {
+	  startRecord();
+	});
+	
+	mui(".footer").on("tap", "#J_sendBtn", function(){
+		var sendMsg = $("#J_comui_input").val();
+		if(!sendMsg){
+			return false;
+		}
+		var tempId = "J_"+(new Date()).getTime();
+
+		W_param.msgContent = sendMsg;
+		var dataP = "userId="+W_param.userId+"&userType="+W_param.userType+"&schoolId="+W_param.schoolId+"&msgContent="+W_param.msgContent+"&msgType="+W_param.msgType+"&destUserType="+W_param.destUserType+"&destId="+W_param.destId+"&destUnitId="+W_param.destUnitId+"&ggName="+W_param.ggName+"&name="+W_param.name+"&tempId="+tempId;
+		console.log("============发送===================")
+		Util.ajax.postJson(srvMap.get("sendClassMsg"), dataP, function(json, state){
+			if(state){
+				if(json && json.rtnCode == '1'){
+					console.log("文字发送成功");
+					console.log(JSON.stringify(json))
+					$("#J_comui_input").val("");
+					
+					$("#"+json.tempId).find(".loading").remove();//取消loading
+				}
+			}
+		})
+		//页面追加数据
+		addToBorder("1", tempId, sendMsg);
+	})
+
+    var old_back = mui.back;
+	mui.back = function(){
+		//显示上一个界面；
+		clearInterval(intervalAjax);
+		console.log("===========返回列表页，清除定时器===========");
+		var curWbeView = mui.currentWebview;
+		var pWebView = curWbeView.opener();
+		mui.fire(pWebView, "pageflowrefresh" );
+		pWebView.show();
+		//继续当前页面原有返回逻辑
+		old_back();
+	}
+	
+})
+// DOMContentLoaded事件处理
+var er = null, rt = null, ep = null, pt = null, pp = null, ps = null;
+document.addEventListener("DOMContentLoaded",function(){
+	// 获取DOM元素对象
+	er = document.getElementById("record");
+	rt = document.getElementById("rtime");
+	ep = document.getElementById("play");
+	pt = document.getElementById("ptime");
+	pp = document.getElementById("progress")
+	ps = document.getElementById("schedule");
+},false);
+
+// 开始录音
+var r=null,t=0,ri=null,rt=null, tempR_Name=null;
+function startRecord() {
+	r = plus.audio.getRecorder();
+	if ( r == null ) {
+		Util.alert( "录音对象未获取" );
+		return;
+	}
+	r.record( {filename:"_doc/audio/"}, function ( p ) {
+		Util.alert( "录音完成："+p );
+		plus.io.resolveLocalFileSystemURL( p, function ( entry ) {
+			tempR_Name = entry.name;
+			
+			//上传语音
+			
+			
+		}, function ( e ) {
+			Util.alert( "读取录音文件错误："+e.message );
+		} );
+	}, function ( e ) {
+		Util.alert( "录音失败："+e.message );
+	} );
+	er.style.display = "block";
+	t = 0;
+	ri = setInterval( function () {
+		t++;
+		rt.innerText = timeToStr(t);
+	}, 1000 );
+}
+// 停止录音
+function stopRecord(){
+	er.style.display = "none";
+	rt.innerText = "00:00:00";
+	clearInterval( ri );
+	ri = null;
+	r.stop();
+	w = null;
+	r = null;
+	t = 0;
+}
+// 播放音频文件
+function playAudio(name ) {
+	startPlay( name );
+}
+// 播放文件相关对象
+var p=null,pt=null,pp=null,ps=null,pi=null;
+// 开始播放
+function startPlay( url ) {
+	ep.style.display = "block";
+	var L = pp.clientWidth;
+	p = plus.audio.createPlayer( url );
+	p.play( function () {
+		Util.alert( "播放完成！" );
+		// 播放完成
+		pt.innerText = timeToStr(d)+"/"+timeToStr(d);
+		ps.style.webkitTransition = "all 0.3s linear";
+		ps.style.width = L+"px";
+		stopPlay();
+	}, function ( e ) {
+		Util.alert( "播放音频文件\""+url+"\"失败："+e.message );
+	} );
+	// 获取总时长
+	var d = p.getDuration();
+	if ( !d ) {
+		pt.innerText = "00:00:00/"+timeToStr(d);
+	}
+	pi = setInterval( function () {
+		if ( !d ) { // 兼容无法及时获取总时长的情况
+			d = p.getDuration();
+		}
+		var c = p.getPosition();
+		if ( !c ) {  // 兼容无法及时获取当前播放位置的情况
+			return;
+		}
+		pt.innerText = timeToStr(c)+"/"+timeToStr(d);
+		var pct = Math.round(L*c/d);
+		if ( pct < 8 ) {
+			pct = 8;
+		}
+		ps.style.width = pct+"px";
+	}, 1000 );
+}
+// 停止播放
+function stopPlay() {
+	clearInterval(pi);
+	pi=null;
+	setTimeout(resetPlay,500);
+	// 操作播放对象
+	if(p){
+		p.stop();
+		p=null;
+	}
+}
+// 重置播放页面内容
+function resetPlay() {
+	ep.style.display = "none";
+	ps.style.width = "8px";
+	ps.style.webkitTransition = "all 1s linear";
+	pt.innerText = "00:00:00/00:00:00";	
+}
+
+function timeToStr(ts){
+	if(isNaN(ts)){
+		return "--:--:--";
+	}
+	var h=parseInt(ts/3600);
+	var m=parseInt((ts%3600)/60);
+	var s=parseInt(ts%60);
+	return (ultZeroize(h)+":"+ultZeroize(m)+":"+ultZeroize(s));
+};
+// 格式化日期时间字符串，格式为"YYYY-MM-DD HH:MM:SS"
+function dateToStr(d){
+	return (d.getFullYear()+"-"+ultZeroize(d.getMonth()+1)+"-"+ultZeroize(d.getDate())+" "+ultZeroize(d.getHours())+":"+ultZeroize(d.getMinutes())+":"+ultZeroize(d.getSeconds()));
+};
+/**
+ * zeroize value with length(default is 2).
+ * @param {Object} v
+ * @param {Number} l
+ * @return {String} 
+ */
+function ultZeroize(v,l){
+	var z="";
+	l=l||2;
+	v=String(v);
+	for(var i=0;i<l-v.length;i++){
+		z+="0";
+	}
+	return z+v;
+}
+
+function getFile(){
+	var fileName = $("#J_img").val().split("\\");
+	fileName = fileName[fileName.length-1];
+	var tempId = "J_"+(new Date()).getTime();
+	
+	$("#J_fileName").val(fileName);
+	$("#J_userId").val(P_param.userId);
+	$("#J_userType").val(P_param.userType);
+	$("#J_schoolId").val(P_param.schoolId);
+	$("#J_msgContent").val(P_param.msgContent);
+	$("#J_msgType").val(P_param.msgType);
+	$("#J_destUserType").val(P_param.destUserType);
+	$("#J_destId").val(P_param.destId);
+	$("#J_destUnitId").val(P_param.destUnitId);
+	$("#J_ggName").val(P_param.ggName);
+	$("#J_name").val(P_param.name);
+	$("#J_fileTimeLong").val(P_param.fileTimeLong);
+	$("#J_fileType").val(P_param.fileType);
+	$("#J_tempId").val(tempId);
+	
+	$("#J_img_form").ajaxSubmit({
+	    url: srvMap.get('fileUpload'),
+	    type: "POST",
+	    cache: false,
+	    dataType: "json",
+	    success: function(data){
+	    	addToBorder("2", data.id, data.name);
+			$("#J_img_form").get(0).reset();
+	    },
+	    error: function(e){
+	    	if(e.readyState == '4' && e.status == '500'){
+	    		Util.alert("服务器错误！");
+				$("#J_img_form").get(0).reset();
+	    	}
+	    }
+	})
+}
+/**
+ * id： 唯一定义该条数据（后台返回的，当ajax未返回时无）,
+ * tempId：前台定义的唯一id，当前时间，秒
+ * name：聊天内容或者图片、语音地址
+ * type：聊天类型（1文字2图片3语音）
+ * **/
+function addToBorder(type, id, name){
+    //推送到聊天框
+    var _li = "";
+    if(type == '1'){
+        //文字
+        _li = '<li class="right" id="'+id+'"><span class="conten">'+name+'</span><span class="mui-icon mui-icon-spinner-cycle mui-spin loading"></span></li>';
+        
+    }else if(type == '2'){
+        //图片文件
+        _li = '<li class="right" id="'+id+'"><a href="javascript:;" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined"><img src="'+name+'" width="50" height="50" /></a><span class="mui-icon mui-icon-spinner-cycle mui-spin loading"></span></li>';
+        
+    }else if(type == '3'){
+        //语音
+        _li = '<li class="right" id="'+id+'"><span>'+name+'</span></li>';
+        
+    }
+    $("#scroller .comui-wrap-ul").append(_li);
+    refreshScroll();
+}
+
+//首次进入，获取上一页数据！
+function getFirstMsg(data){
+    var sidList = $("#T_msg").html();
+	var template = Handlebars.compile(sidList);
+	var data = JSON.parse(data);
+	msgDestid = data[msgIndex].destid;
+	var msgdata = data[msgIndex].msg;//获取当前对话框的数据
+	var html = template(msgdata);
+	$("#scroller ul").html(html);
+	
+	//重新定义时间区间
+	reSetDurtion(data[msgIndex].startdate, data[msgIndex].enddate);
+	loaded();
+	
+	//本地数据库操作
+	handleSql(msgdata);
+}
+
+Handlebars.registerHelper('retLR', function(value, fn){
+	if(value == '2'){
+		return "left";
+	}else if(value == '1'){
+		return "right";
+	}
+	return "left";
+});
+//json转换str
+Handlebars.registerHelper('retJson2Str', function(json, options) {
+	return JSON.stringify(json);
+});
+/**
+ * If Equals
+ * if_eq this compare=that
+ */
+Handlebars.registerHelper('if_eq', function(context, options) {
+  if (context == options.hash.compare)
+    return options.fn(this);
+  return options.inverse(this);
+});
+
+//定时刷新接收数据！
+function addToBorderAjax(json, type){
+	
+	//根据时间，判断大json里面的数据是否已经在页面上加载了，重新返回json数据
+	Util.alert("处理数据")
+	dealData(json, function(newData){
+		if(newData){
+			var sidList = $("#T_msg").html();
+			var template = Handlebars.compile(sidList);
+			var html = template(newData); 
+			if(type == '1'){
+				$("#scroller ul").append(html);
+				setTimeout(function(){
+					refreshScroll();
+				}, 10)
+			}else if(type == '2'){
+				console.log("============追加历史数据成功=================")
+				$("#scroller ul").prepend(html);
+				myScroll.refresh();
+			}
+		}
+	});
+	
+}
+
+function refreshScroll(){
+	if(!myScroll){
+		loaded();
+	}
+	myScroll.refresh();
+	if($("#scroller ul li").length){
+		var _length = $("#scroller ul li").length;
+    	myScroll.scrollToElement(document.querySelector('#scroller li:nth-child('+_length+')'), '0');
+	}
+}
+
+function dealData(data, callback){
+	var stdate = data.retInfo[msgIndex].startdate;
+	var edate = data.retInfo[msgIndex].enddate;
+	var data = data.retInfo[msgIndex].msg;//获取当前对话框的数据
+	
+	alert(stdate+"   "+edate+"      "+startTime+"      "+lastTime)
+	
+	//返回的数据中开始时间与结束时间与上一次的缓存时间一致，则不做处理
+	var stdateStr = parseFloat((new Date(stdate)).getTime(), 10);
+	var edateStr = parseFloat((new Date(edate)).getTime(), 10);
+	var startTimeStr = parseFloat((new Date(startTime)).getTime(), 10);
+	var lastTimeStr = parseFloat((new Date(lastTime)).getTime(), 10);
+	
+	if(stdateStr == startTimeStr && edateStr == lastTimeStr){
+		callback("");
+		console.log("==================数据一致，不追加内容================")
+		Util.alert("数据一致，不追加内容")
+		return false;
+	}
+	
+	//时间区间不能有交叉！！！
+	//[10点-12点]，[12点-13点]
+	//如果开始时间等于上一次缓存的startTime，截取出新数据，不处理数据库
+	if(stdateStr == startTimeStr && edateStr > lastTimeStr){
+		//更新数据库
+		try { 
+			webSql.update(msgDestid, JSON.stringify(data), startTime, lastTime, stdate, edate, function(){
+				var index = 0;
+				var createdate = "";
+				var lastTimeStr = parseFloat((new Date(lastTime)).getTime(), 10);
+				for(var i=0,len=data.length; i<len; i++){
+					createdate = parseFloat((new Date(data[i].createdate)).getTime(), 10);
+					//遍历返回数据，找到第一条时间大于缓存的最后时间的
+					//然后从该条数据开始截取，直到最后
+					if(createdate > lastTimeStr){
+						index = i;
+						break;
+					}
+				}
+				var newRetInfo = data.slice(index);
+				
+				reSetDurtion(stdate, edate);
+				
+				Util.alert("更新数据库")
+				
+				callback(newRetInfo);
+				return false;
+			});
+		} catch (e) { 
+			Util.alert("本地数据库错误！");
+		}
+	}
+	
+	//如果开始时间大于最后的时间，则该条数据都是新数据，需要新插入数据库
+	if(stdateStr > lastTimeStr){
+		webSql.insert(msgDestid, JSON.stringify(data), stdate, edate, function(){
+			reSetDurtion(stdate, edate);
+//			webSql.queryAll(msgDestid, function(data){
+//				console.log("--------新插入-------all------------")
+//				console.log(JSON.stringify(JSON.parse(data)))
+//			});
+			Util.alert("插入数据库")
+			callback(data);
+			return false;
+		});
+	}
+	
+}
+
+function reSetDurtion(start, end){
+	alert(start+"            "+end)
+	startTime = start;
+	lastTime = end;
+}
+
+function sendInterAjax(){
+	//10秒查询一次
+	intervalAjax = setInterval(function(){
+		console.log("=================定时发送========================")
+		Util.alert("定时发送");
+		Util.ajax.postJson(srvMap.get("getMsg"), "userId=81538092&userType=2&schoolId=65789079014073&executeDate=2015-03-09 10:12:08", function(json, state){
+	    	if(state){
+	    		if(json && json.rtnCode == '1'){
+	    			addToBorderAjax(json, '1');
+	    		}else{
+	    			Util.alert(json.rtnMsg);
+	    		}
+	    	}
+	    })
+	}, 30000)
+}
+
+function handleSql(json){
+	try { 
+//  	webSql.dropTable();
+//  	console.log("==========删除表================")
+//  	webSql.queryAll(id, function(data){
+//			console.log("---------------all------------")
+//			console.log(data)
+//		});
+//  	return false;
+		webSql.openDatabase();//打开数据库
+		webSql.createTable();//创建表，存在则不创建
+		//查询本地数据
+		/**
+		 * id：会话id
+		 * 时间：传入返回数据最早的时间
+		 * **/
+		var id = msgDestid;
+		
+		webSql.queryAll(id, function(data){
+			console.log("----------首次进入-----all------------")
+			console.log(data)
+		});
+
+		webSql.query(id, startTime, startTime, 0, function(Sql_searchLocalRes){
+			searchLocalRes = Sql_searchLocalRes;
+			//判断本地数据是否需要更新
+			if(searchLocalRes == null || searchLocalRes == 'null' || searchLocalRes == ''){
+				//无数据，插入新数据
+				webSql.insert(id, JSON.stringify(json), startTime, lastTime, function(){
+					webSql.query(id, startTime, startTime, 0, function(Sql_searchLocalRes){
+						searchLocalRes = Sql_searchLocalRes;
+						console.log("==============首次进入页面、插入数据成功==========")
+					});
+				});
+			}else{
+				//有数据不作处理，dealData方法中会直接更新或者插入数据
+				console.log("==============本地数据库有数据不作处理==========")
+			}
+			
+			//定时发送ajax接收新数据
+			sendInterAjax();
+			
+		});
+		
+	} catch (e) { 
+		console.log("本地数据库错误！");
+	}
+}
+
+//查询历史数据
+function getLocalHistory(){
+	setTimeout(function(){
+		if(msgDestid){
+			/**
+			 * 获取当前对话框最早的一条数据的时间
+			 * 加上时间区间（一天）作为结束时间
+			 * **/
+			var historyEndTime =  new Date(parseFloat((new Date(historyTime)).getTime(), 10) + parseFloat(1 * 24 * 60 * 60 * 1000, 10));
+			historyEndTime = dateToStr(historyEndTime);
+			webSql.query(msgDestid, historyTime, historyEndTime, 0, function(Sql_searchLocalRes){
+				if(Sql_searchLocalRes){
+					console.log("==============获取历史数据成功==========");
+					addToBorderAjax(Sql_searchLocalRes, '2');
+				}else{
+					Util.alert("暂无历史数据！");
+				}
+			});
+			mui('#wrapper').pullRefresh().endPulldownToRefresh(); //refresh completed
+		}else{
+			Util.alert("暂无历史数据！");
+			mui('#wrapper').pullRefresh().endPulldownToRefresh(); //refresh completed
+		}
+	}, 500)
+}
+
+
+</script>
+</body>
+</html>

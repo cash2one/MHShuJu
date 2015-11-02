@@ -1,0 +1,43 @@
+{
+    "rtnCode": "1",
+    "rtnMsg": null,
+    "beans": [
+        {
+          "name":"91-100",
+          "value":20,
+          "color":"#4572a7"
+        },
+        {
+          "name":"81-90",
+          "value":30,
+          "color":"#aa4643"
+        },
+        {
+          "name":"71-80",
+          "value":30,
+          "color":"#89a54e"
+        },
+        {
+          "name":"61-70",
+          "value":10,
+          "color":"#a36262"
+        },
+        {
+          "name":"60以上",
+          "value":10,
+          "color":"#de6464"
+        }
+    ],
+    "rows": [
+    	{
+    		"name":  "平均分以上",
+    		"value": "0",
+          	"color":"#4572a7"
+    	},
+    	{
+    		"name":  "平均分以下",
+    		"value": "1",
+          	"color":"#de6464"
+    	}
+    ]
+}
